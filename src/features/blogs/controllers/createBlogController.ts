@@ -3,7 +3,10 @@ import {BlogInputModel, BlogViewModel} from "../../../types/blogs-types";
 import {blogsRepository} from "../blogsRepository";
 
 export const createBlogController = (req: Request<any, any, BlogInputModel>, res: Response<BlogViewModel>) => {
+    console.log('Request body:', req.body);
     const newBlodId = blogsRepository.create(req.body);
-    const newBlog = blogsRepository.findAndMap(newBlodId)
+    const newBlog = blogsRepository.findAndMap(newBlodId);
     res.status(201).json(newBlog);
 }
+
+

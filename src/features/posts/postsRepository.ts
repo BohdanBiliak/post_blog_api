@@ -6,18 +6,25 @@ import  {blogsRepository} from "../blogs/blogsRepository";
 import {BlogViewModel} from "../../types/blogs-types";
 
 export const postsRepository = {
-    create(post: PostInputModel){
-        const newPost: PostDbType= {
+    create(post: PostInputModel) {
+        const blog = blogsRepository.find(post.blogId);
+        if (!blog) {
+            throw new Error('Blog not found');
+        }
+
+        const newPost: PostDbType = {
             id: new Date().toISOString() + Math.random(),
             title: post.title,
             content: post.content,
             shortDescription: post.shortDescription,
             blogId: post.blogId,
-            blogName: blogsRepository.find(post.blogId)!.name
-        }
+            blogName: blog.name,
+        };
+
         db.posts = [...db.posts, newPost];
         return newPost.id;
     },
+
     find(id: string){
         return db.posts.find(post => post.id === id);
     },
@@ -34,21 +41,20 @@ export const postsRepository = {
             if(foundCourse[i].id == id){
                 foundCourse.splice(i,1);
                 return true
-            }else{
-                return false;
             }
         }
+        return false
 
     },
-    put(post: PostInputModel, id: string){
-        const Post = this.find(id);
-        if(Post){
-           Post.title = post.title
-            Post.shortDescription = post.shortDescription
-            Post.content = post.content
+    put(post: PostInputModel, id: string) {
+        const foundPost = this.find(id);
+        if (foundPost) {
+            foundPost.title = post.title;
+            foundPost.shortDescription = post.shortDescription;
+            foundPost.content = post.content;
+            foundPost.blogId = post.blogId;
         }
-        return Post;
-
+        return foundPost || null;
     },
     map(post: PostDbType){
         const postForOutput: PostViewModel = {

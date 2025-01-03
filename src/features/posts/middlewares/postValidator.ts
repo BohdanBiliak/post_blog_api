@@ -8,12 +8,21 @@ import {adminMiddleware} from "../../../global_middlewares/admin-middleware";
 
 export const ContentValidatorMiddleware = body("content").isString().withMessage("no string").trim()
     .isLength({min: 1, max:1000}).withMessage('more then 1000 or 0')
-export const blogIdValidatorMiddleware = body("blogId").isString().withMessage("no string").trim()
+export const blogIdValidatorMiddleware = body("blogId")
+    .isString().withMessage("no string")
+    .trim()
     .custom(blogId => {
-        const blog = blogsRepository.find(blogId)
-        return !!blog
-    }).withMessage("no blog with that id")
+        const blog = blogsRepository.find(blogId);
+        return !!blog; // Return false if blog does not exist
+    }).withMessage("no blog with that id");
 
+export const TitleValidatorMiddleware = body("title")
+    .isString().withMessage("no string")
+    .isLength({ min: 1, max: 30 }).withMessage("more than 30 or 0");
+
+export const ShortDescriptionValidatorMiddleware = body("shortDescription")
+    .isString().withMessage("no string")
+    .isLength({ min: 1, max: 100 }).withMessage("more than 100 or 0");
 export const findPostValidatorMiddleware = (req: Request<{id:string}>, res: Response, next: NextFunction) => {
     const post = postsRepository.find(req.params.id)
     if (!post) {
@@ -24,10 +33,8 @@ export const findPostValidatorMiddleware = (req: Request<{id:string}>, res: Resp
 }
 export const postValidatorMiddleware = [
     adminMiddleware,
-
-    //titleVa
-    //shortDescr
-
+    TitleValidatorMiddleware,
+    ShortDescriptionValidatorMiddleware,
     ContentValidatorMiddleware,
     blogIdValidatorMiddleware,
     InputCheckErrorsMiddleware

@@ -14,8 +14,12 @@ export const db: DBtype = {
     posts: []
 }
 export const setDB = (dataset?: Partial<ReadonlyDBtype>) => {
-    if(!dataset)
-    db.blogs= []
-    db.posts = []
-    return
-}
+    if (!dataset) {
+        db.blogs = [];
+        db.posts = [];
+    } else {
+        db.blogs = dataset.blogs ? [...dataset.blogs] : [];
+        db.posts = dataset.posts ? [...dataset.posts] : [];
+    }
+    console.log("DB после setDB:", db);
+};
