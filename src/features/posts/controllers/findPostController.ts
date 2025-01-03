@@ -6,8 +6,8 @@ import {blogsRepository} from "../../blogs/blogsRepository";
 export const findPostController = (req: Request<{id: string}>, res: Response<PostViewModel | {}>) => {
     const foundCourse = postsRepository.find(req.params.id);
     if (foundCourse) {
-        res.json(foundCourse)
+      return  res.json(foundCourse)
     }else {
-        res.status(404)
+        return res.status(404).send()
     }
 }

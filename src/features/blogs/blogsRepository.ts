@@ -8,8 +8,9 @@ export const blogsRepository = {
             id: new Date().toISOString() + Math.random(),
             name: blog.name,
             description: blog.description,
-            websiteURL: blog.websiteUrl
-        }
+            websiteUrl: blog.websiteUrl
+        };
+        console.log('Created blog:', newBlog);  // Логируем новый блог
         db.blogs = [...db.blogs, newBlog];
         return newBlog.id;
     },
@@ -29,17 +30,16 @@ export const blogsRepository = {
             if(foundCourse[i].id == id){
                 foundCourse.splice(i,1);
                 return true
-            }else{
-                return false;
             }
         }
+        return false
     },
     put(blog:BlogInputModel, id: string){
         let foundBlog = this.find(id)
         if(foundBlog){
             foundBlog.name = blog.name
             foundBlog.description = blog.description
-            foundBlog.websiteURL = blog.websiteUrl
+            foundBlog.websiteUrl = blog.websiteUrl
         }
         return foundBlog;
     },
@@ -47,7 +47,7 @@ export const blogsRepository = {
         const blogForOutput: BlogViewModel ={
             id: blog.id,
             description: blog.description,
-            websiteUrl: blog.websiteURL,
+            websiteUrl: blog.websiteUrl,
             name: blog.name,
         }
         return blogForOutput
