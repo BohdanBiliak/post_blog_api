@@ -62,11 +62,9 @@ describe("/blogs", () => {
             expect(res.body.errorsMessages[0].field).toEqual('name')
             expect(res.body.errorsMessages[1].field).toEqual('description')
             expect(res.body.errorsMessages[2].field).toEqual('websiteUrl')
-
-
-            expect(res.body.errorsMessages[0].message).toEqual('more than 15 or 0');
-            expect(res.body.errorsMessages[1].message).toEqual('more than 500 characters long or 0');
-            expect(res.body.errorsMessages[2].message).toEqual('more than 100 characters long or 0');
+            expect(res.body.errorsMessages[0].message).toEqual('name length should be between 1 and 15');
+            expect(res.body.errorsMessages[1].message).toEqual('description length should be between 1 and 500');
+            expect(res.body.errorsMessages[2].message).toEqual('websiteUrl length should be between 1 and 100');
         expect(db.blogs.length).toEqual(0)
     })
     it('should get empty array', async () => {

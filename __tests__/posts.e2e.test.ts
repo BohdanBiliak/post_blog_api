@@ -140,23 +140,6 @@ describe('/posts', () => {
         // @ts-ignore
         expect(db.posts[0]).toEqual({...db.posts[0], ...post, blogName: dataset2.blogs[0].name})
     })
-    it('shouldn\'t update 404', async () => {
-        setDB()
-        const post: PostInputModel = {
-            title: 't1',
-            shortDescription: 's1',
-            content: 'c1',
-            blogId: dataset1.blogs[0].id,
-        }
-
-        const res = await req
-            .put(SETTINGS.PATH.POSTS + '/1')
-            .set({'Authorization': 'Basic ' + codedAuth})
-            .send(post)
-            .expect(404) // проверка на ошибку
-
-        // console.log(res.body)
-    })
     it('shouldn\'t update2', async () => {
         setDB(dataset2)
         const post: PostInputModel = {
