@@ -12,10 +12,13 @@ export const descriptionValidator = body("description").isString().withMessage('
 export const websiteUrlValidator = body("websiteUrl").isString().withMessage('not string')
     .trim().isLength({min:1, max:100}).withMessage('more than 100 characters long or 0')
 
-
 export const findBlogValidator = (req: Request, res: Response, next: NextFunction) => {
+    const blog = blogsRepository.find(req.params.id); // Ищем блог по ID
+    if (!blog) {
+        return res.status(404).send({ error: 'Blog not found' }); // Если не найден, возвращаем 404
+    }
     next();
-}
+};
 
 export const blogValidator = [
     adminMiddleware,
