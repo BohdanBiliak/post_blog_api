@@ -57,16 +57,16 @@ describe("/blogs", () => {
             .send(newBlog)
             .expect(400)
 
-            expect(res.body.errorsMessage.length).toEqual(3)
+            expect(res.body.errorsMessages.length).toEqual(3)
 
-            expect(res.body.errorsMessage[0].field).toEqual('name')
-            expect(res.body.errorsMessage[1].field).toEqual('description')
-            expect(res.body.errorsMessage[2].field).toEqual('websiteUrl')
+            expect(res.body.errorsMessages[0].field).toEqual('name')
+            expect(res.body.errorsMessages[1].field).toEqual('description')
+            expect(res.body.errorsMessages[2].field).toEqual('websiteUrl')
 
 
-            expect(res.body.errorsMessage[0].message).toEqual('more than 15 or 0');
-            expect(res.body.errorsMessage[1].message).toEqual('more than 500 characters long or 0');
-            expect(res.body.errorsMessage[2].message).toEqual('more than 100 characters long or 0');
+            expect(res.body.errorsMessages[0].message).toEqual('more than 15 or 0');
+            expect(res.body.errorsMessages[1].message).toEqual('more than 500 characters long or 0');
+            expect(res.body.errorsMessages[2].message).toEqual('more than 100 characters long or 0');
         expect(db.blogs.length).toEqual(0)
     })
     it('should get empty array', async () => {
@@ -170,10 +170,10 @@ describe("/blogs", () => {
 
         console.log(res.body)
              expect(db).toEqual(dataset1)
-             expect(res.body.errorsMessage.length).toEqual(3)
-             expect(res.body.errorsMessage[0].field).toEqual('name')
-             expect(res.body.errorsMessage[1].field).toEqual('description')
-             expect(res.body.errorsMessage[2].field).toEqual('websiteUrl')
+             expect(res.body.errorsMessages.length).toEqual(3)
+             expect(res.body.errorsMessages[0].field).toEqual('name')
+             expect(res.body.errorsMessages[1].field).toEqual('description')
+             expect(res.body.errorsMessages[2].field).toEqual('websiteUrl')
 
     })
     it('shouldn\'t update 401', async  () => {

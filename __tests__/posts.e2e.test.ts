@@ -62,11 +62,11 @@ describe('/posts', () => {
             .set({ 'Authorization': 'Basic ' + codedAuth })
             .send(newPost)
             .expect(400);
-        expect(res.body.errorsMessage.length).toEqual(4);
-        expect(res.body.errorsMessage[0].field).toEqual('title');
-        expect(res.body.errorsMessage[1].field).toEqual('shortDescription');
-        expect(res.body.errorsMessage[2].field).toEqual('content');
-        expect(res.body.errorsMessage[3].field).toEqual('blogId');
+        expect(res.body.errorsMessages.length).toEqual(4);
+        expect(res.body.errorsMessages[0].field).toEqual('title');
+        expect(res.body.errorsMessages[1].field).toEqual('shortDescription');
+        expect(res.body.errorsMessages[2].field).toEqual('content');
+        expect(res.body.errorsMessages[3].field).toEqual('blogId');
 
         expect(db.posts.length).toEqual(0);
     });
@@ -172,11 +172,11 @@ describe('/posts', () => {
             .send(post)
             .expect(400)
         expect(db).toEqual(dataset2)
-        expect(res.body.errorsMessage.length).toEqual(4)
-        expect(res.body.errorsMessage[0].field).toEqual('title')
-        expect(res.body.errorsMessage[1].field).toEqual('shortDescription')
-        expect(res.body.errorsMessage[2].field).toEqual('content')
-        expect(res.body.errorsMessage[3].field).toEqual('blogId')
+        expect(res.body.errorsMessages.length).toEqual(4)
+        expect(res.body.errorsMessages[0].field).toEqual('title')
+        expect(res.body.errorsMessages[1].field).toEqual('shortDescription')
+        expect(res.body.errorsMessages[2].field).toEqual('content')
+        expect(res.body.errorsMessages[3].field).toEqual('blogId')
     })
     it('shouldn\'t update 401', async () => {
         setDB(dataset2)
