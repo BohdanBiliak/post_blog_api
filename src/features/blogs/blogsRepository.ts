@@ -24,15 +24,18 @@ export const blogsRepository = {
     getAll(){
         return db.blogs;
     },
-    delete(id: string){
-        let foundCourse = db.blogs
-        for(let i=0; i<foundCourse.length; i++){
-            if(foundCourse[i].id == id){
-                foundCourse.splice(i,1);
-                return true
+    delete(id: string) {
+        let foundCourse = db.blogs;
+        console.log(`Trying to delete blog with ID: ${id}`); // Логирование ID
+        for (let i = 0; i < foundCourse.length; i++) {
+            if (foundCourse[i].id === id) {
+                foundCourse.splice(i, 1);
+                console.log(`Blog with ID: ${id} deleted`); // Логирование успешного удаления
+                return true;
             }
         }
-        return false
+        console.log(`Blog with ID: ${id} not found`); // Логирование ошибки
+        return false;
     },
     put(blog:BlogInputModel, id: string){
         let foundBlog = this.find(id)
