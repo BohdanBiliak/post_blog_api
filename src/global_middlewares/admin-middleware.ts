@@ -19,7 +19,7 @@ export const adminMiddleware = (req: Request, res: Response, next: NextFunction)
         return;
     }
 
-    if (!auth.startsWith("Basic ")) { // Проверяем, что заголовок начинается с "Basic "
+    if (!auth.startsWith("Basic ")) {
         res.status(401).json({ message: "Authorization header does not start with 'Basic'" });
         return;
     }

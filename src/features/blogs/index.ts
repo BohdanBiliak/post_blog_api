@@ -12,5 +12,5 @@ export const blogsRouter = Router();
 blogsRouter.get("/", getBlogsController);
 blogsRouter.post("/",...blogValidator, createBlogController);
 blogsRouter.delete("/:id",adminMiddleware, findBlogValidator ,deleteBlogController);
-blogsRouter.get('/:id', findBlogValidator, findBlogController)
-blogsRouter.put('/:id', findBlogValidator, ...blogValidator, putBlogController)
+blogsRouter.get('/:id',  findBlogController)
+blogsRouter.put('/:id', ...blogValidator,findBlogValidator,  putBlogController)
