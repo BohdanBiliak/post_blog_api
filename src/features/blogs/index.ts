@@ -10,7 +10,7 @@ import {findBlogController} from "./controllers/findBlogController";
 export const blogsRouter = Router();
 
 blogsRouter.get("/", getBlogsController);
+blogsRouter.get('/:id',findBlogValidator,  findBlogController)
 blogsRouter.post("/",...blogValidator, createBlogController);
 blogsRouter.delete("/:id",adminMiddleware, findBlogValidator ,deleteBlogController);
-blogsRouter.get('/:id',  findBlogController)
 blogsRouter.put('/:id', ...blogValidator,findBlogValidator,  putBlogController)
