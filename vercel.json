@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "name": "home1_1",
+  "builds": [
+
+    { "src": "src/index.ts", "use": "@vercel/node" }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "src/index.ts" }
+  ]
+
+}
