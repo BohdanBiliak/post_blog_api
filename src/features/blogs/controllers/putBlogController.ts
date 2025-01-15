@@ -1,9 +1,19 @@
-import {blogsRepository} from "../blogsRepository";
-import {Request, Response} from "express";
-import {BlogInputModel, BlogViewModel} from "../../../types/blogs-types";
+import { Request, Response } from "express";
+import { blogsRepository } from "../blogsRepository";
+import { BlogInputModel } from "../../../types/blogs-types";
 
-export const putBlogController = (req: Request<{id:string}, any, BlogViewModel>, res: Response) => {
-   const foundBlogs = blogsRepository.put(req.body, req.params.id)
-    res.status(204).send(foundBlogs);
-}
+export const putBlogController = async (req: Request<{ id: string }, any, BlogInputModel>, res: Response) => {
+    try {
+        const updatedBlog = await blogsRepository.put(req.body, req.params.id);
+
+        if (!updatedBlog) {
+            return res.status(404).send({ error: "Blog not found" });
+        }
+
+        res.status(204).send();
+    } catch (error) {
+        res.status(500).json({ error: "Failed to update blog." });
+    }
+};
+
 

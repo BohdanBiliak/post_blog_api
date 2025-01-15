@@ -24,10 +24,10 @@ export const adminMiddleware = (req: Request, res: Response, next: NextFunction)
         return;
     }
 
-    const base64Credentials = auth.slice(6).trim(); // Убираем "Basic " и пробелы
-    const decodedCredentials = fromBase64toUTF8(base64Credentials); // Декодируем Base64
+    const base64Credentials = auth.slice(6).trim();
+    const decodedCredentials = fromBase64toUTF8(base64Credentials);
 
-    if (decodedCredentials !== SETTINGS.ADMIN) { // Сравниваем декодированную строку с SETTINGS.ADMIN
+    if (decodedCredentials !== SETTINGS.ADMIN) {
         res.status(401).json({ message: "Invalid credentials" });
         return;
     }

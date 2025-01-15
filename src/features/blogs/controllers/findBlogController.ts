@@ -1,15 +1,17 @@
-import {Request, Response} from "express";
-import {BlogViewModel} from "../../../types/blogs-types";
-import {blogsRepository} from "../blogsRepository";
+import { Request, Response } from "express";
+import { blogsRepository } from "../blogsRepository";
+import { BlogViewModel } from "../../../types/blogs-types";
 
-export const findBlogController = (req: Request<{ id: string }>, res: Response<BlogViewModel | {}>) => {
-    const foundBlog = blogsRepository.find(req.params.id);
-    console.log(blogsRepository.find(req.params.id));
-    console.log('Trying to find blog with ID:', req.params.id);
-    if (foundBlog) {
-        res.send(foundBlog);
-    } else {
-        res.sendStatus(404);
+export const findBlogController = async (req: Request<{ id: string }>, res: Response<BlogViewModel | {}>) => {
+    try {
+        const foundBlog = await blogsRepository.findAndMap(req.params.id);
+
+        if (!foundBlog) {
+            return res.status(404).send();
+        }
+
+        res.status(200).json(foundBlog);
+    } catch (error) {
+        res.status(500).json({ error: "Failed to fetch blog." });
     }
-}
-
+};

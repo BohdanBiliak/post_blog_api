@@ -1,15 +1,13 @@
-import {db} from "../../db/db";
-import {PostInputModel} from "../../types/posts-types";
-import {PostViewModel} from "../../types/posts-types";
-import {PostDbType} from "../../db/post-db-type";
-import  {blogsRepository} from "../blogs/blogsRepository";
-import {BlogViewModel} from "../../types/blogs-types";
+import { postCollection } from "../../db/db";
+import { PostInputModel, PostViewModel } from "../../types/posts-types";
+import { PostDbType } from "../../db/post-db-type";
+import { blogsRepository } from "../blogs/blogsRepository";
 
 export const postsRepository = {
-    create(post: PostInputModel) {
-        const blog = blogsRepository.find(post.blogId);
+    async create(post: PostInputModel): Promise<string> {
+        const blog = await blogsRepository.find(post.blogId);
         if (!blog) {
-            throw new Error('Blog not found');
+            throw new Error("Blog not found");
         }
 
         const newPost: PostDbType = {
@@ -21,53 +19,48 @@ export const postsRepository = {
             blogName: blog.name,
         };
 
-        db.posts = [...db.posts, newPost];
-        return newPost.id;
+        await postCollection.insertOne(newPost);
+        return newPost.id; // Zwracamy tylko ID
     },
 
-    find(id: string){
-        return db.posts.find(post => post.id === id);
+    async find(id: string): Promise<PostDbType | null> {
+        return postCollection.findOne({ id });
     },
-    findAndMap(id: string) {
-        const post = this.find(id)!
-        return this.map(post)
-    },
-    getAll() {
-        return db.posts.map(p => this.map(p));
-    },
-    delete(id: string){
-        let foundCourse = db.posts
-        for(let i=0; i<foundCourse.length; i++){
-            if(foundCourse[i].id == id){
-                foundCourse.splice(i,1);
-                return true
-            }
-        }
-        return false
 
+    async findAndMap(id: string): Promise<PostViewModel | null> {
+        const post = await this.find(id);
+        if (!post) return null;
+        return this.map(post);
     },
-    put(post: PostInputModel, id: string) {
-        const foundPost = this.find(id);
-        if (foundPost) {
-            foundPost.title = post.title;
-            foundPost.shortDescription = post.shortDescription;
-            foundPost.content = post.content;
-            foundPost.blogId = post.blogId;
-        }
-        return foundPost || null;
+
+    async getAll(): Promise<PostViewModel[]> {
+        const posts = await postCollection.find().toArray();
+        return posts.map((post) => this.map(post)); // Nie używamy Promise.all
     },
-    map(post: PostDbType){
-        const postForOutput: PostViewModel = {
+
+    async delete(id: string): Promise<boolean> {
+        const result = await postCollection.deleteOne({ id });
+        return result.deletedCount === 1;
+    },
+
+    async put(post: PostInputModel, id: string): Promise<PostDbType | null> {
+        const updatedPost = await postCollection.findOneAndUpdate(
+            { id },
+            { $set: post },
+            { returnDocument: "after" }
+        );
+        // @ts-ignore
+        return updatedPost.value || null;
+    },
+
+    map(post: PostDbType): PostViewModel {
+        return {
             id: post.id,
             title: post.title,
             shortDescription: post.shortDescription,
             content: post.content,
             blogId: post.blogId,
-            blogName: post.blogName
-
-        }
-        return postForOutput;
-    }
-
-
-}
+            blogName: post.blogName,
+        };
+    },
+};

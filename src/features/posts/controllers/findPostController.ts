@@ -1,13 +1,17 @@
-import {Request, Response} from 'express'
-import {PostViewModel} from "../../../types/posts-types";
-import {postsRepository} from '../postsRepository'
-import {blogsRepository} from "../../blogs/blogsRepository";
+import { Request, Response } from "express";
+import { postsRepository } from "../postsRepository";
+import { PostViewModel } from "../../../types/posts-types";
 
-export const findPostController = (req: Request<{id: string}>, res: Response<PostViewModel | {}>) => {
-    const foundCourse = postsRepository.find(req.params.id);
-    if (foundCourse) {
-      return  res.json(foundCourse)
-    }else {
-        return res.status(404).send()
+export const findPostController = async (req: Request<{ id: string }>, res: Response<PostViewModel | {}>) => {
+    try {
+        const foundPost = await postsRepository.findAndMap(req.params.id);
+
+        if (!foundPost) {
+            return res.status(404).send();
+        }
+
+        res.status(200).json(foundPost);
+    } catch (error) {
+        res.status(500).json({ error: "Failed to fetch post." });
     }
-}
+};

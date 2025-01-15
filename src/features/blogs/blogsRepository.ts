@@ -1,58 +1,56 @@
-import {BlogDbType} from "../../db/blog-db-type";
-import {db} from "../../db/db";
-import {BlogInputModel, BlogViewModel} from "../../types/blogs-types";
-
+import { blogsCollection } from "../../db/db";
+import { BlogDbType } from "../../db/blog-db-type";
+import { BlogInputModel, BlogViewModel } from "../../types/blogs-types";
+import { ObjectId } from "mongodb";
 export const blogsRepository = {
-    create(blog: BlogInputModel) {
+    async create(blog: BlogInputModel) {
         const newBlog: BlogDbType = {
             id: new Date().toISOString() + Math.random(),
             name: blog.name,
             description: blog.description,
-            websiteUrl: blog.websiteUrl
+            websiteUrl: blog.websiteUrl,
         };
-        console.log('Created blog:', newBlog);  // Логируем новый блог
-        db.blogs = [...db.blogs, newBlog];
+
+        await blogsCollection.insertOne(newBlog);
         return newBlog.id;
     },
-    find(id:string){
-        return db.blogs.find(i => i.id == id);
+
+    async find(id: string): Promise<BlogDbType | null> {
+        return blogsCollection.findOne({ id });
     },
-    findAndMap(id: string){
-        const blog = this.find(id)!
-        return this.map(blog)
+
+    async findAndMap(id: string): Promise<BlogViewModel | null> {
+        const blog = await this.find(id);
+        if (!blog) return null;
+        return this.map(blog);
     },
-    getAll(){
-        return db.blogs;
+
+    async getAll(): Promise<BlogViewModel[]> {
+        const blogs = await blogsCollection.find().toArray();
+        return blogs.map((blog) => this.map(blog));
     },
-    delete(id: string) {
-        let foundCourse = db.blogs;
-        console.log(`Trying to delete blog with ID: ${id}`); // Логирование ID
-        for (let i = 0; i < foundCourse.length; i++) {
-            if (foundCourse[i].id === id) {
-                foundCourse.splice(i, 1);
-                console.log(`Blog with ID: ${id} deleted`); // Логирование успешного удаления
-                return true;
-            }
-        }
-        console.log(`Blog with ID: ${id} not found`); // Логирование ошибки
-        return false;
+
+    async delete(id: string): Promise<boolean> {
+        const result = await blogsCollection.deleteOne({ id });
+        return result.deletedCount === 1;
     },
-    put(blog:BlogInputModel, id: string){
-        let foundBlog = this.find(id)
-        if(foundBlog){
-            foundBlog.name = blog.name
-            foundBlog.description = blog.description
-            foundBlog.websiteUrl = blog.websiteUrl
-        }
-        return foundBlog;
+
+    async put(blog: BlogInputModel, id: string): Promise<BlogDbType | null> {
+        const updatedBlog = await blogsCollection.findOneAndUpdate(
+            { id },
+            { $set: blog },
+            { returnDocument: "after" }
+        );
+        // @ts-ignore
+        return updatedBlog.value;
     },
-    map(blog: BlogDbType){
-        const blogForOutput: BlogViewModel ={
+
+    map(blog: BlogDbType): BlogViewModel {
+        return {
             id: blog.id,
             description: blog.description,
             websiteUrl: blog.websiteUrl,
             name: blog.name,
-        }
-        return blogForOutput
+        };
     },
-}
+};

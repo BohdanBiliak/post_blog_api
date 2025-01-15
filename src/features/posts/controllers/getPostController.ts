@@ -1,9 +1,11 @@
-import {Request, Response} from 'express'
-import {PostViewModel} from "../../../types/posts-types";
-import {postsRepository} from '../postsRepository'
-import {blogsRepository} from "../../blogs/blogsRepository";
+import { Request, Response } from "express";
+import { postsRepository } from "../postsRepository";
 
-export const getPostsController = (req: Request, res: Response) => {
-    const Blogs = postsRepository.getAll()
-    res.json(Blogs)
-}
+export const getPostsController = async (req: Request, res: Response) => {
+    try {
+        const posts = await postsRepository.getAll();
+        res.status(200).json(posts);
+    } catch (error) {
+        res.status(500).json({ error: "Failed to fetch posts." });
+    }
+};
