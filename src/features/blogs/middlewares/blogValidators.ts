@@ -48,5 +48,6 @@ export const blogValidator = [
     nameValidator,
     descriptionValidator,
     websiteUrlValidator,
+    blogIdValidatorMiddleware,
     InputCheckErrorsMiddleware
 ]
