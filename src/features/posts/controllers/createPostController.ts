@@ -7,10 +7,7 @@ export const createPostController = async (
     res: Response
 ) => {
     try {
-        // Tworzymy nowy post i uzyskujemy jego ID
         const newPostId = await postsRepository.create(req.body);
-
-        // Pobieramy i mapujemy nowo utworzony post
         const newPost = await postsRepository.findAndMap(newPostId);
 
         if (!newPost) {
