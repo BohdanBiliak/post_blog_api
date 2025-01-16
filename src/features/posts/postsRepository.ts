@@ -11,16 +11,17 @@ export const postsRepository = {
         }
 
         const newPost: PostDbType = {
-            id: new Date().toISOString() + Math.random(),
-            title: post.title,
-            content: post.content,
-            shortDescription: post.shortDescription,
             blogId: post.blogId,
             blogName: blog.name,
+            content: post.content,
+            createdAt: new Date().toISOString(),
+            id: new Date().toISOString() + Math.random(),
+            shortDescription: post.shortDescription,
+            title: post.title,
         };
 
         await postCollection.insertOne(newPost);
-        return newPost.id; // Zwracamy tylko ID
+        return newPost.id;
     },
 
     async find(id: string): Promise<PostDbType | null> {
