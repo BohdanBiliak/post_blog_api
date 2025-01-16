@@ -9,7 +9,10 @@ export const blogsRepository = {
             name: blog.name,
             description: blog.description,
             websiteUrl: blog.websiteUrl,
+            createdAt: new Date().toISOString(), // Dodaj pole createdAt
+            isMembership: false,                 // Dodaj pole isMembership
         };
+
 
         await blogsCollection.insertOne(newBlog);
         return newBlog.id;
@@ -48,9 +51,12 @@ export const blogsRepository = {
     map(blog: BlogDbType): BlogViewModel {
         return {
             id: blog.id,
+            name: blog.name,
             description: blog.description,
             websiteUrl: blog.websiteUrl,
-            name: blog.name,
+            createdAt: blog.createdAt, // Dodaj createdAt
+            isMembership: blog.isMembership, // Dodaj isMembership
         };
-    },
+    }
+
 };
