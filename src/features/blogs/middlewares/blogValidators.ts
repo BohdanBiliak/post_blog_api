@@ -3,7 +3,6 @@ import {InputCheckErrorsMiddleware} from '../../../global_middlewares/inputCheck
 import {NextFunction, Response, Request} from "express";
 import {blogsRepository} from "../blogsRepository";
 import {adminMiddleware} from "../../../global_middlewares/admin-middleware";
-
 export const nameValidator =
     body("name")
         .exists().withMessage('name is required')
@@ -25,6 +24,16 @@ export const websiteUrlValidator =
         .trim()
         .isLength({ min: 1, max: 100 }).withMessage('websiteUrl length should be between 1 and 100')
         .isURL().withMessage('websiteUrl is not a valid URL');
+export const blogIdValidatorMiddleware = body("blogId")
+    .isString().withMessage("blogId must be a string")
+    .trim()
+    .custom(async (blogId) => {
+        const blog = await blogsRepository.find(blogId);
+        if (!blog) {
+            throw new Error("no blog with that id");
+        }
+        return true;
+    });
 
 export const findBlogValidator = (req: Request, res: Response, next: NextFunction) => {
     const blog = blogsRepository.find(req.params.id);

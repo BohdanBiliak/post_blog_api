@@ -8,7 +8,7 @@ export const InputCheckErrorsMiddleware = (req: Request, res: Response<OutputErr
         console.log('Validation errors:', errors.array());
         const errorsArray = errors.array({ onlyFirstError: true }) as { path: FieldNamesType; msg: string }[];
         return res.status(400).json({
-            errorsMessages: errorsArray.map(x => ({ field: x.path, message: x.msg }))
+            errorsMessages: errorsArray.map(x => ({ message: x.msg, field: x.path  }))
         });
     }
     next();
