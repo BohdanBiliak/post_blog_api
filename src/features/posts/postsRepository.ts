@@ -56,12 +56,14 @@ export const postsRepository = {
 
     map(post: PostDbType): PostViewModel {
         return {
-            id: post.id,
-            title: post.title,
-            shortDescription: post.shortDescription,
-            content: post.content,
             blogId: post.blogId,
             blogName: post.blogName,
+            content: post.content,
+            createdAt:post.createdAt,
+            id: post.id,
+            shortDescription: post.shortDescription,
+            title: post.title,
+
         };
     },
 };
