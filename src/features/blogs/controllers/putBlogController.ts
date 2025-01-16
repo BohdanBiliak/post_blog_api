@@ -1,19 +1,17 @@
 import { Request, Response } from "express";
 import { blogsRepository } from "../blogsRepository";
-import { BlogInputModel } from "../../../types/blogs-types";
 
-export const putBlogController = async (req: Request<{ id: string }, any, BlogInputModel>, res: Response) => {
+export const putBlogController = async (req: Request<{ id: string }>, res: Response) => {
     try {
-        const updatedBlog = await blogsRepository.put(req.body, req.params.id);
+        const blog = await blogsRepository.find(req.params.id);
 
-        if (!updatedBlog) {
-            return res.status(404).send({ error: "Blog not found" });
+        if (!blog) {
+            return res.status(404).json({ error: "Blog not found" });
         }
+        const updatedBlog = await blogsRepository.put( req.body, req.params.id);
 
-        res.status(204).send();
+        res.status(200).json(updatedBlog);
     } catch (error) {
         res.status(500).json({ error: "Failed to update blog." });
     }
 };
-
-

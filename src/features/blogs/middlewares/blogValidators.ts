@@ -27,9 +27,9 @@ export const websiteUrlValidator =
         .isURL().withMessage('websiteUrl is not a valid URL');
 
 export const findBlogValidator = (req: Request, res: Response, next: NextFunction) => {
-    const blog = blogsRepository.find(req.params.id); // Ищем блог по ID
+    const blog = blogsRepository.find(req.params.id);
     if (!blog) {
-        return res.status(404).send({ error: 'Blog not found' }); // Если не найден, возвращаем 404
+        return res.status(404).send({ error: 'Blog not found' });
     }
     next();
 };
