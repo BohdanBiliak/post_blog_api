@@ -55,7 +55,6 @@ export const updateBlogValidator = [
     nameValidator,
     descriptionValidator,
     websiteUrlValidator,
-    blogIdValidatorMiddleware,
     InputCheckErrorsMiddleware,
 ];
 export const DeleteBlogValidator = [
