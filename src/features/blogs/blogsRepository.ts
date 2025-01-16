@@ -9,11 +9,9 @@ export const blogsRepository = {
             name: blog.name,
             description: blog.description,
             websiteUrl: blog.websiteUrl,
-            createdAt: new Date().toISOString(), // Dodaj pole createdAt
-            isMembership: false,                 // Dodaj pole isMembership
+            createdAt: new Date().toISOString(),
+            isMembership: false,
         };
-
-
         await blogsCollection.insertOne(newBlog);
         return newBlog.id;
     },
@@ -54,8 +52,8 @@ export const blogsRepository = {
             name: blog.name,
             description: blog.description,
             websiteUrl: blog.websiteUrl,
-            createdAt: blog.createdAt, // Dodaj createdAt
-            isMembership: blog.isMembership, // Dodaj isMembership
+            createdAt: blog.createdAt,
+            isMembership: blog.isMembership,
         };
     }
 
