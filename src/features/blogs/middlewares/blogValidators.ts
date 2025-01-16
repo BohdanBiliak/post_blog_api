@@ -3,16 +3,6 @@ import {InputCheckErrorsMiddleware} from '../../../global_middlewares/inputCheck
 import {NextFunction, Response, Request} from "express";
 import {blogsRepository} from "../blogsRepository";
 import {adminMiddleware} from "../../../global_middlewares/admin-middleware";
-export const blogIdValidatorMiddleware = body("blogId")
-    .isString().withMessage("blogId must be a string")
-    .trim()
-    .custom(async (blogId) => {
-        const blog = await blogsRepository.find(blogId);
-        if (!blog) {
-            throw new Error("no blog with that id");
-        }
-        return true;
-    });
 
 export const nameValidator =
     body("name")
@@ -49,6 +39,5 @@ export const blogValidator = [
     nameValidator,
     descriptionValidator,
     websiteUrlValidator,
-    blogIdValidatorMiddleware,
     InputCheckErrorsMiddleware
 ]
