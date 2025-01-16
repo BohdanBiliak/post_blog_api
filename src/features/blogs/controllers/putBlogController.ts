@@ -10,7 +10,7 @@ export const putBlogController = async (req: Request<{ id: string }>, res: Respo
         }
         const updatedBlog = await blogsRepository.put( req.body, req.params.id);
 
-        res.status(200).json(updatedBlog);
+        res.status(204).json(updatedBlog);
     } catch (error) {
         res.status(500).json({ error: "Failed to update blog." });
     }
