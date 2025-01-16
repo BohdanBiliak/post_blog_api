@@ -48,6 +48,18 @@ export const blogValidator = [
     nameValidator,
     descriptionValidator,
     websiteUrlValidator,
-    blogIdValidatorMiddleware,
     InputCheckErrorsMiddleware
 ]
+export const updateBlogValidator = [
+    adminMiddleware,
+    nameValidator,
+    descriptionValidator,
+    websiteUrlValidator,
+    blogIdValidatorMiddleware,
+    InputCheckErrorsMiddleware,
+];
+export const DeleteBlogValidator = [
+    adminMiddleware,
+    blogIdValidatorMiddleware,
+    InputCheckErrorsMiddleware,
+];

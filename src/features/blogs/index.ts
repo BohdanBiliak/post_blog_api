@@ -1,7 +1,7 @@
 import {Router} from "express";
 import {createBlogController} from "./controllers/createBlogController";
 import{getBlogsController} from "./controllers/getBlogController";
-import {findBlogValidator} from "./middlewares/blogValidators";
+import {findBlogValidator, updateBlogValidator} from "./middlewares/blogValidators";
 import {deleteBlogController} from "./controllers/deleteBlogController";
 import {putBlogController} from "./controllers/putBlogController";
 import {blogValidator} from "./middlewares/blogValidators";
@@ -13,4 +13,4 @@ blogsRouter.get("/", getBlogsController);
 blogsRouter.get('/:id',findBlogValidator,  findBlogController)
 blogsRouter.post("/",...blogValidator, createBlogController);
 blogsRouter.delete("/:id",adminMiddleware, findBlogValidator ,deleteBlogController);
-blogsRouter.put('/:id', ...blogValidator,findBlogValidator,  putBlogController)
+blogsRouter.put('/:id', ...updateBlogValidator,findBlogValidator,  putBlogController)
