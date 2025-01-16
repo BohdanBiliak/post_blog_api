@@ -28,14 +28,13 @@ export const blogIdValidatorMiddleware = body("blogId")
     .optional()
     .isString().withMessage("blogId must be a string")
     .trim()
-    .custom(async (blogId) => {
+    .custom(async (blogId, { req }) => {
         const blog = await blogsRepository.find(blogId);
         if (!blog) {
             throw new Error("Blog with the given id does not exist");
         }
         return true;
-    }).withMessage("Invalid blogId")
-    .customSanitizer((value) => value.trim())
+    }).withMessage("Invalid blogId");
 
 
 export const findBlogValidator = (req: Request, res: Response, next: NextFunction) => {
