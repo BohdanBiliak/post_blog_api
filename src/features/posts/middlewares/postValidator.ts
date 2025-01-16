@@ -15,11 +15,13 @@ export const ContentValidatorMiddleware = body("content")
 export const blogIdValidatorMiddleware = body("blogId")
     .isString().withMessage("blogId must be a string")
     .trim()
-    .custom(blogId => {
-        const blog = blogsRepository.find(blogId);
-        return !!blog;
-    }).withMessage("no blog with that id");
-
+    .custom(async (blogId) => {
+        const blog = await blogsRepository.find(blogId); // Sprawdzenie asynchroniczne
+        if (!blog) {
+            throw new Error("no blog with that id");
+        }
+        return true;
+    });
 
 export const TitleValidatorMiddleware = body("title")
     .isString().withMessage("title must be a string")
