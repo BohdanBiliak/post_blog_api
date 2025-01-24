@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
 import { BlogInputModel, BlogViewModel } from "../../../types/blogs-types";
-import { blogsRepository } from "../blogsRepository";
+import {blogsService} from "../domain/products-services";
 
 export const createBlogController = async (
     req: Request<any, any, BlogInputModel>,
     res: Response
 ) => {
     try {
-        const newBlogId = await blogsRepository.create(req.body);
-        const newBlog = await blogsRepository.findAndMap(newBlogId);
+        const newBlogId = await blogsService.create(req.body);
+        const newBlog = await blogsService.findAndMap(newBlogId);
 
         if (!newBlog) {
             res.status(404).json({ error: "Blog not found after creation" });

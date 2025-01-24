@@ -1,17 +1,8 @@
 import { blogsCollection } from "../../db/db";
 import { BlogDbType } from "../../db/blog-db-type";
 import { BlogInputModel, BlogViewModel } from "../../types/blogs-types";
-import { ObjectId } from "mongodb";
 export const blogsRepository = {
-    async create(blog: BlogInputModel) {
-        const newBlog: BlogDbType = {
-            id: new Date().toISOString() + Math.random(),
-            name: blog.name,
-            description: blog.description,
-            websiteUrl: blog.websiteUrl,
-            createdAt: new Date().toISOString(),
-            isMembership: false,
-        };
+    async create(newBlog: BlogDbType) {
         await blogsCollection.insertOne(newBlog);
         return newBlog.id;
     },
