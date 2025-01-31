@@ -1,6 +1,8 @@
-import { blogsCollection } from "../../db/db";
+import { blogsCollection, postCollection } from "../../db/db";
 import { BlogDbType } from "../../db/blog-db-type";
 import { BlogInputModel, BlogViewModel } from "../../types/blogs-types";
+import {PostViewModel} from "../../types/posts-types";
+import {PostDbType} from "../../db/post-db-type";
 export const blogsRepository = {
     async create(newBlog: BlogDbType) {
         await blogsCollection.insertOne(newBlog);
@@ -46,6 +48,61 @@ export const blogsRepository = {
             createdAt: blog.createdAt,
             isMembership: blog.isMembership,
         };
-    }
+    },
+    async getAllPostsForBlog(blogId: string, pageNumber = 1, pageSize = 10, sortBy = "createdAt", sortDirection = "desc"): Promise<{ pagesCount: number, page: number, pageSize: number, totalCount: number, items: PostViewModel[] }> {
+        const totalCount = await postCollection.countDocuments({ blogId });
+
+        const pagesCount = Math.ceil(totalCount / pageSize);
+        const skip = (pageNumber - 1) * pageSize;
+
+        const posts = await postCollection
+            .find({ blogId })
+            .sort({ [sortBy]: sortDirection === "asc" ? 1 : -1 })
+            .skip(skip)
+            .limit(pageSize)
+            .toArray();
+
+        return {
+            pagesCount,
+            page: pageNumber,
+            pageSize,
+            totalCount,
+            items: posts.map((post:any) => ({
+                id: post.id,
+                title: post.title,
+                shortDescription: post.shortDescription,
+                content: post.content,
+                blogId: post.blogId,
+                blogName: post.blogName,
+                createdAt: post.createdAt,
+            })),
+        };
+    },
+    async createPostForBlog(blogId: string, title: string, shortDescription: string, content: string): Promise<PostViewModel | null> {
+        const blog = await blogsCollection.findOne({ id: blogId });
+        if (!blog) return null;
+
+        const newPost: PostDbType = {
+            id: new Date().toISOString() + Math.random(),
+            title,
+            shortDescription,
+            content,
+            blogId,
+            blogName: blog.name,
+            createdAt: new Date().toISOString(),
+        };
+
+        await postCollection.insertOne(newPost);
+
+        return {
+            id: newPost.id,
+            title: newPost.title,
+            shortDescription: newPost.shortDescription,
+            content: newPost.content,
+            blogId: newPost.blogId,
+            blogName: newPost.blogName,
+            createdAt: newPost.createdAt,
+        };
+    },
 
 };

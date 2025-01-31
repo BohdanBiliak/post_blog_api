@@ -1,6 +1,9 @@
 import {blogsRepository} from "../blogsRepository";
 import {BlogInputModel, BlogViewModel} from "../../../types/blogs-types";
 import {BlogDbType} from "../../../db/blog-db-type";
+import {PostViewModel} from "../../../types/posts-types";
+import {blogsCollection, postCollection} from "../../../db/db";
+import {PostDbType} from "../../../db/post-db-type";
 
 export const blogsService = {
     async create(blog: BlogInputModel) {
@@ -37,6 +40,13 @@ export const blogsService = {
 
     map(blog: BlogDbType): BlogViewModel {
         return blogsRepository.map(blog);
-    }
+    },
+    async getAllPostsForBlog(blogId: string, pageNumber = 1, pageSize = 10, sortBy = "createdAt", sortDirection = "desc"): Promise<{ pagesCount: number, page: number, pageSize: number, totalCount: number, items: PostViewModel[] }> {
+        return blogsRepository.getAllPostsForBlog(blogId, pageNumber, pageSize, sortBy, sortDirection);
+
+    },
+    async createPostForBlog(blogId: string, title: string, shortDescription: string, content: string): Promise<PostViewModel | null> {
+       return blogsRepository.createPostForBlog(blogId, title, shortDescription, content);
+    },
 
 };
