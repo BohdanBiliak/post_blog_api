@@ -8,7 +8,10 @@ export const getAllPostsForBlogController = async (req: Request, res: Response) 
         const pageSize = parseInt(req.query.pageSize as string) || 10;
         const sortBy = req.query.sortBy as string || "createdAt";
         const sortDirection = req.query.sortDirection as string || "desc";
-
+        const blogExists = await blogsService.find(blogId);
+        if (!blogExists) {
+            return res.status(404).json({ error: "Blog not found" });
+        }
         const posts = await blogsService.getAllPostsForBlog(blogId, pageNumber, pageSize, sortBy, sortDirection);
 
         res.status(200).json(posts);
