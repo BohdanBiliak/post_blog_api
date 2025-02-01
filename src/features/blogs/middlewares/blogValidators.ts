@@ -45,6 +45,7 @@ export const findBlogValidator = (req: Request, res: Response, next: NextFunctio
     next();
 };
 
+
 export const blogValidator = [
     adminMiddleware,
     nameValidator,
@@ -57,11 +58,6 @@ export const updateBlogValidator = [
     nameValidator,
     descriptionValidator,
     websiteUrlValidator,
-    blogIdValidatorMiddleware,
-    InputCheckErrorsMiddleware,
-];
-export const DeleteBlogValidator = [
-    adminMiddleware,
     blogIdValidatorMiddleware,
     InputCheckErrorsMiddleware,
 ];

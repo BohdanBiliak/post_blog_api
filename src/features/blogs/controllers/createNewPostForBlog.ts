@@ -6,14 +6,18 @@ export const createPostForBlogController = async (req: Request, res: Response) =
         const { blogId } = req.params;
         const { title, shortDescription, content } = req.body;
 
-        if (!title || !shortDescription || !content) {
-            return res.status(400).json({
-                errorsMessages: [
-                    { message: "Title is required", field: "title" },
-                    { message: "Short description is required", field: "shortDescription" },
-                    { message: "Content is required", field: "content" },
-                ],
-            });
+        let errors: { message: string, field: string }[] = [];
+
+        if (!title) {
+            errors.push({ message: "Title is required", field: "title" });
+        }
+
+        if (!shortDescription) {
+            errors.push({ message: "Short description is required", field: "shortDescription" });
+        }
+
+        if (errors.length > 0) {
+            return res.status(400).json({ errorsMessages: errors });
         }
 
         const newPost = await blogsRepository.createPostForBlog(blogId, title, shortDescription, content);
