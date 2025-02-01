@@ -8,21 +8,19 @@ export const createPostForBlogController = async (req: Request, res: Response) =
 
         let errors: { message: string, field: string }[] = [];
 
-        // Validate title
-        if (!title) {
+        if (!title || title.trim().length === 0) {
             errors.push({ message: "Title is required", field: "title" });
         } else if (title.length > 30) {
             errors.push({ message: "Title must be at most 30 characters long", field: "title" });
         }
 
-        // Validate shortDescription
-        if (!shortDescription) {
+        if (!shortDescription || shortDescription.trim().length === 0) {
             errors.push({ message: "Short description is required", field: "shortDescription" });
         } else if (shortDescription.length > 100) {
             errors.push({ message: "Short description must be at most 100 characters long", field: "shortDescription" });
         }
 
-        if (!content) {
+        if (!content || content.trim().length === 0) {
             errors.push({ message: "Content is required", field: "content" });
         } else if (content.length > 1000) {
             errors.push({ message: "Content must be at most 1000 characters long", field: "content" });
