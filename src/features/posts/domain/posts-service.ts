@@ -37,7 +37,8 @@ export const postsService = {
     },
 
     async put(post: PostInputModel, id: string): Promise<boolean> {
-        return await blogsRepository.delete(id)
+        const updatedPost = await postsRepository.put(post, id);
+        return updatedPost !== null;
     },
 
     map(post: PostDbType): PostViewModel {
