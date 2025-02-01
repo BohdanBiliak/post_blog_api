@@ -18,7 +18,10 @@ export const createPostForBlogController = async (req: Request, res: Response) =
         // Validate shortDescription
         if (!shortDescription) {
             errors.push({ message: "Short description is required", field: "shortDescription" });
+        } else if (shortDescription.length > 100) {
+            errors.push({ message: "Short description must be at most 100 characters long", field: "shortDescription" });
         }
+
         if (!content) {
             errors.push({ message: "Content is required", field: "content" });
         } else if (content.length > 1000) {
