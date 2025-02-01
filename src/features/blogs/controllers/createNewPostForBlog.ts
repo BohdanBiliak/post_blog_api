@@ -19,6 +19,13 @@ export const createPostForBlogController = async (req: Request, res: Response) =
         if (!shortDescription) {
             errors.push({ message: "Short description is required", field: "shortDescription" });
         }
+        if (!content) {
+            errors.push({ message: "Content is required", field: "content" });
+        } else if (content.length > 1000) {
+            errors.push({ message: "Content must be at most 1000 characters long", field: "content" });
+        }
+
+
 
         if (errors.length > 0) {
             return res.status(400).json({ errorsMessages: errors });
