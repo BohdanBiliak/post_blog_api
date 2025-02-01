@@ -104,5 +104,10 @@ export const blogsRepository = {
             createdAt: newPost.createdAt,
         };
     },
+    async countBlogs(): Promise<number> {
+        return blogsCollection.countDocuments();
+    }
+
+
 
 };
