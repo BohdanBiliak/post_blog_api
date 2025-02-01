@@ -26,9 +26,10 @@ export const blogsService = {
         return blogsRepository.findAndMap(id);
     },
 
-    async getAll(): Promise<BlogViewModel[]> {
-        return  blogsRepository.getAll();
+    async getAll(pageNumber = 1, pageSize = 10, sortBy = "createdAt", sortDirection = "desc") {
+        return blogsRepository.getAll(pageNumber, pageSize, sortBy, sortDirection);
     },
+
 
     async delete(id: string): Promise<boolean> {
         return blogsRepository.delete(id);
