@@ -8,10 +8,14 @@ export const createPostForBlogController = async (req: Request, res: Response) =
 
         let errors: { message: string, field: string }[] = [];
 
+        // Validate title
         if (!title) {
             errors.push({ message: "Title is required", field: "title" });
+        } else if (title.length > 30) {
+            errors.push({ message: "Title must be at most 30 characters long", field: "title" });
         }
 
+        // Validate shortDescription
         if (!shortDescription) {
             errors.push({ message: "Short description is required", field: "shortDescription" });
         }
