@@ -20,7 +20,7 @@ export const blogsRepository = {
     },
 
     async getAll(pageNumber = 1, pageSize = 10, sortBy = "createdAt", sortDirection = "desc") {
-        const totalCount = await blogsCollection.countDocuments();
+        const totalCount = await blogsCollection.countDocuments({});
         const pagesCount = Math.ceil(totalCount / pageSize);
         const skip = (pageNumber - 1) * pageSize;
 
