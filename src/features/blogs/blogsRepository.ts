@@ -29,7 +29,8 @@ export const blogsRepository = {
         sortDirection = "desc",
         searchNameTerm: string | null = null
     ) {
-        const filter = searchNameTerm ? { name: { $regex: `^${searchNameTerm}`, $options: "i" } } : {};
+        const filter = searchNameTerm ? { name: { $regex: searchNameTerm, $options: "i" } } : {};
+
 
         const totalCount = await blogsCollection.countDocuments(filter);
         const pagesCount = totalCount > 0 ? Math.ceil(totalCount / pageSize) : 1;
