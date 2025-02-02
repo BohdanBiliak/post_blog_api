@@ -28,9 +28,10 @@ export const postsService = {
     async findAndMap(id: string): Promise<PostViewModel | null> {
         return postsRepository.findAndMap(id )
     },
-    async getAll(): Promise<PostViewModel[]> {
-      return postsRepository.getAll()
+    async getAll(pageNumber = 1, pageSize = 10, sortBy = "createdAt", sortDirection = "desc") {
+        return postsRepository.getAll(pageNumber, pageSize, sortBy, sortDirection);
     },
+
 
     async delete(id: string): Promise<boolean> {
         return postsRepository.delete(id)

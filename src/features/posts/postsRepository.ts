@@ -34,10 +34,28 @@ export const postsRepository = {
         return this.map(post);
     },
 
-    async getAll(): Promise<PostViewModel[]> {
-        const posts = await postCollection.find().toArray();
-        return posts.map((post) => this.map(post)); // Nie używamy Promise.all
+    async getAll(pageNumber = 1, pageSize = 10, sortBy = "createdAt", sortDirection = "desc") {
+        const totalCount = await postCollection.countDocuments();
+        const pagesCount = Math.ceil(totalCount / pageSize);
+        const skip = (pageNumber - 1) * pageSize;
+
+        const posts = await postCollection
+            .find()
+            .sort({ [sortBy]: sortDirection === "asc" ? 1 : -1 })
+            .skip(skip)
+            .limit(pageSize)
+            .toArray();
+
+        return {
+            pagesCount,
+            page: pageNumber,
+            pageSize,
+            totalCount,
+            items: posts.map(post => this.map(post))
+        };
     },
+
+
 
     async delete(id: string): Promise<boolean> {
         const result = await postCollection.deleteOne({ id });
