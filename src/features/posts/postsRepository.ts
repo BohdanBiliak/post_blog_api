@@ -35,7 +35,7 @@ export const postsRepository = {
     },
 
     async getAll(pageNumber = 1, pageSize = 10, sortBy = "createdAt", sortDirection = "desc") {
-        const totalCount = await postCollection.countDocuments();
+        const totalCount = await postCollection.countDocuments({});
         const pagesCount = Math.ceil(totalCount / pageSize);
         const skip = (pageNumber - 1) * pageSize;
 

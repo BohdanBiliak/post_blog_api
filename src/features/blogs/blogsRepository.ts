@@ -10,7 +10,7 @@ export const blogsRepository = {
     },
 
     async find(id: string): Promise<BlogDbType | null> {
-        return blogsCollection.findOne({ id });
+        return blogsCollection.findOne({ id:id });
     },
 
     async findAndMap(id: string): Promise<BlogViewModel | null> {
