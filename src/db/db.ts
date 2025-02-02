@@ -36,13 +36,8 @@ export const db: DBtype = {
     blogs: [],
     posts: []
 }
-export const setDB = (dataset?: Partial<ReadonlyDBtype>) => {
-    if (!dataset) {
-        db.blogs = [];
-        db.posts = [];
-    } else {
-        db.blogs = dataset.blogs ? [...dataset.blogs] : [];
-        db.posts = dataset.posts ? [...dataset.posts] : [];
-    }
+export const setDB = async (dataset?: Partial<ReadonlyDBtype>) => {
+    await blogsCollection.deleteMany({});
+    await postCollection.deleteMany({});
     console.log("DB после setDB:", db);
 };
