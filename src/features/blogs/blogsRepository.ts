@@ -3,14 +3,17 @@ import { BlogDbType } from "../../db/blog-db-type";
 import { BlogInputModel, BlogViewModel } from "../../types/blogs-types";
 import {PostViewModel} from "../../types/posts-types";
 import {PostDbType} from "../../db/post-db-type";
+import { ObjectId } from "mongodb";
 export const blogsRepository = {
     async create(newBlog: BlogDbType) {
-        await blogsCollection.insertOne(newBlog);
+        await blogsCollection.insertOne(newBlog)
         return newBlog.id;
+
+
     },
 
     async find(id: string): Promise<BlogDbType | null> {
-        return blogsCollection.findOne({ id:id });
+        return blogsCollection.findOne({ id });
     },
 
     async findAndMap(id: string): Promise<BlogViewModel | null> {
@@ -31,6 +34,8 @@ export const blogsRepository = {
         const totalCount = await blogsCollection.countDocuments(filter);
         const pagesCount = Math.ceil(totalCount / pageSize);
         const skip = (pageNumber - 1) * pageSize;
+        console.log("🔍 Total blog count:", totalCount);
+        console.log("🔍 Filter used:", JSON.stringify(filter));
 
         const blogs = await blogsCollection
             .find(filter)
