@@ -26,8 +26,8 @@ export const blogsService = {
         return blogsRepository.findAndMap(id);
     },
 
-    async getAll(pageNumber = 1, pageSize = 10, sortBy = "createdAt", sortDirection = "desc") {
-        return blogsRepository.getAll(pageNumber, pageSize, sortBy, sortDirection);
+    async getAll(pageNumber = 1, pageSize = 10, sortBy = "createdAt", sortDirection = "desc", searchNameTerm: string | null = null) {
+        return blogsRepository.getAll(pageNumber, pageSize, sortBy, sortDirection,searchNameTerm);
     },
 
 

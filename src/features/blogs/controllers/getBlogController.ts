@@ -9,6 +9,6 @@ export const getBlogsController = async (req: Request, res: Response) => {
     const sortDirection = req.query.sortDirection === "asc" ? "asc" : "desc";
     const searchNameTerm = req.query.searchNameTerm as string || null; // ✅ Support filtering
 
-    const blogs = await blogsService.getAll(pageNumber, pageSize, sortBy, sortDirection);
+    const blogs = await blogsService.getAll(pageNumber, pageSize, sortBy, sortDirection,searchNameTerm);
     res.status(200).json(blogs);
 };
