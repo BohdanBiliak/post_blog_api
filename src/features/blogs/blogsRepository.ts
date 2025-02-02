@@ -31,12 +31,13 @@ export const blogsRepository = {
     ) {
         const filter = searchNameTerm ? { name: { $regex: searchNameTerm, $options: "i" } } : {};
 
-
         const totalCount = await blogsCollection.countDocuments(filter);
         const pagesCount = totalCount > 0 ? Math.ceil(totalCount / pageSize) : 1;
         const skip = (pageNumber - 1) * pageSize;
-        console.log("🔍 Total blog count:", totalCount);
-        console.log("🔍 Filter used:", JSON.stringify(filter));
+
+        console.log("🔍 searchNameTerm:", searchNameTerm);
+        console.log("🔍 Filtr wyszukiwania:", JSON.stringify(filter));
+        console.log("🔍 TotalCount przed pobraniem blogów:", totalCount);
 
         const blogs = await blogsCollection
             .find(filter)
@@ -44,6 +45,8 @@ export const blogsRepository = {
             .skip(skip)
             .limit(pageSize)
             .toArray();
+
+        console.log("🔍 Liczba blogów w odpowiedzi:", blogs.length);
 
         return {
             pagesCount,
@@ -53,6 +56,7 @@ export const blogsRepository = {
             items: blogs.map(blog => this.map(blog))
         };
     },
+
 
     async delete(id: string): Promise<boolean> {
         const result = await blogsCollection.deleteOne({ id });
