@@ -19,13 +19,21 @@ export const blogsRepository = {
         return this.map(blog);
     },
 
-    async getAll(pageNumber = 1, pageSize = 10, sortBy = "createdAt", sortDirection = "desc") {
-        const totalCount = await blogsCollection.countDocuments({});
+    async getAll(
+        pageNumber = 1,
+        pageSize = 10,
+        sortBy = "createdAt",
+        sortDirection = "desc",
+        searchNameTerm: string | null = null
+    ) {
+        const filter = searchNameTerm ? { name: { $regex: `^${searchNameTerm}`, $options: "i" } } : {};
+
+        const totalCount = await blogsCollection.countDocuments(filter);
         const pagesCount = Math.ceil(totalCount / pageSize);
         const skip = (pageNumber - 1) * pageSize;
 
         const blogs = await blogsCollection
-            .find()
+            .find(filter)
             .sort({ [sortBy]: sortDirection === "asc" ? 1 : -1 })
             .skip(skip)
             .limit(pageSize)
@@ -39,6 +47,7 @@ export const blogsRepository = {
             items: blogs.map(blog => this.map(blog))
         };
     },
+
     async delete(id: string): Promise<boolean> {
         const result = await blogsCollection.deleteOne({ id });
         return result.deletedCount === 1;
