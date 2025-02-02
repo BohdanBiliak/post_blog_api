@@ -4,12 +4,11 @@ import {BlogDbType} from "../../../db/blog-db-type";
 import {PostViewModel} from "../../../types/posts-types";
 import {blogsCollection, postCollection} from "../../../db/db";
 import {PostDbType} from "../../../db/post-db-type";
-import {ObjectId} from "mongodb";
 
 export const blogsService = {
     async create(blog: BlogInputModel) {
         const newBlog: BlogDbType = {
-            id: new ObjectId().toString(),
+            id: new Date().toISOString() + Math.random(),
             name: blog.name,
             description: blog.description,
             websiteUrl: blog.websiteUrl,

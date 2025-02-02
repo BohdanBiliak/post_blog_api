@@ -32,7 +32,7 @@ export const blogsRepository = {
         const filter = searchNameTerm ? { name: { $regex: `^${searchNameTerm}`, $options: "i" } } : {};
 
         const totalCount = await blogsCollection.countDocuments(filter);
-        const pagesCount = Math.ceil(totalCount / pageSize);
+        const pagesCount = totalCount > 0 ? Math.ceil(totalCount / pageSize) : 1;
         const skip = (pageNumber - 1) * pageSize;
         console.log("🔍 Total blog count:", totalCount);
         console.log("🔍 Filter used:", JSON.stringify(filter));
