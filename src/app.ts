@@ -4,6 +4,7 @@ import {SETTINGS} from './settings'
 import {blogsRouter} from './features/blogs'
 import {testingRouter} from './features/testing'
 import {postsRouter} from './features/posts'
+import {userRouter} from "./features/user";
 
 export const app = express()
 app.use(express.json())
@@ -16,3 +17,4 @@ app.get('/', (req, res) => {
 app.use(SETTINGS.PATH.BLOGS, blogsRouter)
 app.use(SETTINGS.PATH.POSTS, postsRouter)
 app.use(SETTINGS.PATH.TESTING, testingRouter)
+app.use(SETTINGS.PATH.USERS, userRouter)
