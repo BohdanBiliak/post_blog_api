@@ -65,15 +65,17 @@ export const userRepository = {
 
         // 🔍 Poprawione wyszukiwanie loginów (ignoruje wielkość liter i akceptuje różne warianty)
         if (searchLoginTerm) {
-            const searchRegex = new RegExp(`.*${searchLoginTerm}.*|usr|use|user`, "i");
+            const searchRegex = new RegExp(searchLoginTerm.split("").join(".*"), "i");
             filter.login = { $regex: searchRegex };
         }
 
+
         // 🔍 Poprawione wyszukiwanie emaili (również szerzej dopasowuje)
         if (searchEmailTerm) {
-            const emailRegex = new RegExp(`.*${searchEmailTerm}.*`, "i");
-            filter.email = { $regex: emailRegex };
+            const searchEmailRegex = new RegExp(searchEmailTerm.split("").join(".*"), "i");
+            filter.email = { $regex: searchEmailRegex };
         }
+
 
         console.log("🔍 MongoDB FILTER:", JSON.stringify(filter, null, 2));
 
