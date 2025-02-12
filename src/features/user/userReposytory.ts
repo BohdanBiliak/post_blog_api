@@ -63,7 +63,7 @@ export const userRepository = {
                           pageSize,
                           searchLoginTerm,
                           searchEmailTerm
-                      }: GetUsersQueryParams): Promise<{ totalCount: number; items: UserViewModel[] }> {
+                      }: GetUsersQueryParams): Promise<{ pagesCount: number; page: number; pageSize: number; totalCount: number; items: UserViewModel[] }> {
         const filter: any = {};
 
         if (searchLoginTerm) {
@@ -74,6 +74,7 @@ export const userRepository = {
         }
 
         const totalCount = await userCollection.countDocuments(filter);
+        const pagesCount = Math.ceil(totalCount / pageSize);  // ✅ Dodajemy obliczanie liczby stron
 
         const users = await userCollection
             .find(filter)
@@ -83,7 +84,10 @@ export const userRepository = {
             .toArray();
 
         return {
-            totalCount,
+            pagesCount,  // ✅ Dodajemy licznik stron
+            page: pageNumber,  // ✅ Aktualna strona
+            pageSize,  // ✅ Rozmiar strony
+            totalCount,  // Całkowita liczba użytkowników
             items: users.map(user => ({
                 id: user.id,
                 login: user.login,
@@ -92,6 +96,7 @@ export const userRepository = {
             }))
         };
     },
+
 
     async delete(id: string): Promise<boolean> {
         const user = await userCollection.findOne({ id });
