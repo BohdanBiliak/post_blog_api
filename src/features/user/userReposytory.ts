@@ -63,18 +63,16 @@ export const userRepository = {
                       }: GetUsersQueryParams): Promise<{ pagesCount: number; page: number; pageSize: number; totalCount: number; items: UserViewModel[] }> {
         const filter: any = {};
 
-        // 🔍 Poprawione wyszukiwanie loginów (ignoruje wielkość liter i akceptuje różne warianty)
         if (searchLoginTerm) {
             const searchRegex = new RegExp(searchLoginTerm.split("").join(".*"), "i");
             filter.login = { $regex: searchRegex };
         }
 
-
-        // 🔍 Poprawione wyszukiwanie emaili (również szerzej dopasowuje)
         if (searchEmailTerm) {
             const searchEmailRegex = new RegExp(searchEmailTerm.split("").join(".*"), "i");
             filter.email = { $regex: searchEmailRegex };
         }
+
 
 
         console.log("🔍 MongoDB FILTER:", JSON.stringify(filter, null, 2));
