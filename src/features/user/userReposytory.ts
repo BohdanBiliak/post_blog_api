@@ -64,16 +64,23 @@ export const userRepository = {
 
         const filter: any = {};
 
-        // **🔍 Fuzzy matching for login**
+        const orConditions = [];
+
+        // **🔍 Fuzzy Matching for Login (if provided)**
         if (searchLoginTerm) {
             const searchRegex = new RegExp(searchLoginTerm.split("").join(".*"), "i");
-            filter.login = { $regex: searchRegex };
+            orConditions.push({ login: { $regex: searchRegex } });
         }
 
-        // **🔍 Fuzzy matching for email**
+        // **🔍 Fuzzy Matching for Email (if provided)**
         if (searchEmailTerm) {
             const searchEmailRegex = new RegExp(searchEmailTerm.split("").join(".*"), "i");
-            filter.email = { $regex: searchEmailRegex };
+            orConditions.push({ email: { $regex: searchEmailRegex } });
+        }
+
+        // Apply `$or` only if there are conditions
+        if (orConditions.length > 0) {
+            filter.$or = orConditions;
         }
 
         console.log("🔍 FILTER:", JSON.stringify(filter, null, 2)); // Debug
@@ -104,6 +111,7 @@ export const userRepository = {
             }))
         };
     }
+
     ,
 
     async delete(id: string): Promise<boolean> {
