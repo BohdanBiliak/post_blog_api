@@ -61,37 +61,38 @@ export const userRepository = {
                           searchLoginTerm,
                           searchEmailTerm
                       }: GetUsersQueryParams): Promise<{ pagesCount: number; page: number; pageSize: number; totalCount: number; items: UserViewModel[] }> {
+
         const filter: any = {};
 
+        // **🔍 Fuzzy matching for login**
         if (searchLoginTerm) {
             const searchRegex = new RegExp(searchLoginTerm.split("").join(".*"), "i");
             filter.login = { $regex: searchRegex };
         }
 
+        // **🔍 Fuzzy matching for email**
         if (searchEmailTerm) {
             const searchEmailRegex = new RegExp(searchEmailTerm.split("").join(".*"), "i");
             filter.email = { $regex: searchEmailRegex };
         }
 
-
-
-        console.log("🔍 MongoDB FILTER:", JSON.stringify(filter, null, 2));
+        console.log("🔍 FILTER:", JSON.stringify(filter, null, 2)); // Debug
 
         const totalCount = await userCollection.countDocuments(filter);
-        console.log("🔍 TOTAL USERS FOUND:", totalCount);
+        const pagesCount = Math.ceil(totalCount / pageSize);
 
         const users = await userCollection
             .find(filter)
-            .collation({ locale: "en", strength: 2 })  // 🔥 Ignorowanie wielkości liter
             .sort({ [sortBy]: sortDirection === "asc" ? 1 : -1 })
             .skip((pageNumber - 1) * pageSize)
             .limit(pageSize)
             .toArray();
 
-        console.log("🔍 USERS RETURNED:", users.map(user => user.login));
+        console.log("🔍 USERS FOUND:", users.map(u => u.login)); // Debugging users found
+        console.log("🔍 EMAILS FOUND:", users.map(u => u.email)); // Debugging emails found
 
         return {
-            pagesCount: Math.ceil(totalCount / pageSize),
+            pagesCount,
             page: pageNumber,
             pageSize,
             totalCount,
@@ -102,7 +103,8 @@ export const userRepository = {
                 createdAt: user.createdAt
             }))
         };
-    },
+    }
+    ,
 
     async delete(id: string): Promise<boolean> {
         const user = await userCollection.findOne({ id });
