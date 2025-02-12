@@ -74,7 +74,7 @@ export const userRepository = {
             filter.email = { $regex: new RegExp(searchEmailTerm, "i") };
         }
 
-        console.log("🔍 FILTR:", JSON.stringify(filter, null, 2));  // Debugowanie filtrów
+        console.log("🔍 FILTR MongoDB:", JSON.stringify(filter, null, 2));  // Debugowanie filtrów
 
         const totalCount = await userCollection.countDocuments(filter);
         const pagesCount = Math.ceil(totalCount / pageSize);
