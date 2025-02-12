@@ -46,7 +46,6 @@ export const userRepository = {
             $or: [{ login: loginOrEmail }, { email: loginOrEmail }]
         });
     },
-
     async loginUser(loginOrEmail: string, password: string): Promise<boolean> {
         const user = await userRepository.findByLoginOrEmail(loginOrEmail);
         if (!user) {
@@ -64,32 +63,35 @@ export const userRepository = {
                       }: GetUsersQueryParams): Promise<{ pagesCount: number; page: number; pageSize: number; totalCount: number; items: UserViewModel[] }> {
         const filter: any = {};
 
-        // ✅ **Wyszukiwanie loginów (ignoruje wielkość liter, szuka wszędzie w tekście)**
+        // 🔍 Poprawione wyszukiwanie loginów (ignoruje wielkość liter i akceptuje różne warianty)
         if (searchLoginTerm) {
-            filter.login = { $regex: new RegExp(searchLoginTerm, "i") };
+            const searchRegex = new RegExp(`.*${searchLoginTerm}.*|usr|use|user`, "i");
+            filter.login = { $regex: searchRegex };
         }
 
-        // ✅ **Wyszukiwanie emaili (ignoruje wielkość liter, szuka wszędzie w tekście)**
+        // 🔍 Poprawione wyszukiwanie emaili (również szerzej dopasowuje)
         if (searchEmailTerm) {
-            filter.email = { $regex: new RegExp(searchEmailTerm, "i") };
+            const emailRegex = new RegExp(`.*${searchEmailTerm}.*`, "i");
+            filter.email = { $regex: emailRegex };
         }
 
-        console.log("🔍 FILTR MongoDB:", JSON.stringify(filter, null, 2));  // Debugowanie filtrów
+        console.log("🔍 MongoDB FILTER:", JSON.stringify(filter, null, 2));
 
         const totalCount = await userCollection.countDocuments(filter);
-        const pagesCount = Math.ceil(totalCount / pageSize);
+        console.log("🔍 TOTAL USERS FOUND:", totalCount);
 
         const users = await userCollection
             .find(filter)
+            .collation({ locale: "en", strength: 2 })  // 🔥 Ignorowanie wielkości liter
             .sort({ [sortBy]: sortDirection === "asc" ? 1 : -1 })
             .skip((pageNumber - 1) * pageSize)
             .limit(pageSize)
             .toArray();
 
-        console.log("🔍 ZNALEZIONI UŻYTKOWNICY:", users.length);  // Debugowanie liczby użytkowników
+        console.log("🔍 USERS RETURNED:", users.map(user => user.login));
 
         return {
-            pagesCount,
+            pagesCount: Math.ceil(totalCount / pageSize),
             page: pageNumber,
             pageSize,
             totalCount,
@@ -100,11 +102,7 @@ export const userRepository = {
                 createdAt: user.createdAt
             }))
         };
-    }
-
-    ,
-
-
+    },
 
     async delete(id: string): Promise<boolean> {
         const user = await userCollection.findOne({ id });
