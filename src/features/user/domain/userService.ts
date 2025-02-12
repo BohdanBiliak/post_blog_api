@@ -2,6 +2,7 @@ import {userRepository} from "../userReposytory";
 import {hashPassword} from "./passwordService";
 import {UserDBModel} from "../../../db/user-db-types";
 import {UserViewModel} from "../../../types/user-types";
+import {userCollection} from "../../../db/db";
 
 
 export const userService = {
@@ -28,16 +29,29 @@ export const userService = {
             createdAt: new Date().toISOString()
         };
 
-        return await userRepository.create(newUser);
+        await userRepository.create(newUser);
+
+        console.log("New user created:", newUser);  // <-- SPRAWDŹ, CZY NOWY UŻYTKOWNIK ZOSTAŁ ZAPISANY
+
+        return newUser.id;
     },
 
     async find(id: string): Promise<UserViewModel | null> {
         return userRepository.findByLoginOrEmail(id);
     },
+    async findById(id: string): Promise<UserDBModel | null> {
+        return await userCollection.findOne({ id });
+    },
 
     async findAndMap(id: string): Promise<UserViewModel | null> {
-        return userRepository.findByLoginOrEmail(id);
-    },
+        const user = await userRepository.findByLoginOrEmail(id);
+        console.log("findAndMap() result:", user);  // <-- SPRAWDŹ, CZY POBIERA UŻYTKOWNIKA
+
+        if (!user) return null;
+
+        return this.map(user);
+    }
+    ,
 
     async getAll(
         pageNumber: number = 1,

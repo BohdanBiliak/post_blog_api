@@ -14,7 +14,15 @@ interface GetUsersQueryParams {
 
 export const userRepository = {
     async create(user: UserDBModel): Promise<string> {
-        await userCollection.insertOne(user);
+        const result = await userCollection.insertOne(user);
+
+        console.log("Inserted user:", user);  // <-- Sprawdź, czy dane są poprawne
+        console.log("Inserted result ID:", result.insertedId);
+
+        if (!result.insertedId) {
+            throw new Error("User creation failed");
+        }
+
         return user.id;
     },
 

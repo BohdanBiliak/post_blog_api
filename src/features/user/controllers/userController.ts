@@ -6,17 +6,28 @@ export const userController = {
     async create(req: Request, res: Response) {
         const { login, email, password } = req.body;
         const errors = validateNewUser(login, email, password);
+
         if (errors) {
             return res.status(400).json({ errorsMessages: errors });
         }
+
         const result = await userService.create(login, email, password);
+
         if (typeof result !== "string") {
             return res.status(400).json({ errorsMessages: result.errors });
         }
+
+        // Pobranie użytkownika po ID (upewniamy się, że zwraca poprawne dane)
         const newUser = await userService.findAndMap(result);
 
+        if (!newUser) {
+            console.error("ERROR: Created user could not be found in DB!", result);
+            return res.status(500).json({ message: "Internal Server Error: User was created but not found" });
+        }
+
         res.status(201).json(newUser);
-    },
+    }
+    ,
 
     async login(req: Request, res: Response) {
         const { loginOrEmail, password } = req.body;
