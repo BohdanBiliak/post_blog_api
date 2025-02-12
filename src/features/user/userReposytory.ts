@@ -2,6 +2,7 @@ import {userCollection} from "../../db/db";
 import {UserDBModel} from "../../db/user-db-types";
 import {comparePassword} from "./domain/passwordService";
 import {UserViewModel} from "../../types/user-types";
+import { ObjectId } from "mongodb";
 interface GetUsersQueryParams {
     sortBy: string;
     sortDirection: "asc" | "desc";
@@ -10,7 +11,6 @@ interface GetUsersQueryParams {
     searchLoginTerm?: string;
     searchEmailTerm?: string;
 }
-
 
 export const userRepository = {
     async create(user: UserDBModel): Promise<string> {
@@ -25,6 +25,14 @@ export const userRepository = {
 
         return user.id;
     },
+
+        async findById(id: string): Promise<UserDBModel | null> {
+            console.log("🔍 SZUKAM UŻYTKOWNIKA O ID:", id);  // <-- SPRAWDŹ, czy ID się zgadza
+            return await userCollection.findOne({ id });  // <-- Szukamy po ID użytkownika, nie po `_id`
+
+
+    },
+
 
     async findByEmail(email: string): Promise<UserDBModel | null> {
         return await userCollection.findOne({ email });

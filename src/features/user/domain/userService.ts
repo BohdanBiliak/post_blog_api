@@ -39,12 +39,8 @@ export const userService = {
     async find(id: string): Promise<UserViewModel | null> {
         return userRepository.findByLoginOrEmail(id);
     },
-    async findById(id: string): Promise<UserDBModel | null> {
-        return await userCollection.findOne({ id });
-    },
-
     async findAndMap(id: string): Promise<UserViewModel | null> {
-        const user = await userRepository.findByLoginOrEmail(id);
+        const user = await userRepository.findById(id);
         console.log("findAndMap() result:", user);  // <-- SPRAWDŹ, CZY POBIERA UŻYTKOWNIKA
 
         if (!user) return null;
