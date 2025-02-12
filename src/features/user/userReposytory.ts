@@ -55,7 +55,6 @@ export const userRepository = {
         }
         return comparePassword(password, user.passwordHash);
     },
-
     async getAllUsers({
                           sortBy,
                           sortDirection,
@@ -66,28 +65,35 @@ export const userRepository = {
                       }: GetUsersQueryParams): Promise<{ pagesCount: number; page: number; pageSize: number; totalCount: number; items: UserViewModel[] }> {
         const filter: any = {};
 
+        // 🔍 Poprawione wyszukiwanie loginów (ignoruje wielkość liter)
         if (searchLoginTerm) {
             filter.login = { $regex: searchLoginTerm, $options: "i" };
         }
+
+        // 🔍 Poprawione wyszukiwanie e-maili (ignoruje wielkość liter)
         if (searchEmailTerm) {
             filter.email = { $regex: searchEmailTerm, $options: "i" };
         }
 
+        console.log("🔍 FILTR:", filter);  // Debugowanie filtrów
+
         const totalCount = await userCollection.countDocuments(filter);
-        const pagesCount = Math.ceil(totalCount / pageSize);  // ✅ Dodajemy obliczanie liczby stron
+        const pagesCount = Math.ceil(totalCount / pageSize); // 📌 Obliczamy liczbę stron
 
         const users = await userCollection
             .find(filter)
-            .sort({ [sortBy]: sortDirection === "asc" ? 1 : -1 })
-            .skip((pageNumber - 1) * pageSize)
+            .sort({ [sortBy]: sortDirection === "asc" ? 1 : -1 })  // 📌 Sortowanie
+            .skip((pageNumber - 1) * pageSize)  // 📌 Paginacja
             .limit(pageSize)
             .toArray();
 
+        console.log("🔍 ZNALEZIONI UŻYTKOWNICY:", users.length);  // Debugowanie liczby użytkowników
+
         return {
-            pagesCount,  // ✅ Dodajemy licznik stron
-            page: pageNumber,  // ✅ Aktualna strona
-            pageSize,  // ✅ Rozmiar strony
-            totalCount,  // Całkowita liczba użytkowników
+            pagesCount,
+            page: pageNumber,
+            pageSize,
+            totalCount,
             items: users.map(user => ({
                 id: user.id,
                 login: user.login,
@@ -95,7 +101,9 @@ export const userRepository = {
                 createdAt: user.createdAt
             }))
         };
-    },
+    }
+    ,
+
 
 
     async delete(id: string): Promise<boolean> {
