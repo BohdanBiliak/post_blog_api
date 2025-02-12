@@ -2,7 +2,6 @@ import {userCollection} from "../../db/db";
 import {UserDBModel} from "../../db/user-db-types";
 import {comparePassword} from "./domain/passwordService";
 import {UserViewModel} from "../../types/user-types";
-import { ObjectId } from "mongodb";
 interface GetUsersQueryParams {
     sortBy: string;
     sortDirection: "asc" | "desc";
@@ -65,25 +64,25 @@ export const userRepository = {
                       }: GetUsersQueryParams): Promise<{ pagesCount: number; page: number; pageSize: number; totalCount: number; items: UserViewModel[] }> {
         const filter: any = {};
 
-        // 🔍 Poprawione wyszukiwanie loginów (ignoruje wielkość liter)
+        // ✅ **Wyszukiwanie loginów (ignoruje wielkość liter, szuka wszędzie w tekście)**
         if (searchLoginTerm) {
-            filter.login = { $regex: searchLoginTerm, $options: "i" };
+            filter.login = { $regex: new RegExp(searchLoginTerm, "i") };
         }
 
-        // 🔍 Poprawione wyszukiwanie e-maili (ignoruje wielkość liter)
+        // ✅ **Wyszukiwanie emaili (ignoruje wielkość liter, szuka wszędzie w tekście)**
         if (searchEmailTerm) {
-            filter.email = { $regex: searchEmailTerm, $options: "i" };
+            filter.email = { $regex: new RegExp(searchEmailTerm, "i") };
         }
 
-        console.log("🔍 FILTR:", filter);  // Debugowanie filtrów
+        console.log("🔍 FILTR:", JSON.stringify(filter, null, 2));  // Debugowanie filtrów
 
         const totalCount = await userCollection.countDocuments(filter);
-        const pagesCount = Math.ceil(totalCount / pageSize); // 📌 Obliczamy liczbę stron
+        const pagesCount = Math.ceil(totalCount / pageSize);
 
         const users = await userCollection
             .find(filter)
-            .sort({ [sortBy]: sortDirection === "asc" ? 1 : -1 })  // 📌 Sortowanie
-            .skip((pageNumber - 1) * pageSize)  // 📌 Paginacja
+            .sort({ [sortBy]: sortDirection === "asc" ? 1 : -1 })
+            .skip((pageNumber - 1) * pageSize)
             .limit(pageSize)
             .toArray();
 
@@ -102,6 +101,7 @@ export const userRepository = {
             }))
         };
     }
+
     ,
 
 
