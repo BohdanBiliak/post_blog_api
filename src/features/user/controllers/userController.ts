@@ -4,17 +4,17 @@ import {userService} from "../domain/userService";
 
 export const userController = {
     async create(req: Request, res: Response) {
-        const { login, email, password } = req.body;
+        const {login, email, password} = req.body;
         const errors = validateNewUser(login, email, password);
 
         if (errors) {
-            return res.status(400).json({ errorsMessages: errors });
+            return res.status(400).json({errorsMessages: errors});
         }
 
         const result = await userService.create(login, email, password);
 
         if (typeof result !== "string") {
-            return res.status(400).json({ errorsMessages: result.errors });
+            return res.status(400).json({errorsMessages: result.errors});
         }
 
         // Pobranie użytkownika po ID (upewniamy się, że zwraca poprawne dane)
@@ -22,7 +22,7 @@ export const userController = {
 
         if (!newUser) {
             console.error("ERROR: Created user could not be found in DB!", result);
-            return res.status(500).json({ message: "Internal Server Error: User was created but not found" });
+            return res.status(500).json({message: "Internal Server Error: User was created but not found"});
         }
 
         res.status(201).json(newUser);
@@ -30,15 +30,15 @@ export const userController = {
     ,
 
     async login(req: Request, res: Response) {
-        const { loginOrEmail, password } = req.body;
+        const {loginOrEmail, password} = req.body;
         const errors = validateLoginInput(loginOrEmail, password);
         if (errors) {
-            return res.status(400).json({ errorsMessages: errors });
+            return res.status(400).json({errorsMessages: errors});
         }
 
         const isAuthenticated = await userService.loginUser(loginOrEmail, password);
         if (!isAuthenticated) {
-            return res.status(401).json({ message: "Invalid login or password" });
+            return res.status(401).json({message: "Invalid login or password"});
         }
 
         res.status(204).send();
@@ -65,16 +65,18 @@ export const userController = {
 
         res.status(200).json(users);
     },
-
     async deleteUser(req: Request, res: Response) {
-        const { id } = req.params;
+        try {
+            const deleteFlag = await userService.delete(req.params.id);
 
-        const isDeleted = await userService.delete(id);
+            if (!deleteFlag) {
+                return res.status(404).send({error: "User not found"});
+            }
 
-        if (!isDeleted) {
-            return res.status(404).json({ message: "User not found" });
+            res.status(204).send();
+        } catch (error) {
+            console.error("🚨 Error deleting user:", error);
+            res.status(500).json({error: "Failed to delete user."});
         }
-
-        res.status(204).send();
     }
-};
+}
