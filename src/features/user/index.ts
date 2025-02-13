@@ -5,7 +5,7 @@ import {adminMiddleware} from "../../global_middlewares/admin-middleware";
 
 export const userRouter = express.Router();
 
-userRouter.post("/", userController.create);
+userRouter.post("/", adminMiddleware, userController.create);
 userRouter.post("/login", userController.login);
 userRouter.get("/", userController.getAllUsers);
 userRouter.delete("/:id",adminMiddleware, userController.deleteUser);
