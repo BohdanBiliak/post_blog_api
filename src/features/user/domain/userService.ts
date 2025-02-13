@@ -2,7 +2,6 @@ import {userRepository} from "../userReposytory";
 import {hashPassword} from "./passwordService";
 import {UserDBModel} from "../../../db/user-db-types";
 import {UserViewModel} from "../../../types/user-types";
-import {userCollection} from "../../../db/db";
 
 
 export const userService = {
