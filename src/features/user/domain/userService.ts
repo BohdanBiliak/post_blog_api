@@ -73,7 +73,7 @@ export const userService = {
         return userRepository.delete(id);
     },
 
-    async loginUser(loginOrEmail: string, password: string): Promise<any> {
+    async loginUser(loginOrEmail: string, password: string): Promise<boolean | any> {
         return userRepository.loginUser(loginOrEmail, password);
     },
 
