@@ -47,21 +47,24 @@ export const userRepository = {
         });
     },
     async loginUser(loginOrEmail: string, password: string): Promise<boolean | null> {
+        console.log("🔍 Checking user:", loginOrEmail);
+
         const user = await userRepository.findByLoginOrEmail(loginOrEmail);
         if (!user) {
             console.error("❌ User not found:", loginOrEmail);
-            return null; // Return null if the user does not exist
+            return null; // Should return null for a non-existing user
         }
 
         const isPasswordValid = comparePassword(password, user.passwordHash);
         if (!isPasswordValid) {
             console.error("❌ Incorrect password for:", loginOrEmail);
-            return null; // Return null if the password is incorrect
+            return null; // Should return null for incorrect passwords
         }
 
         console.log("✅ Login successful for:", loginOrEmail);
         return true;
-    },
+    }
+    ,
     async getAllUsers({
                           sortBy,
                           sortDirection,
