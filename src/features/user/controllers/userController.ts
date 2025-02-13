@@ -39,11 +39,13 @@ export const userController = {
                 return res.status(400).json({ errorsMessages: errors });
             }
 
+            // Attempt to authenticate the user
             const isAuthenticated = await userService.loginUser(loginOrEmail, password);
 
-            if (isAuthenticated === null) {
+            // 🔥 Ensure correct status code
+            if (!isAuthenticated) {
                 console.error("❌ Authentication failed for:", loginOrEmail);
-                return res.status(401).json({ message: "Invalid login or password" });
+                return res.status(401).json({ message: "Invalid login or password" });  // 🔥 Always return 401 here
             }
 
             console.log("✅ User authenticated:", loginOrEmail);
@@ -53,6 +55,9 @@ export const userController = {
             res.status(500).json({ message: "Internal Server Error" });
         }
     }
+
+
+
     ,
     async getAllUsers(req: Request, res: Response) {
         const {
