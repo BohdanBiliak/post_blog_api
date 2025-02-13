@@ -30,19 +30,30 @@ export const userController = {
     ,
 
     async login(req: Request, res: Response) {
-        const {loginOrEmail, password} = req.body;
-        const errors = validateLoginInput(loginOrEmail, password);
-        if (errors) {
-            return res.status(400).json({errorsMessages: errors});
-        }
+        try {
+            const { loginOrEmail, password } = req.body;
+            console.log("📩 Received login request:", { loginOrEmail });
 
-        const isAuthenticated = await userService.loginUser(loginOrEmail, password);
-        if (!isAuthenticated) {
-            return res.status(401).json({message: "Invalid login or password"});
-        }
+            const errors = validateLoginInput(loginOrEmail, password);
+            if (errors) {
+                console.error("❌ Validation failed:", errors);
+                return res.status(400).json({ errorsMessages: errors });
+            }
 
-        res.status(204).send();
+            const isAuthenticated = await userService.loginUser(loginOrEmail, password);
+            if (isAuthenticated === null) {
+                console.error("❌ Authentication failed for:", loginOrEmail);
+                return res.status(401).json({ message: "Invalid login or password" });
+            }
+
+            console.log("✅ User authenticated:", loginOrEmail);
+            res.status(204).send();
+        } catch (error) {
+            console.error("❌ Unexpected server error during login:", error);
+            res.status(500).json({ message: "Internal Server Error" });
+        }
     },
+
 
     async getAllUsers(req: Request, res: Response) {
         const {
