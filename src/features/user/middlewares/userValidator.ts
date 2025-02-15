@@ -3,58 +3,28 @@ import {InputCheckErrorsMiddleware} from "../../../global_middlewares/inputCheck
 import {adminMiddleware} from "../../../global_middlewares/admin-middleware";
 
 export const LoginValidatorMiddleware = body("login")
-    .custom((value, { req }) => {
-        const errors: { message: string; field: string }[] = [];
-        if (!value) {
-            errors.push({ message: "Login is required", field: "login" });
-        }
-        if (typeof value !== "string") {
-            errors.push({ message: "Login must be a string", field: "login" });
-        }
-        if (value.trim().length < 3 || value.trim().length > 30) {
-            errors.push({ message: "Login length should be between 3 and 30", field: "login" });
-        }
-        if (errors.length > 0) {
-            throw errors;
-        }
-        return true;
-    });
+    .exists().withMessage("Login is required")
+    .bail()
+    .isString().withMessage("Login must be a string")
+    .bail()
+    .trim()
+    .isLength({ min: 3, max: 30 }).withMessage("Login length should be between 3 and 30");
 
 export const EmailValidatorMiddleware = body("email")
-    .custom((value, { req }) => {
-        const errors: { message: string; field: string }[] = [];
-        if (!value) {
-            errors.push({ message: "Email is required", field: "email" });
-        }
-        if (typeof value !== "string") {
-            errors.push({ message: "Email must be a string", field: "email" });
-        }
-        if (!/^\S+@\S+\.\S+$/.test(value)) {
-            errors.push({ message: "Invalid email format", field: "email" });
-        }
-        if (errors.length > 0) {
-            throw errors;
-        }
-        return true;
-    });
+    .exists().withMessage("Email is required")
+    .bail()
+    .isString().withMessage("Email must be a string")
+    .bail()
+    .trim()
+    .isEmail().withMessage("Invalid email format");
 
 export const PasswordValidatorMiddleware = body("password")
-    .custom((value, { req }) => {
-        const errors: { message: string; field: string }[] = [];
-        if (!value) {
-            errors.push({ message: "Password is required", field: "password" });
-        }
-        if (typeof value !== "string") {
-            errors.push({ message: "Password must be a string", field: "password" });
-        }
-        if (value.trim().length < 6 || value.trim().length > 50) {
-            errors.push({ message: "Password length should be between 6 and 50", field: "password" });
-        }
-        if (errors.length > 0) {
-            throw errors;
-        }
-        return true;
-    });
+    .exists().withMessage("Password is required")
+    .bail()
+    .isString().withMessage("Password must be a string")
+    .bail()
+    .trim()
+    .isLength({ min: 6, max: 50 }).withMessage("Password length should be between 6 and 50");
 
 
 export const validateLoginInput = (loginOrEmail: string, password: string) => {
