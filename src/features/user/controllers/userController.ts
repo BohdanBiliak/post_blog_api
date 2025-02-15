@@ -7,8 +7,8 @@ export const userController = {
         const { login, email, password } = req.body;
         const validationErrors = validateNewUser(login, email, password);
 
-        if (validationErrors) {
-            return res.status(400).json({ errorsMessages: validationErrors.errorsMessages }); // ✅ Fix to match expected format
+        if (validationErrors !== null) {  // ✅ Fix: Now returns all errors, not just the first one
+            return res.status(400).json(validationErrors);
         }
 
         const result = await userService.create(login, email, password);
@@ -18,8 +18,7 @@ export const userController = {
         }
 
         res.status(201).json(await userService.findAndMap(result));
-    }
-    ,
+    },
     async login(req: Request, res: Response) {
         try {
             const { loginOrEmail, password } = req.body;
