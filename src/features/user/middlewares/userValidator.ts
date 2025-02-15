@@ -28,8 +28,8 @@ export const validateLoginInput = (loginOrEmail: string, password: string) => {
     return errors.length > 0 ? errors : null;
 };
 export const userValidatorMiddleware = [
-    LoginValidatorMiddleware,
     EmailValidatorMiddleware,
+    LoginValidatorMiddleware,
     PasswordValidatorMiddleware,
     InputCheckErrorsMiddleware
 ];
