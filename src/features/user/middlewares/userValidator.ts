@@ -13,8 +13,7 @@ export const validateNewUser = (login: string, email: string, password: string) 
         errors.push({ message: "Password must be at least 6 characters long", field: "password" });
     }
 
-    // ✅ Always return an object with { errorsMessages: [...] }
-    return errors.length > 0 ? { errorsMessages: errors } : null;
+    return errors.length > 0 ? { errorsMessages: errors } : { errorsMessages: [] }; // ✅ Ensure an empty array if no errors
 };
 
 export const validateLoginInput = (loginOrEmail: string, password: string) => {

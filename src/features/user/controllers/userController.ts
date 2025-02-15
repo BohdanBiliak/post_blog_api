@@ -8,7 +8,7 @@ export const userController = {
         const validationErrors = validateNewUser(login, email, password);
 
         if (validationErrors) {
-            return res.status(400).json(validationErrors); // ✅ Fix: Ensure correct response format
+            return res.status(400).json({ errorsMessages: validationErrors.errorsMessages }); // ✅ Fix to match expected format
         }
 
         const result = await userService.create(login, email, password);
@@ -18,7 +18,8 @@ export const userController = {
         }
 
         res.status(201).json(await userService.findAndMap(result));
-    },
+    }
+    ,
     async login(req: Request, res: Response) {
         try {
             const { loginOrEmail, password } = req.body;
