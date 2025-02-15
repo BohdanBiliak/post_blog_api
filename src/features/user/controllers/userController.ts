@@ -1,23 +1,23 @@
 import { Request, Response } from "express";
-import { validateLoginInput, validateNewUser } from "../middlewares/userValidator";
+import { validateLoginInput} from "../middlewares/userValidator";
 import {userService} from "../domain/userService";
 
 export const userController = {
     async create(req: Request, res: Response) {
-        const { login, email, password } = req.body;
-        const validationErrors = validateNewUser(login, email, password);
+        try {
+            const { login, email, password } = req.body;
 
-        if (validationErrors !== null) {  // ✅ Fix: Now returns all errors, not just the first one
-            return res.status(400).json(validationErrors);
+            const newUserId = await userService.create(login, email, password);
+            if (typeof newUserId !== "string") {
+                return res.status(400).json({ errorsMessages: newUserId.errors });
+            }
+
+            const newUser = await userService.findAndMap(newUserId);
+            res.status(201).json(newUser);
+        } catch (error) {
+            console.error("🚨 Error creating user:", error);
+            res.status(500).json({ message: "Internal Server Error" });
         }
-
-        const result = await userService.create(login, email, password);
-
-        if (typeof result !== "string") {
-            return res.status(400).json({ errorsMessages: result.errors });
-        }
-
-        res.status(201).json(await userService.findAndMap(result));
     },
     async login(req: Request, res: Response) {
         try {

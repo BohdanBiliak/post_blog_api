@@ -1,6 +1,5 @@
 import { body } from "express-validator";
 import {InputCheckErrorsMiddleware} from "../../../global_middlewares/inputCheckErrorsMiddleware";
-import {adminMiddleware} from "../../../global_middlewares/admin-middleware";
 
 export const LoginValidatorMiddleware = body("login")
     .isString().withMessage("Login must be a string")
@@ -29,7 +28,6 @@ export const validateLoginInput = (loginOrEmail: string, password: string) => {
     return errors.length > 0 ? errors : null;
 };
 export const userValidatorMiddleware = [
-    adminMiddleware,
     LoginValidatorMiddleware,
     EmailValidatorMiddleware,
     PasswordValidatorMiddleware,
