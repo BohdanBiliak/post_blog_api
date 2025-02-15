@@ -1,5 +1,6 @@
 import { body } from "express-validator";
 import {InputCheckErrorsMiddleware} from "../../../global_middlewares/inputCheckErrorsMiddleware";
+import {adminMiddleware} from "../../../global_middlewares/admin-middleware";
 
 export const LoginValidatorMiddleware = body("login")
     .isString().withMessage("Login must be a string")
@@ -16,7 +17,6 @@ export const PasswordValidatorMiddleware = body("password")
     .trim()
     .isLength({ min: 6, max: 50 }).withMessage("Password length should be between 6 and 50");
 
-// ✅ Group all validators together
 
 export const validateLoginInput = (loginOrEmail: string, password: string) => {
     const errors: { message: string; field: string }[] = [];
@@ -29,8 +29,9 @@ export const validateLoginInput = (loginOrEmail: string, password: string) => {
     return errors.length > 0 ? errors : null;
 };
 export const userValidatorMiddleware = [
+    adminMiddleware,
     LoginValidatorMiddleware,
     EmailValidatorMiddleware,
     PasswordValidatorMiddleware,
-    InputCheckErrorsMiddleware // Ensures errors are returned properly
+    InputCheckErrorsMiddleware
 ];
