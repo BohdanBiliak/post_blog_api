@@ -7,6 +7,6 @@ import {userValidatorMiddleware} from "./middlewares/userValidator";
 
 export const userRouter = express.Router();
 
-userRouter.post("/",adminMiddleware,userValidatorMiddleware,  userController.create);
+userRouter.post("/",adminMiddleware,...userValidatorMiddleware,  userController.create);
 userRouter.get("/", userController.getAllUsers);
 userRouter.delete("/:id",adminMiddleware, userController.deleteUser);
