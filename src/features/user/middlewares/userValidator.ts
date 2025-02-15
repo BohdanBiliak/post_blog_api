@@ -4,7 +4,8 @@ import {InputCheckErrorsMiddleware} from "../../../global_middlewares/inputCheck
 export const LoginValidatorMiddleware = body("login")
     .isString().withMessage("Login must be a string")
     .trim()
-    .isLength({ min: 3, max: 30 }).withMessage("Login length should be between 3 and 30");
+    .isLength({ min: 3, max: 30 }).withMessage("Login length should be between 3 and 30")
+    .custom(login => login.trim() !== "").withMessage("Login cannot be just spaces");
 
 export const EmailValidatorMiddleware = body("email")
     .isString().withMessage("Email must be a string")
@@ -15,7 +16,6 @@ export const PasswordValidatorMiddleware = body("password")
     .isString().withMessage("Password must be a string")
     .trim()
     .isLength({ min: 6, max: 50 }).withMessage("Password length should be between 6 and 50");
-
 
 export const validateLoginInput = (loginOrEmail: string, password: string) => {
     const errors: { message: string; field: string }[] = [];
