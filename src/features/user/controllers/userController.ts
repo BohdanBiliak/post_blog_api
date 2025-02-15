@@ -8,7 +8,7 @@ export const userController = {
         const validationErrors = validateNewUser(login, email, password);
 
         if (validationErrors) {
-            return res.status(400).json(validationErrors); // ✅ This ensures both errors are returned
+            return res.status(400).json(validationErrors); // ✅ Fix: Ensure correct response format
         }
 
         const result = await userService.create(login, email, password);
