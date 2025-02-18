@@ -7,13 +7,12 @@ export const userController = {
         try {
             const { login, email, password } = req.body;
 
-            const result = await userService.create(login, email, password);
-
-            if (typeof result !== "string") {
-                return res.status(400).json({ errorsMessages: result.errors });
+            const newUserId = await userService.create(login, email, password);
+            if (typeof newUserId !== "string") {
+                return res.status(400).json({ errorsMessages: newUserId.errors });
             }
 
-            const newUser = await userService.findAndMap(result);
+            const newUser = await userService.findAndMap(newUserId);
             res.status(201).json(newUser);
         } catch (error) {
             console.error("🚨 Error creating user:", error);
