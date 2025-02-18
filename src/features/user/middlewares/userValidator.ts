@@ -1,6 +1,5 @@
 import { body } from "express-validator";
 import {InputCheckErrorsMiddleware} from "../../../global_middlewares/inputCheckErrorsMiddleware";
-import {adminMiddleware} from "../../../global_middlewares/admin-middleware";
 
 export const LoginValidatorMiddleware = body("login")
     .exists().withMessage("Login is required")
@@ -18,9 +17,15 @@ export const PasswordValidatorMiddleware = body("password")
     .exists().withMessage("Password is required")
     .isString().withMessage("Password must be a string")
     .trim()
-    .isLength({ min: 6, max: 50 }).withMessage("Password length should be between 6 and 50");
+    .isLength({ min: 6, max: 20 }).withMessage("Password length should be between 6 and 20");
 
 
+export const userValidatorMiddleware = [
+    LoginValidatorMiddleware,
+    EmailValidatorMiddleware,
+    PasswordValidatorMiddleware,
+    InputCheckErrorsMiddleware
+];
 
 export const validateLoginInput = (loginOrEmail: string, password: string) => {
     const errors: { message: string; field: string }[] = [];
@@ -32,9 +37,3 @@ export const validateLoginInput = (loginOrEmail: string, password: string) => {
     }
     return errors.length > 0 ? errors : null;
 };
-export const userValidatorMiddleware = [
-    LoginValidatorMiddleware,
-    EmailValidatorMiddleware,
-    PasswordValidatorMiddleware,
-    InputCheckErrorsMiddleware
-];
