@@ -2,23 +2,35 @@ import { body } from "express-validator";
 import {InputCheckErrorsMiddleware} from "../../../global_middlewares/inputCheckErrorsMiddleware";
 import {adminMiddleware} from "../../../global_middlewares/admin-middleware";
 
-export const LoginValidatorMiddleware = body("login")
-    .exists().withMessage("Login is required")
-    .isString().withMessage("Login must be a string")
-    .trim()
-    .isLength({ min: 3, max: 30 }).withMessage("Login length should be between 3 and 30");
+import { Request, Response, NextFunction } from "express";
 
-export const EmailValidatorMiddleware = body("email")
-    .exists().withMessage("Email is required")
-    .isString().withMessage("Email must be a string")
-    .trim()
-    .isEmail().withMessage("Invalid email format");
+export const userValidatorMiddleware = (req: Request, res: Response, next: NextFunction) => {
+    const errors: { message: string; field: string }[] = [];
+    const { login, email, password } = req.body;
 
-export const PasswordValidatorMiddleware = body("password")
-    .exists().withMessage("Password is required")
-    .isString().withMessage("Password must be a string")
-    .trim()
-    .isLength({ min: 6, max: 50 }).withMessage("Password length should be between 6 and 50");
+    // ✅ Sprawdzenie loginu
+    if (!login || typeof login !== "string" || login.trim().length < 3 || login.trim().length > 30) {
+        errors.push({ message: "Login length should be between 3 and 30", field: "login" });
+    }
+
+    // ✅ Sprawdzenie emaila (prosty regex)
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || typeof email !== "string" || !emailRegex.test(email.trim())) {
+        errors.push({ message: "Invalid email format", field: "email" });
+    }
+
+    // ✅ Sprawdzenie hasła
+    if (!password || typeof password !== "string" || password.length < 6 || password.length > 50) {
+        errors.push({ message: "Password length should be between 6 and 50", field: "password" });
+    }
+
+    // ❌ Jeśli są błędy, zwróć status 400
+    if (errors.length > 0) {
+        return res.status(400).json({ errorsMessages: errors });
+    }
+
+    next();
+};
 
 
 
@@ -32,9 +44,3 @@ export const validateLoginInput = (loginOrEmail: string, password: string) => {
     }
     return errors.length > 0 ? errors : null;
 };
-export const userValidatorMiddleware = [
-    LoginValidatorMiddleware,
-    EmailValidatorMiddleware,
-    PasswordValidatorMiddleware,
-    InputCheckErrorsMiddleware
-];
