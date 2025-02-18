@@ -1,6 +1,4 @@
-import { body } from "express-validator";
-import {InputCheckErrorsMiddleware} from "../../../global_middlewares/inputCheckErrorsMiddleware";
-import {adminMiddleware} from "../../../global_middlewares/admin-middleware";
+
 import { Request, Response, NextFunction } from "express";
 
 export const validateUserInput = (req: Request, res: Response, next: NextFunction) => {
@@ -28,7 +26,7 @@ export const validateUserInput = (req: Request, res: Response, next: NextFunctio
         errors.push({ message: "Password length should be between 6 and 50", field: "password" });
     }
 
-    // ✅ ОТПРАВЛЯЕМ ОТВЕТ 400, если есть ошибки
+    // ✅ Если есть ошибки, отправляем их сразу в `res.status(400).json()`
     if (errors.length > 0) {
         return res.status(400).json({ errorsMessages: errors });
     }

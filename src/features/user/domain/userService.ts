@@ -10,12 +10,17 @@ export const userService = {
         email: string,
         password: string
     ): Promise<string | { success: false; errors: { message: string; field: string }[] }> {
+        const errors: { message: string; field: string }[] = [];
+
         if (await userRepository.findByEmail(email)) {
-            return { success: false, errors: [{ message: "Email is already taken", field: "email" }] };
+            errors.push({ message: "Email is already taken", field: "email" });
         }
 
         if (await userRepository.findByLogin(login)) {
-            return { success: false, errors: [{ message: "Login is already taken", field: "login" }] };
+            errors.push({ message: "Login is already taken", field: "login" });
+        }
+        if (errors.length > 0) {
+            return { success: false, errors };
         }
 
         const passwordHash = hashPassword(password);
@@ -29,8 +34,6 @@ export const userService = {
         };
 
         await userRepository.create(newUser);
-
-        console.log("New user created:", newUser);  // <-- SPRAWDŹ, CZY NOWY UŻYTKOWNIK ZOSTAŁ ZAPISANY
 
         return newUser.id;
     },
