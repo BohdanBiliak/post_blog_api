@@ -3,7 +3,6 @@ import {InputCheckErrorsMiddleware} from "../../../global_middlewares/inputCheck
 import {adminMiddleware} from "../../../global_middlewares/admin-middleware";
 import { Request, Response, NextFunction } from "express";
 
-
 export const validateUserInput = (req: Request, res: Response, next: NextFunction) => {
     const { login, email, password } = req.body;
     const errors: { message: string; field: string }[] = [];
@@ -29,13 +28,14 @@ export const validateUserInput = (req: Request, res: Response, next: NextFunctio
         errors.push({ message: "Password length should be between 6 and 50", field: "password" });
     }
 
-    // ❗ Вместо отправки ответа передаём ошибки в `next()`
+    // ✅ ОТПРАВЛЯЕМ ОТВЕТ 400, если есть ошибки
     if (errors.length > 0) {
-        return next({ errorsMessages: errors });
+        return res.status(400).json({ errorsMessages: errors });
     }
 
     next();
 };
+
 
 
 export const validateLoginInput = (loginOrEmail: string, password: string) => {
@@ -49,6 +49,5 @@ export const validateLoginInput = (loginOrEmail: string, password: string) => {
     return errors.length > 0 ? errors : null;
 };
 export const userValidatorMiddleware = [
-    validateUserInput,
-    InputCheckErrorsMiddleware
+    validateUserInput
 ];
