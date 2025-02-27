@@ -3,6 +3,7 @@ import {UserDBModel} from "../../db/user-db-types";
 import {comparePassword} from "./domain/passwordService";
 import {UserViewModel} from "../../types/user-types";
 import {jwtService} from "../../application/jwt-services";
+import jwt from "jsonwebtoken";
 interface GetUsersQueryParams {
     sortBy: string;
     sortDirection: "asc" | "desc";
@@ -49,22 +50,15 @@ export const userRepository = {
     },
     async loginUser(loginOrEmail: string, password: string): Promise<boolean> {
         console.log("🔍 Checking user:", loginOrEmail);
-
         const user = await userRepository.findByLoginOrEmail(loginOrEmail);
-        if (!user) {
-            console.error("❌ User not found:", loginOrEmail);
-            return false; // ✅ Всегда возвращаем `false`, а не `null`
+        if (!user || !comparePassword(password, user.passwordHash)) {
+            console.error("❌ Invalid login:", loginOrEmail);
+            return false; // Zawsze zwraca `true` albo `false`
         }
-
-        const isPasswordValid = comparePassword(password, user.passwordHash);
-        if (!isPasswordValid) {
-            console.error("❌ Incorrect password for:", loginOrEmail);
-            return false; // ✅ Всегда возвращаем `false`, а не `null`
-        }
-
-        console.log("✅ Login successful for:", loginOrEmail);
-        return true; // ✅ Только `true` или `false`, без `null`
+        return true;
     },
+
+
 
 
     async getAllUsers({

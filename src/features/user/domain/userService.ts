@@ -1,8 +1,8 @@
 import {userRepository} from "../userReposytory";
-import {hashPassword} from "./passwordService";
+import {comparePassword, hashPassword} from "./passwordService";
 import {UserDBModel} from "../../../db/user-db-types";
 import {UserViewModel} from "../../../types/user-types";
-
+import jwt from 'jsonwebtoken';
 
 export const userService = {
     async create(
@@ -72,9 +72,20 @@ export const userService = {
         return userRepository.delete(id);
     },
 
-    async loginUser(loginOrEmail: string, password: string): Promise<boolean> {
-        return userRepository.loginUser(loginOrEmail, password);
+    async loginUser(loginOrEmail: string, password: string): Promise<string | null> {
+        const user = await userRepository.findByLoginOrEmail(loginOrEmail);
+        if (!user || !comparePassword(password, user.passwordHash)) {
+            return null; // Niepoprawne dane logowania
+        }
+
+        // ✅ Generowanie tokena JWT
+        return jwt.sign(
+            { userId: user.id, login: user.login },
+            process.env.JWT_SECRET || "yourSecretKey",
+            { expiresIn: "1h" }
+        );
     },
+
 
     map(user: UserDBModel): UserViewModel {
         return {
