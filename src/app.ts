@@ -6,7 +6,6 @@ import {testingRouter} from './features/testing'
 import {postsRouter} from './features/posts'
 import {userRouter} from "./features/user";
 import {userController} from "./features/user/controllers/userController";
-
 export const app = express()
 app.use(express.json())
 app.use(cors())

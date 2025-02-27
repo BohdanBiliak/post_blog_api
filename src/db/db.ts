@@ -4,11 +4,13 @@ import {Collection, MongoClient} from 'mongodb'
 import dotenv from 'dotenv'
 import {SETTINGS} from "../settings";
 import {UserDBModel} from "./user-db-types";
+import {CommentViewModel} from "../features/comments/commentsTypes/commentsTypes";
 dotenv.config()
 
 export let postCollection: Collection<PostDbType>
 export let blogsCollection: Collection<BlogDbType>
 export let userCollection: Collection<UserDBModel>
+export let commentsCollection: Collection<CommentViewModel>
 export async function runDB(url:string):Promise<void> {
     let client = new MongoClient(url)
     let db = client.db(SETTINGS.DB_NAME)
@@ -16,6 +18,7 @@ export async function runDB(url:string):Promise<void> {
     postCollection = db.collection<PostDbType>(SETTINGS.PATH.POSTS);
     blogsCollection = db.collection<BlogDbType>(SETTINGS.PATH.BLOGS);
     userCollection = db.collection<UserDBModel>(SETTINGS.PATH.USERS);
+    commentsCollection = db.collection<CommentViewModel>(SETTINGS.PATH.COMMENTS);
 
     try {
         await client.connect();
@@ -35,16 +38,18 @@ export type ReadonlyDBtype = {
     posts: Readonly<PostDbType[]>;
     blogs: Readonly<BlogDbType[]>;
     users: Readonly<UserDBModel[]>;
+    comments: Readonly<CommentViewModel[]>;
 }
 export const db: DBtype = {
     blogs: [],
     posts: [],
-    users:[]
+    users:[],
 }
 export const setDB = async (dataset?: Partial<ReadonlyDBtype>) => {
     await blogsCollection.deleteMany({});
     await postCollection.deleteMany({});
     await userCollection.deleteMany({});
+    await commentsCollection.deleteMany({});
 
     console.log("DB после setDB:", db);
 };

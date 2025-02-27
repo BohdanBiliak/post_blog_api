@@ -8,6 +8,7 @@ export const SETTINGS = {
         POSTS: '/posts',
         TESTING: '/testing',
         USERS: '/users',
+        COMMENTS: '/comments',
     },
     ADMIN: process.env.ADMIN || 'admin:qwerty',
     MONGO_URL: process.env.MONGO_URL || 'mongodb://0.0.0.0:27017',
