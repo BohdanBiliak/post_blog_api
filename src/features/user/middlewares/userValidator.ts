@@ -5,7 +5,7 @@ export const LoginValidatorMiddleware = body("login")
     .exists().withMessage("Login is required")
     .isString().withMessage("Login must be a string")
     .trim()
-    .isLength({ min: 3, max: 11 }).withMessage("Login length should be between 3 and 30");
+    .isLength({ min: 3, max: 11 }).withMessage("Login length should be between 3 and 11");
 
 export const EmailValidatorMiddleware = body("email")
     .exists().withMessage("Email is required")

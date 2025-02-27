@@ -18,35 +18,37 @@ export const userController = {
             console.error("🚨 Error creating user:", error);
             res.status(500).json({ message: "Internal Server Error" });
         }
+
     },
+
     async login(req: Request, res: Response) {
         try {
             const { loginOrEmail, password } = req.body;
             console.log("📩 Received login request:", { loginOrEmail });
 
-            // Validate input
             const errors = validateLoginInput(loginOrEmail, password);
             if (errors) {
                 console.error("❌ Validation failed:", errors);
                 return res.status(400).json({ errorsMessages: errors });
             }
 
-            // Attempt authentication
-            const isAuthenticated = await userService.loginUser(loginOrEmail, password);
-
-            // ✅ Always return **401** when authentication fails
-            if (!isAuthenticated) {
+            // Authenticate the user and get the JWT token
+            const accessToken = await userService.loginUser(loginOrEmail, password);
+            if (!accessToken) {
                 console.error("❌ Authentication failed for:", loginOrEmail);
                 return res.status(401).json({ message: "Invalid login or password" });
             }
 
             console.log("✅ User authenticated:", loginOrEmail);
-            res.status(204).send();
+
+            // Return the JWT token
+            return res.status(200).json({ accessToken });
         } catch (error) {
             console.error("🚨 Unexpected server error during login:", error);
-            res.status(500).json({ message: "Internal Server Error" });
+            return res.status(500).json({ message: "Internal Server Error" });
         }
     },
+
     async getAllUsers(req: Request, res: Response) {
         const {
             sortBy = "createdAt",

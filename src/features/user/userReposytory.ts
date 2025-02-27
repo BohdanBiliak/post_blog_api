@@ -2,6 +2,7 @@ import {userCollection} from "../../db/db";
 import {UserDBModel} from "../../db/user-db-types";
 import {comparePassword} from "./domain/passwordService";
 import {UserViewModel} from "../../types/user-types";
+import {jwtService} from "../../application/jwt-services";
 interface GetUsersQueryParams {
     sortBy: string;
     sortDirection: "asc" | "desc";
@@ -52,20 +53,20 @@ export const userRepository = {
         const user = await userRepository.findByLoginOrEmail(loginOrEmail);
         if (!user) {
             console.error("❌ User not found:", loginOrEmail);
-            return false; // ✅ Return false instead of null
+            return false; // ✅ Всегда возвращаем `false`, а не `null`
         }
 
         const isPasswordValid = comparePassword(password, user.passwordHash);
         if (!isPasswordValid) {
             console.error("❌ Incorrect password for:", loginOrEmail);
-            return false; // ✅ Return false instead of null
+            return false; // ✅ Всегда возвращаем `false`, а не `null`
         }
 
         console.log("✅ Login successful for:", loginOrEmail);
-        return true;
-    }
+        return true; // ✅ Только `true` или `false`, без `null`
+    },
 
-    ,
+
     async getAllUsers({
                           sortBy,
                           sortDirection,
