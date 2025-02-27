@@ -20,3 +20,4 @@ app.use(SETTINGS.PATH.POSTS, postsRouter)
 app.use(SETTINGS.PATH.TESTING, testingRouter)
 app.use(SETTINGS.PATH.USERS, userRouter)
 app.post("/auth/login", userController.login);
+app.get("/auth/me", userController.getCurrentUser);

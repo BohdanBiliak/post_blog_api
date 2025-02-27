@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { validateLoginInput} from "../middlewares/userValidator";
 import {userService} from "../domain/userService";
+import {userRepository} from "../userReposytory";
+import jwt from "jsonwebtoken";
 
 export const userController = {
     async create(req: Request, res: Response) {
@@ -83,5 +85,40 @@ export const userController = {
             console.error("🚨 Error deleting user:", error);
             res.status(500).json({error: "Failed to delete user."});
         }
-    }
+    },
+    async getCurrentUser(req: Request, res: Response) {
+        try {
+            // 1. Pobranie tokena z nagłówka "Authorization"
+            const authHeader = req.headers["authorization"];
+            if (!authHeader || typeof authHeader !== "string" || !authHeader.startsWith("Bearer ")) {
+                return res.status(401).json({ message: "Unauthorized" });
+            }
+
+            // 2. Wyciąganie tokena
+            const token = authHeader.split(" ")[1];
+            let decodedToken;
+            try {
+                // 3. Weryfikacja tokena
+                decodedToken = jwt.verify(token, process.env.JWT_SECRET || "yourSecretKey") as { userId: string };
+            } catch (error) {
+                return res.status(401).json({ message: "Invalid or expired token" });
+            }
+
+            // 4. Pobranie użytkownika z bazy danych
+            const user = await userRepository.findById(decodedToken.userId);
+            if (!user) {
+                return res.status(401).json({ message: "User not found" });
+            }
+
+            // 5. Zwrócenie danych użytkownika
+            return res.status(200).json({
+                email: user.email,
+                login: user.login,
+                userId: user.id,
+            });
+        } catch (error) {
+            console.error("🚨 Error fetching user:", error);
+            return res.status(500).json({ message: "Internal Server Error" });
+        }
+    },
 }

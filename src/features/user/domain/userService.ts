@@ -75,10 +75,8 @@ export const userService = {
     async loginUser(loginOrEmail: string, password: string): Promise<string | null> {
         const user = await userRepository.findByLoginOrEmail(loginOrEmail);
         if (!user || !comparePassword(password, user.passwordHash)) {
-            return null; // Niepoprawne dane logowania
+            return null;
         }
-
-        // ✅ Generowanie tokena JWT
         return jwt.sign(
             { userId: user.id, login: user.login },
             process.env.JWT_SECRET || "yourSecretKey",
@@ -94,5 +92,7 @@ export const userService = {
             email: user.email,
             createdAt: user.createdAt
         };
-    }
+    },
+
+
 };
