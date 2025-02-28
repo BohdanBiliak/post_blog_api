@@ -27,7 +27,7 @@ export const commentController = {
 
     async update(req: Request, res: Response) {
         try {
-            const commentId = req.params.commentId;
+            const commentId = req.params.commentsId;
             const { content } = req.body;
             const user = req.user;
             if (!user) {
@@ -52,7 +52,7 @@ export const commentController = {
 
     async delete(req: Request, res: Response) {
         try {
-            const commentId = req.params.commentId;
+            const commentId = req.params.commentsId;
             const user = req.user;
             if (!user) {
                 return res.status(401).json({ message: "Unauthorized" });
