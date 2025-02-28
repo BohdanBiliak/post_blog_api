@@ -2,8 +2,6 @@ import {userCollection} from "../../db/db";
 import {UserDBModel} from "../../db/user-db-types";
 import {comparePassword} from "./domain/passwordService";
 import {UserViewModel} from "../../types/user-types";
-import {jwtService} from "../../application/jwt-services";
-import jwt from "jsonwebtoken";
 interface GetUsersQueryParams {
     sortBy: string;
     sortDirection: "asc" | "desc";

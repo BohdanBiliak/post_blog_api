@@ -1,4 +1,3 @@
-
 export interface CommentInputModel {
     content: string;
     postId: string;
@@ -10,4 +9,8 @@ export interface CommentViewModel {
     content: string;
     postId: string;
     createdAt: string;
+    commentatorInfo: {
+        userId: string;
+        userLogin: string;
+    };
 }

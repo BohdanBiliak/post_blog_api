@@ -7,6 +7,7 @@ import {putPostController} from './controllers/putPostController'
 import {findPostValidatorMiddleware, postValidatorMiddleware} from './middlewares/postValidator'
 import {adminMiddleware} from '../../global_middlewares/admin-middleware'
 import {commentController} from "../comments/controllers/commentsController";
+import {authenticateJWT} from "../../global_middlewares/authJWT";
 
 export const postsRouter = Router()
 
@@ -15,5 +16,4 @@ postsRouter.get('/:id',findPostValidatorMiddleware, findPostController)
 postsRouter.post('/', ...postValidatorMiddleware, createPostController)
 postsRouter.delete('/:id', adminMiddleware, findPostValidatorMiddleware,delPostController)
 postsRouter.put('/:id', ...postValidatorMiddleware,findPostValidatorMiddleware, putPostController)
-postsRouter.post("/:postId/comments", commentController.create);
-postsRouter.get("/:postId/comments", commentController.getByPostId);
+postsRouter.post("/:postId/comments",authenticateJWT, commentController.create);
