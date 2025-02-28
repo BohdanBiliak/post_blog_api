@@ -53,4 +53,16 @@ export const commentRepository = {
         const result = await commentsCollection.deleteOne({ id: commentId });
         return result.deletedCount > 0;
     },
+    async findById(commentId: string): Promise<CommentViewModel | null> {
+        const comment = await commentsCollection.findOne({ id: commentId });
+        if (!comment) return null;
+
+        return {
+            ...comment,
+            commentatorInfo: {
+                userId: comment.commentatorInfo?.userId || "",
+                userLogin: comment.commentatorInfo?.userLogin || "",
+            }
+        };
+    }
 };

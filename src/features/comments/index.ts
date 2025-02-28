@@ -7,3 +7,4 @@ export const commentRouter = Router()
 
 commentRouter.put("/:commentsId",authenticateJWT, commentController.update);
 commentRouter.delete("/:commentsId",authenticateJWT, commentController.delete);
+commentRouter.get("/:commentsId",authenticateJWT, commentController.getCommentById);

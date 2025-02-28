@@ -24,5 +24,8 @@ export const commentService = {
     async delete(commentId: string, userId: string): Promise<boolean> {
         const deleted = await commentRepository.delete(commentId, userId);
         return deleted;
+    },
+    async getCommentById(commentId: string): Promise<CommentViewModel | null> {
+        return await commentRepository.findById(commentId);
     }
 };
