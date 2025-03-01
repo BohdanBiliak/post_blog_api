@@ -1,5 +1,6 @@
 import { CommentInputModel, CommentViewModel } from "./commentsTypes/commentsTypes";
 import { commentsCollection } from "../../db/db";
+import {ObjectId} from "mongodb";
 
 export const commentRepository = {
     async create(comment: CommentInputModel, user: { id: string; login: string }): Promise<CommentViewModel> {
@@ -9,8 +10,8 @@ export const commentRepository = {
 
         const newComment = {
             ...comment,
-            id: new Date().toISOString() + Math.random(), // Unique ID
-            _id: new Date().toISOString() + Math.random(), // Add _id for consistency with the test
+            id: new Date().toISOString() + Math.random(),
+            _id: new ObjectId().toString(),
             commentatorInfo: {
                 userId: user.id,
                 userLogin: user.login,
@@ -20,6 +21,7 @@ export const commentRepository = {
         await commentsCollection.insertOne(newComment);
         return newComment;
     },
+
 
     async findByPostId(postId: string): Promise<CommentViewModel[]> {
         const comments = await commentsCollection.find({ postId }).toArray();
