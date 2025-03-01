@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import {commentService} from "../domain/commentsService";
+import {commentRepository} from "../commentsReposytory";
 
 export const commentController = {
     async create(req: Request, res: Response) {
@@ -30,6 +31,7 @@ export const commentController = {
             const commentId = req.params.commentsId;
             const { content } = req.body;
             const user = req.user;
+
             if (!user) {
                 return res.status(401).json({ message: "Unauthorized" });
             }
@@ -38,9 +40,18 @@ export const commentController = {
                 return res.status(400).json({ message: "Content is required" });
             }
 
+            const comment = await commentService.getCommentById(commentId);
+            if (!comment) {
+                return res.status(404).json({ message: "Comment not found" });
+            }
+
+            if (comment.commentatorInfo.userId !== user.id) {
+                return res.status(403).json({ message: "You can only edit your own comments" });
+            }
+
             const updated = await commentService.update(commentId, content, user.id);
             if (!updated) {
-                return res.status(403).json({ message: "You can only edit your own comments" });
+                return res.status(500).json({ message: "Failed to update comment" });
             }
 
             return res.status(200).json({ message: "Comment updated successfully" });
@@ -50,16 +61,29 @@ export const commentController = {
         }
     },
 
+
     async delete(req: Request, res: Response) {
         try {
             const commentId = req.params.commentsId;
             const user = req.user;
+
             if (!user) {
                 return res.status(401).json({ message: "Unauthorized" });
             }
+
+            const comment = await commentService.getCommentById(commentId);
+            if (!comment) {
+                return res.status(404).json({ message: "Comment not found" });
+            }
+
+            // Sprawdzenie, czy użytkownik jest właścicielem komentarza
+            if (comment.commentatorInfo.userId !== user.id) {
+                return res.status(403).json({ message: "You can only delete your own comments" });
+            }
+
             const deleted = await commentService.delete(commentId, user.id);
             if (!deleted) {
-                return res.status(403).json({ message: "You can only delete your own comments" });
+                return res.status(500).json({ message: "Failed to delete comment" });
             }
 
             return res.status(200).json({ message: "Comment deleted successfully" });
@@ -67,7 +91,8 @@ export const commentController = {
             console.error("Error deleting comment:", error);
             return res.status(500).json({ message: "Internal Server Error" });
         }
-    },
+    }
+    ,
     async getCommentById(req: Request, res: Response) {
         try {
             const commentId = req.params.commentsId;

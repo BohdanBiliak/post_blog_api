@@ -5,8 +5,8 @@ export interface CommentInputModel {
 }
 
 export interface CommentViewModel {
-    _id: string;  // Dodajemy _id, które jest wymagane przez test
-    id: string;   // Identyfikator generowany na potrzeby systemu
+    _id: string;
+    id: string;
     content: string;
     postId: string;
     createdAt: string;
