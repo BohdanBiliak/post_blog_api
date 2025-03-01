@@ -9,7 +9,8 @@ export const commentRepository = {
 
         const newComment = {
             ...comment,
-            id: new Date().toISOString() + Math.random(), // Уникальный ID
+            id: new Date().toISOString() + Math.random(), // Unique ID
+            _id: new Date().toISOString() + Math.random(), // Add _id for consistency with the test
             commentatorInfo: {
                 userId: user.id,
                 userLogin: user.login,
