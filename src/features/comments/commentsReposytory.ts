@@ -59,12 +59,12 @@ export const commentRepository = {
         };
     },
     async findByPostId(postId: string, page: number, pageSize: number): Promise<CommentViewModel[]> {
-        const skip = (page - 1) * pageSize;
         const comments = await commentsCollection
             .find({ postId })
-            .skip(skip)
+            .skip((page - 1) * pageSize)
             .limit(pageSize)
             .toArray();
+        comments.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
         return comments.map((comment: any) => ({
             ...comment,
