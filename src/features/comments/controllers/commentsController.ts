@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import {commentService} from "../domain/commentsService";
+import {postsService} from "../../posts/domain/posts-service";
 
 export const commentController = {
     async create(req: Request, res: Response) {
@@ -111,6 +112,10 @@ export const commentController = {
             const postId = req.params.postId;
             if (!postId) {
                 return res.status(400).json({message: "Post ID is required"});
+            }
+            const post = await postsService.find(postId)
+            if (!post) {
+                return res.status(404).json({ message: "Post not found" });
             }
 
             const comments = await commentService.getCommentsByPostId(postId);
