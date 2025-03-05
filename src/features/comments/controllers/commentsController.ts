@@ -76,7 +76,6 @@ export const commentController = {
                 return res.status(404).json({ message: "Comment not found" });
             }
 
-            // Sprawdzenie, czy użytkownik jest właścicielem komentarza
             if (comment.commentatorInfo.userId !== user.id) {
                 return res.status(403).json({ message: "You can only delete your own comments" });
             }
