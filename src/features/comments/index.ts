@@ -8,4 +8,4 @@ export const commentRouter = Router()
 
 commentRouter.put("/:commentsId",authenticateJWT,commentValidator, commentController.update);
 commentRouter.delete("/:commentsId",authenticateJWT, commentController.delete);
-commentRouter.get("/:commentsId",authenticateJWT, commentController.getCommentById);
+commentRouter.get("/:commentsId", commentController.getCommentById);
