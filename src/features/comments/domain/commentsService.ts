@@ -28,5 +28,6 @@ export const commentService = {
     },
     async getCommentById(commentId: string): Promise<CommentViewModel | null> {
         return await commentRepository.findById(commentId);
+
     }
 };

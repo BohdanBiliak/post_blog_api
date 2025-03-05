@@ -60,9 +60,9 @@ export const commentRepository = {
     async findById(commentId: string): Promise<CommentViewModel | null> {
         const comment = await commentsCollection.findOne({ id: commentId });
         if (!comment) return null;
-
+        const { postId, _id, ...commentData } = comment;
         return {
-            ...comment,
+            ...commentData,
             commentatorInfo: {
                 userId: comment.commentatorInfo?.userId || "",
                 userLogin: comment.commentatorInfo?.userLogin || "",
