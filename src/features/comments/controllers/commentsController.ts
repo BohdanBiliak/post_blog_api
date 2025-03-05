@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import {commentService} from "../domain/commentsService";
-import {commentRepository} from "../commentsReposytory";
 
 export const commentController = {
     async create(req: Request, res: Response) {

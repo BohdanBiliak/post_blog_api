@@ -1,3 +1,4 @@
+
 export interface CommentInputModel {
     content: string;
     postId: string;
@@ -5,7 +6,6 @@ export interface CommentInputModel {
 }
 
 export interface CommentViewModel {
-    _id: string;
     id: string;
     content: string;
     postId: string;

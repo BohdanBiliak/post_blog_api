@@ -1,6 +1,6 @@
 import { CommentInputModel, CommentViewModel } from "./commentsTypes/commentsTypes";
 import { commentsCollection } from "../../db/db";
-import {ObjectId} from "mongodb";
+import {ObjectId, WithId} from "mongodb";
 
 export const commentRepository = {
     async create(comment: CommentInputModel, user: { id: string; login: string }): Promise<CommentViewModel> {
@@ -8,10 +8,9 @@ export const commentRepository = {
             throw new Error("User must be authenticated");
         }
 
-        const newComment = {
+        const newComment: WithId<any> = {
             ...comment,
-            id: new Date().toISOString() + Math.random(),
-            _id: new ObjectId().toString(),
+            id: new ObjectId().toString(),
             commentatorInfo: {
                 userId: user.id,
                 userLogin: user.login,
@@ -20,7 +19,8 @@ export const commentRepository = {
         };
 
         await commentsCollection.insertOne(newComment);
-        return newComment;
+        const { _id, ...response } = newComment;
+        return response;
     },
 
 
