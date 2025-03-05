@@ -53,7 +53,7 @@ export const commentController = {
                 return res.status(500).json({ message: "Failed to update comment" });
             }
 
-            return res.status(200).json({ message: "Comment updated successfully" });
+            return res.status(204).json({ message: "Comment updated successfully" });
         } catch (error) {
             console.error("Error updating comment:", error);
             return res.status(500).json({ message: "Internal Server Error" });
