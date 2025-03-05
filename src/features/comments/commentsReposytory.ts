@@ -72,7 +72,7 @@ export const commentRepository = {
                 userId: comment.commentatorInfo?.userId || "",
                 userLogin: comment.commentatorInfo?.userLogin || "",
             },
-            id: comment._id.toString(),
+            _id: comment._id.toString(),
         }));
     },
 
