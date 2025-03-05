@@ -1,5 +1,5 @@
-import { CommentInputModel, CommentViewModel } from "./commentsTypes/commentsTypes";
-import { commentsCollection } from "../../db/db";
+import {CommentInputModel, CommentViewModel} from "./commentsTypes/commentsTypes";
+import {commentsCollection} from "../../db/db";
 import {ObjectId, WithId} from "mongodb";
 
 export const commentRepository = {
@@ -58,17 +58,26 @@ export const commentRepository = {
             }
         };
     },
-        async findByPostId(postId: string): Promise<CommentViewModel[]> {
-            const comments = await commentsCollection.find({ postId }).toArray();
-            return comments.map((comment: any) => ({
-                ...comment,
-                commentatorInfo: {
-                    userId: comment.commentatorInfo?.userId || "",
-                    userLogin: comment.commentatorInfo?.userLogin || "",
-                },
-                id: comment._id.toString(),
-            }));
+    async findByPostId(postId: string, page: number, pageSize: number): Promise<CommentViewModel[]> {
+        const skip = (page - 1) * pageSize;
+        const comments = await commentsCollection
+            .find({ postId })
+            .skip(skip)
+            .limit(pageSize)
+            .toArray();
 
+        return comments.map((comment: any) => ({
+            ...comment,
+            commentatorInfo: {
+                userId: comment.commentatorInfo?.userId || "",
+                userLogin: comment.commentatorInfo?.userLogin || "",
+            },
+            id: comment._id.toString(),
+        }));
+    },
+
+    async countCommentsByPostId(postId: string): Promise<number> {
+        return await commentsCollection.countDocuments({postId});
     }
 
 };

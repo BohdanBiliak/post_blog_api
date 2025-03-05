@@ -8,29 +8,24 @@ export const commentService = {
             throw new Error("User must be authenticated");
         }
 
-        const newComment = await commentRepository.create(
-            { postId, content, createdAt: new Date().toISOString() },
+        return await commentRepository.create(
+            {postId, content, createdAt: new Date().toISOString()},
             user
         );
-
-
-        return newComment;
     },
 
     async update(commentId: string, content: string, userId: string): Promise<boolean> {
-        const updated = await commentRepository.update(commentId, content, userId);
-        return updated;
+        return await commentRepository.update(commentId, content, userId);
     },
 
     async delete(commentId: string, userId: string): Promise<boolean> {
-        const deleted = await commentRepository.delete(commentId, userId);
-        return deleted;
+        return await commentRepository.delete(commentId, userId);
     },
     async getCommentById(commentId: string): Promise<CommentViewModel | null> {
         return await commentRepository.findById(commentId);
 
     },
-    async getCommentsByPostId(postId: string): Promise<CommentViewModel[]> {
-        return await commentRepository.findByPostId(postId);
+    async getCommentsByPostId(postId: string, page: number, pageSize: number): Promise<CommentViewModel[]> {
+        return await commentRepository.findByPostId(postId, page, pageSize);
     }
 };

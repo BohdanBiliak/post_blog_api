@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import {commentService} from "../domain/commentsService";
 import {postsService} from "../../posts/domain/posts-service";
+import {commentRepository} from "../commentsReposytory";
 
 export const commentController = {
     async create(req: Request, res: Response) {
@@ -114,23 +115,48 @@ export const commentController = {
     async getCommentsByPostId(req: Request, res: Response) {
         try {
             const postId = req.params.postId;
+            const page = parseInt(req.query.page as string) || 1;
+            const pageSize = parseInt(req.query.pageSize as string) || 10;
+
             if (!postId) {
-                return res.status(400).json({message: "Post ID is required"});
+                return res.status(400).json({ message: "Post ID is required" });
             }
-            const post = await postsService.find(postId)
+
+            const post = await postsService.find(postId);
             if (!post) {
                 return res.status(404).json({ message: "Post not found" });
             }
 
-            const comments = await commentService.getCommentsByPostId(postId);
+            const totalCount = await commentRepository.countCommentsByPostId(postId);
+            const comments = await commentService.getCommentsByPostId(postId, page, pageSize);
+
             if (!comments || comments.length === 0) {
-                return res.status(404).json({message: "No comments found for this post"});
+                return res.status(404).json({ message: "No comments found for this post" });
             }
 
-            return res.status(200).json(comments);
+            const pagesCount = Math.ceil(totalCount / pageSize);
+
+            const response = {
+                pagesCount,
+                page,
+                pageSize,
+                totalCount,
+                items: comments.map(comment => ({
+                    id: comment.id,
+                    content: comment.content,
+                    createdAt: comment.createdAt,
+                    commentatorInfo: {
+                        userId: comment.commentatorInfo.userId,
+                        userLogin: comment.commentatorInfo.userLogin,
+                    }
+                }))
+            };
+
+            return res.status(200).json(response);
         } catch (error) {
             console.error("Error fetching comments:", error);
-            return res.status(500).json({message: "Internal Server Error"});
+            return res.status(500).json({ message: "Internal Server Error" });
         }
     }
+
 }
