@@ -19,7 +19,7 @@ export const commentRepository = {
         };
 
         await commentsCollection.insertOne(newComment);
-        const { _id, ...response } = newComment;
+        const { postId, _id, ...response } = newComment;
         return response;
     },
 
