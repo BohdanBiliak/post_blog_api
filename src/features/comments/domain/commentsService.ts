@@ -25,7 +25,7 @@ export const commentService = {
         return await commentRepository.findById(commentId);
 
     },
-    async getCommentsByPostId(postId: string, page: number, pageSize: number): Promise<CommentViewModel[]> {
-        return await commentRepository.findByPostId(postId, page, pageSize);
+    async getCommentsByPostId(postId: string, page: number, pageSize: number,sortDirection: string): Promise<CommentViewModel[]> {
+        return await commentRepository.findByPostId(postId, page, pageSize, sortDirection);
     }
 };

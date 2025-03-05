@@ -117,6 +117,7 @@ export const commentController = {
             const postId = req.params.postId;
             const page = parseInt(req.query.pageNumber as string) || 1;
             const pageSize = parseInt(req.query.pageSize as string) || 10;
+            const sortDirection = req.query.sortDirection as string || "desc"; // сортування
 
             if (!postId) {
                 return res.status(400).json({ message: "Post ID is required" });
@@ -128,7 +129,7 @@ export const commentController = {
             }
 
             const totalCount = await commentRepository.countCommentsByPostId(postId);
-            const comments = await commentService.getCommentsByPostId(postId, page, pageSize);
+            const comments = await commentService.getCommentsByPostId(postId, page, pageSize,sortDirection);
 
             if (!comments || comments.length === 0) {
                 return res.status(404).json({ message: "No comments found for this post" });
