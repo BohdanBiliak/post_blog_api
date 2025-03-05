@@ -63,8 +63,8 @@ export const commentRepository = {
             .find({ postId })
             .skip((page - 1) * pageSize)
             .limit(pageSize)
+            .sort({ createdAt: -1 })
             .toArray();
-        comments.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
         return comments.map((comment: any) => ({
             ...comment,
