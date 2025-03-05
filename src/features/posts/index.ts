@@ -18,3 +18,4 @@ postsRouter.post('/', ...postValidatorMiddleware, createPostController)
 postsRouter.delete('/:id', adminMiddleware, findPostValidatorMiddleware,delPostController)
 postsRouter.put('/:id', ...postValidatorMiddleware,findPostValidatorMiddleware, putPostController)
 postsRouter.post("/:postId/comments",authenticateJWT,commentValidator, commentController.create);
+postsRouter.get("/:postId/comments", commentController.getCommentsByPostId);

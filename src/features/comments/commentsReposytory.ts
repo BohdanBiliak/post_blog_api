@@ -24,17 +24,6 @@ export const commentRepository = {
     },
 
 
-    async findByPostId(postId: string): Promise<CommentViewModel[]> {
-        const comments = await commentsCollection.find({ postId }).toArray();
-        return comments.map((comment: any) => ({
-            ...comment,
-            commentatorInfo: {
-                userId: comment.commentatorInfo?.userId || "",
-                userLogin: comment.commentatorInfo?.userLogin || "",
-            },
-        }));
-    },
-
     async update(commentId: string, content: string, userId: string): Promise<boolean> {
         const comment = await commentsCollection.findOne({ id: commentId });
 
@@ -68,5 +57,18 @@ export const commentRepository = {
                 userLogin: comment.commentatorInfo?.userLogin || "",
             }
         };
+    },
+        async findByPostId(postId: string): Promise<CommentViewModel[]> {
+            const comments = await commentsCollection.find({ postId }).toArray();
+            return comments.map((comment: any) => ({
+                ...comment,
+                commentatorInfo: {
+                    userId: comment.commentatorInfo?.userId || "",
+                    userLogin: comment.commentatorInfo?.userLogin || "",
+                },
+                id: comment._id.toString(),
+            }));
+
     }
+
 };

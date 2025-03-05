@@ -29,5 +29,8 @@ export const commentService = {
     async getCommentById(commentId: string): Promise<CommentViewModel | null> {
         return await commentRepository.findById(commentId);
 
+    },
+    async getCommentsByPostId(postId: string): Promise<CommentViewModel[]> {
+        return await commentRepository.findByPostId(postId);
     }
 };
