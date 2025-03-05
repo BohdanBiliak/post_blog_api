@@ -16,6 +16,10 @@ export const commentController = {
             if (!user) {
                 return res.status(401).json({message: "Unauthorized: You must be logged in"});
             }
+            const post = await postsService.find(postId);
+            if (!post) {
+                return res.status(404).json({ message: "Post not found" });
+            }
 
             const newComment = await commentService.create(postId, content, user);
 
