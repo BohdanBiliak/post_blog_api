@@ -115,7 +115,7 @@ export const commentController = {
     async getCommentsByPostId(req: Request, res: Response) {
         try {
             const postId = req.params.postId;
-            const page = parseInt(req.query.page as string) || 1;
+            const page = parseInt(req.query.pageNumber as string) || 1;
             const pageSize = parseInt(req.query.pageSize as string) || 10;
 
             if (!postId) {
