@@ -118,7 +118,7 @@ export const commentController = {
                 return res.status(404).json({message: "No comments found for this post"});
             }
 
-            return res.status(204).json(comments);
+            return res.status(200).json(comments);
         } catch (error) {
             console.error("Error fetching comments:", error);
             return res.status(500).json({message: "Internal Server Error"});
