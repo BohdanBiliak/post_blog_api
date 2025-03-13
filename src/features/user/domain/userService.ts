@@ -20,7 +20,7 @@ export const userService = {
 
         const passwordHash = hashPassword(password);
 
-        const newUser: UserDBModel = {
+        const newUser: { id: string; login: string; email: string; passwordHash: string; createdAt: string } = {
             id: Date.now().toString(),
             login,
             email,

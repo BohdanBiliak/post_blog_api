@@ -12,7 +12,14 @@ interface GetUsersQueryParams {
 }
 
 export const userRepository = {
-    async create(user: UserDBModel): Promise<string> {
+    async create(user: {
+        id: string;
+        login: string;
+        email: string;
+        passwordHash: string;
+        createdAt: string
+    }): Promise<string> {
+        // @ts-ignore
         const result = await userCollection.insertOne(user);
 
         console.log("Inserted user:", user);  // <-- Sprawdź, czy dane są poprawne
@@ -46,19 +53,6 @@ export const userRepository = {
             $or: [{ login: loginOrEmail }, { email: loginOrEmail }]
         });
     },
-    async loginUser(loginOrEmail: string, password: string): Promise<boolean> {
-        console.log("🔍 Checking user:", loginOrEmail);
-        const user = await userRepository.findByLoginOrEmail(loginOrEmail);
-        if (!user || !comparePassword(password, user.passwordHash)) {
-            console.error("❌ Invalid login:", loginOrEmail);
-            return false; // Zawsze zwraca `true` albo `false`
-        }
-        return true;
-    },
-
-
-
-
     async getAllUsers({
                           sortBy,
                           sortDirection,
