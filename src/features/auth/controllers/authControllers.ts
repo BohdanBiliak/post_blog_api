@@ -6,12 +6,12 @@ import jwt from "jsonwebtoken";
 export const authController = {
     async register(req: Request, res: Response) {
         const { login, email, password } = req.body;
+        const result = await authService.registerUser(login, email, password);
 
-        const success = await authService.registerUser(login, email, password);
-        if (!success) {
+        if (result.error) {
             return res.status(400).json({
                 errorsMessages: [
-                    { message: "User already exists", field: "email" }
+                    { message: result.error, field: result.field }
                 ]
             });
         }

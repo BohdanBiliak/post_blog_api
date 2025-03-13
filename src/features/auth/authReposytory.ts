@@ -31,6 +31,10 @@ export const authRepository = {
         return await userCollection.findOne({
             $or: [{ email: loginOrEmail }, { login: loginOrEmail }]
         });
+    },
+
+    async findUserByLogin(login: string): Promise<UserDBModel | null> {
+        return await userCollection.findOne({ login });
     }
 
 }

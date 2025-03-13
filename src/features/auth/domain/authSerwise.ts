@@ -8,14 +8,22 @@ class UserDBType {
 }
 
 export const authService = {
-    async registerUser(login: string, email: string, password: string): Promise<boolean> {
-        const existingUser = await authRepository.findUserByEmail(email);
-        if (existingUser) return false;
+    async registerUser(login: string, email: string, password: string) {
+        const existingUserByEmail = await authRepository.findUserByEmail(email);
+        const existingUserByLogin = await authRepository.findUserByLogin(login);
+
+        if (existingUserByEmail) {
+            return { error: "User with this email already exists", field: "email" };
+        }
+
+        if (existingUserByLogin) {
+            return { error: "User with this login already exists", field: "login" };
+        }
 
         const hashedPassword = await bcrypt.hash(password, 10);
         const confirmationCode = uuidv4();
 
-        const newUser: UserDBType = {
+        const newUser = {
             login,
             email,
             passwordHash: hashedPassword,
@@ -26,7 +34,7 @@ export const authService = {
         await authRepository.createUser(newUser);
         await emailManager.sendConfirmationEmail(email, confirmationCode);
 
-        return true;
+        return { success: true };
     },
 
     async confirmEmail(code: string): Promise<boolean> {
