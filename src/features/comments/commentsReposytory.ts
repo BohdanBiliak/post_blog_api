@@ -28,7 +28,7 @@ export const commentRepository = {
         const comment = await commentsCollection.findOne({ id: commentId });
 
         if (!comment) return false;
-        if (comment.commentatorInfo.userId !== userId) return false; // Проверка на автора
+        if (comment.commentatorInfo.userId !== userId) return false;
 
         const result = await commentsCollection.updateOne(
             { id: commentId },

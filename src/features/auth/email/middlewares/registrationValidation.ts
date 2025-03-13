@@ -30,7 +30,7 @@ export const EmailValidatorMiddleware = body("email")
 export const PasswordValidatorMiddleware = body("password")
     .isString().withMessage("password must be a string")
     .trim()
-    .isLength({min: 10, max: 20  }).withMessage("password must be at least 8 characters long")
+    .isLength({min: 5, max: 20  }).withMessage("password must be at least 8 characters long")
     //.matches(/[0-9]/).withMessage("password must contain at least one number")
     //.matches(/[A-Za-z]/).withMessage("password must contain at least one letter");
 
