@@ -33,8 +33,7 @@ export const userRepository = {
     },
 
         async findById(id: string): Promise<UserDBModel | null> {
-            console.log("🔍 SZUKAM UŻYTKOWNIKA O ID:", id);  // <-- SPRAWDŹ, czy ID się zgadza
-            return await userCollection.findOne({ id });  // <-- Szukamy po ID użytkownika, nie po `_id`
+            return await userCollection.findOne({ id });
 
 
     },

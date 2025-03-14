@@ -44,7 +44,7 @@ export const authController = {
 
         const accessToken = jwt.sign(
             { userId: user.id },
-            process.env.JWT_SECRET || "secret",
+            process.env.JWT_SECRET || "yourSecretKey",
             { expiresIn: "1h" }
         );
 
