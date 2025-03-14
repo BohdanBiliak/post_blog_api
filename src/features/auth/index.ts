@@ -1,7 +1,7 @@
 import {userController} from "../user/controllers/userController";
 import {Router} from 'express'
 import {authController} from "./controllers/authControllers";
-import {registrationValidatorMiddleware} from "./email/middlewares/registrationValidation";
+import { registrationValidatorMiddleware} from "./email/middlewares/registrationValidation";
 
 
 export const authRouter = Router()

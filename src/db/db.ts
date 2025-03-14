@@ -21,8 +21,6 @@ export async function runDB(url:string):Promise<void> {
     blogsCollection = db.collection<BlogDbType>(SETTINGS.PATH.BLOGS);
     userCollection = db.collection<UserDBModel>(SETTINGS.PATH.USERS);
     commentsCollection = db.collection<CommentViewModel>(SETTINGS.PATH.COMMENTS);
-    accountCollection = db.collection<UserAccountDBType>(SETTINGS.PATH.ACCOUNT);
-
     try {
         await client.connect();
         await db.command({ ping: 1 });

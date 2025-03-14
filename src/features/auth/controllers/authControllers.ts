@@ -5,6 +5,8 @@ import jwt from "jsonwebtoken";
 
 export const authController = {
     async register(req: Request, res: Response) {
+        console.log(`Received email for registration: ${req.body.email}`);
+        console.log("Received request body:", req.body);
         const { login, email, password } = req.body;
         const result = await authService.registerUser(login, email, password);
 
@@ -15,7 +17,6 @@ export const authController = {
                 ]
             });
         }
-
         res.sendStatus(204);
     },
 
@@ -50,11 +51,29 @@ export const authController = {
         res.json({ accessToken });
     },
 
+
     async resendConfirmationEmail(req: Request, res: Response) {
+        console.log(`Received email for registration: ${req.body.email}`);
+        console.log("Received request body:", req.body);
+
         const { email } = req.body;
 
+        console.log("Received request body:", req.body);
+
+        console.log(`Received request to resend confirmation email for email: ${email}`);  // Debugging log
+
+        if (!email) {
+            return res.status(400).json({
+                errorsMessages: [
+                    { message: "Email is required", field: "email" }
+                ]
+            });
+        }
+
         const success = await authService.resendConfirmationEmail(email);
+
         if (!success) {
+            console.log(`Failed to resend confirmation email for ${email}.`);
             return res.status(400).json({
                 errorsMessages: [
                     { message: "Invalid email or email already confirmed", field: "email" }
@@ -62,7 +81,9 @@ export const authController = {
             });
         }
 
+        console.log(`Successfully resent confirmation email for ${email}.`);
         res.sendStatus(204);
     }
+
 
 };

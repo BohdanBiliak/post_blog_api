@@ -1,18 +1,18 @@
 import {accountCollection, userCollection} from "../../db/db";
 import {UserDBModel} from "../../db/user-db-types";
-import {UserAccountDBType} from "../user/userTypes/userTypes";
 
-class UserDBType {
-}
 
 export const authRepository = {
-    async createUser(user: UserDBType): Promise<void> {
-        // @ts-ignore
+    async createUser(user: UserDBModel): Promise<void> {
+        console.log(`Saving user with email: ${user.email}`);
         await userCollection.insertOne(user);
     },
 
     async findUserByEmail(email: string): Promise<UserDBModel | null> {
-        return await userCollection.findOne({ email });
+        console.log(`Searching for user with email: ${email}`);  // Debugging log
+        const user = await userCollection.findOne({ email });
+        console.log(`User found: ${user ? JSON.stringify(user) : 'No user found'}`);  // Debugging log
+        return user;
     },
 
     async confirmUser(email: string): Promise<boolean> {
@@ -35,6 +35,15 @@ export const authRepository = {
 
     async findUserByLogin(login: string): Promise<UserDBModel | null> {
         return await userCollection.findOne({ login });
+    },
+    async updateUserConfirmationCode(email: string, newCode: string): Promise<boolean> {
+        const result = await userCollection.updateOne(
+            { email },
+            { $set: { confirmationCode: newCode } }
+        );
+
+        return result.matchedCount > 0;
     }
+
 
 }
