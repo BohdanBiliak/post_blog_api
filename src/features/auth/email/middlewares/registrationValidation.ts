@@ -5,7 +5,7 @@ import {InputCheckErrorsMiddleware} from "../../../../global_middlewares/inputCh
 export const LoginValidatorMiddleware = body("login")
     .isString().withMessage("login must be a string")
     .trim()
-    .isLength({ min: 3, max: 20 }).withMessage("login length should be between 1 and 20")
+    .isLength({ min: 3, max:10 }).withMessage("login length should be between 1 and 20")
     .custom(async (login) => {
         const existingUser = await authRepository.findUserByLogin(login);
         if (existingUser) {
