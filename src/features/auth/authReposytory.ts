@@ -4,18 +4,11 @@ import {UserDBModel} from "../../db/user-db-types";
 
 export const authRepository = {
     async createUser(user: UserDBModel): Promise<void> {
-        console.log(`Saving user with email: ${user.email}`);
-
-        console.log(`User saved: ${JSON.stringify(user)}`);
-
         await userCollection.insertOne(user);
     },
 
     async findUserByEmail(email: string): Promise<UserDBModel | null> {
-        console.log(`Searching for user with email: ${email}`);  // Debugging log
-        const user = await userCollection.findOne({ email });
-        console.log(`User found: ${user ? JSON.stringify(user) : 'No user found'}`);  // Debugging log
-        return user;
+        return await userCollection.findOne({email});
     },
 
     async confirmUser(email: string): Promise<boolean> {

@@ -1,24 +1,17 @@
+import {Resend} from 'resend';
+import dotenv from 'dotenv';
 
-import nodemailer from "nodemailer";
-export const emailAdapter ={
-    async sendEmail(email:string, subject:string, message:string){
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: "furergop@gmail.com",
-                pass: "umuv gzdt msor rmdb",
-            },
-        });
+dotenv.config();
 
-        let info = await transporter.sendMail({
-            from: '"Maddison Foo Koch 👻" <biliakbohdan74@gmail.com>',
-            to:  email,
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+export const emailAdapter = {
+    async sendEmail(email: string, subject: string, html: string) {
+        return await resend.emails.send({
+            from: 'Your App <noreply@yourdomain.com>',
+            to: [email],
             subject: subject,
-            html: message,
+            html: html,
         });
-
-        return info;
-
-
-    }
-}
+    },
+};

@@ -32,7 +32,6 @@ export const authService = {
             id: Date.now().toString(),
             createdAt: new Date().toString()
         };
-        console.log(`Creating user with email: ${email}`);
         await authRepository.createUser(newUser);
         await emailManager.sendConfirmationEmail(email, confirmationCode);
         return { success: true };
@@ -53,25 +52,20 @@ export const authService = {
     },
 
     async resendConfirmationEmail(email: string): Promise<boolean> {
-        console.log(`Resending confirmation email for ${email}`); // Logowanie akcji
         const user = await authRepository.findUserByEmail(email);
         if (!user) {
-            console.log(`User with email ${email} not found.`);
             return false;
         }
 
         if (user.isConfirmed) {
-            console.log(`User with email ${email} has already confirmed their email.`);
             return false;
         }
 
         const confirmationCode = uuidv4();
-        console.log(`Generated new confirmation code for user ${email}: ${confirmationCode}`);
 
         const updateSuccess = await authRepository.updateUserConfirmationCode(email, confirmationCode);
 
         if (!updateSuccess) {
-            console.log(`Failed to update confirmation code for ${email}.`);
             return false;
         }
 
