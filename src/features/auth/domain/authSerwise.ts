@@ -10,15 +10,8 @@ export const authService = {
         const existingUserByEmail = await authRepository.findUserByEmail(email);
         const existingUserByLogin = await authRepository.findUserByLogin(login);
 
-        if (existingUserByEmail) {
-            return { error: "User with this email already exists", field: "email" };
-        }
-
-        if (existingUserByLogin) {
-            return { error: "User with this login already exists", field: "login" };
-        }
-
-
+        if (existingUserByEmail) return { error: "User with this email already exists", field: "email" };
+        if (existingUserByLogin) return { error: "User with this login already exists", field: "login" };
 
         const hashedPassword = await bcrypt.hash(password, 10);
         const confirmationCode = uuidv4();
@@ -33,7 +26,14 @@ export const authService = {
             createdAt: new Date().toString()
         };
         await authRepository.createUser(newUser);
-        await emailManager.sendConfirmationEmail(email, confirmationCode);
+        emailManager.sendConfirmationEmail(email, confirmationCode)
+            .then(() => {
+                console.log(`Confirmation email sent to ${email}`);
+            })
+            .catch((error) => {
+                console.error(`Failed to send confirmation email to ${email}:`, error);
+            });
+
         return { success: true };
     },
 
