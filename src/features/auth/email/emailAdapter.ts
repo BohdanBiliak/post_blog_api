@@ -1,17 +1,16 @@
-import {Resend} from 'resend';
-import dotenv from 'dotenv';
+import { Resend } from 'resend';
 
-dotenv.config();
-
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend('re_6NoVLaTw_Lzdjm3YkYGQZGBdjYHZWjP9v');
 
 export const emailAdapter = {
-    async sendEmail(email: string, subject: string, html: string) {
-        return await resend.emails.send({
-            from: 'Your App <noreply@yourdomain.com>',
-            to: [email],
-            subject: subject,
-            html: html,
-        });
+    async sendEmail(email: string, subject: string, message: string) {
+           const data =  await resend.emails.send({
+                from: 'Incubator <bohdan@incubatortest.com>',
+                to: [email],
+                subject: subject,
+                html: message,
+            });
+
+          console.log(data);
     },
 };
