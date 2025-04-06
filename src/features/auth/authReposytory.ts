@@ -1,10 +1,13 @@
-import {accountCollection, userCollection} from "../../db/db";
+import {userCollection} from "../../db/db";
 import {UserDBModel} from "../../db/user-db-types";
 
 
 export const authRepository = {
     async createUser(user: UserDBModel): Promise<void> {
         console.log(`Saving user with email: ${user.email}`);
+
+        console.log(`User saved: ${JSON.stringify(user)}`);
+
         await userCollection.insertOne(user);
     },
 

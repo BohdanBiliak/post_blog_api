@@ -18,6 +18,8 @@ export const authService = {
             return { error: "User with this login already exists", field: "login" };
         }
 
+
+
         const hashedPassword = await bcrypt.hash(password, 10);
         const confirmationCode = uuidv4();
 
@@ -30,10 +32,9 @@ export const authService = {
             id: Date.now().toString(),
             createdAt: new Date().toString()
         };
-
+        console.log(`Creating user with email: ${email}`);
         await authRepository.createUser(newUser);
         await emailManager.sendConfirmationEmail(email, confirmationCode);
-
         return { success: true };
     },
 
@@ -53,7 +54,6 @@ export const authService = {
 
     async resendConfirmationEmail(email: string): Promise<boolean> {
         console.log(`Resending confirmation email for ${email}`); // Logowanie akcji
-
         const user = await authRepository.findUserByEmail(email);
         if (!user) {
             console.log(`User with email ${email} not found.`);

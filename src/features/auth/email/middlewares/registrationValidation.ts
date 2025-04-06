@@ -17,7 +17,6 @@ export const LoginValidatorMiddleware = body("login")
 
 export const EmailValidatorMiddleware = body("email")
     .isEmail().withMessage("Invalid email format")
-    .normalizeEmail()
     .custom(async (email) => {
         const existingUser = await authRepository.findUserByEmail(email);
         if (existingUser) {
