@@ -72,26 +72,28 @@ export const authController = {
 
             const newTokens = await authService.rotateRefreshToken(payload.userId, payload.tokenId);
 
-            res
-                .cookie("refreshToken", newTokens.refreshToken, { httpOnly: true, secure: true })
+            res.cookie("refreshToken", newTokens.refreshToken, {httpOnly: true,
+                secure: true,
+                sameSite: "strict",
+                maxAge: 7 * 24 * 60 * 60 * 1000  })
                 .json({ accessToken: newTokens.accessToken });
         } catch (err) {
-            return res.sendStatus(401); // również w przypadku token expired/invalid
+            return res.sendStatus(401);
         }
     },
     async logout(req: Request, res: Response) {
         const token = req.cookies?.refreshToken;
-        if (token) {
-            try {
-                const payload = jwt.verify(token, process.env.JWT_REFRESH_SECRET!) as RefreshTokenPayload;
-                await authService.invalidateRefreshToken(payload.tokenId);
-            } catch (err) {
-                // token mógł być już nieaktywny – ignorujemy
-            }
-        }
+        if (!token) return res.sendStatus(401);
 
-        res.clearCookie("refreshToken").sendStatus(204);
+        try {
+            const payload = jwt.verify(token, REFRESH_TOKEN_SECRET) as RefreshTokenPayload;
+            await authService.invalidateRefreshToken(payload.tokenId);
+            res.clearCookie("refreshToken").sendStatus(204);
+        } catch (err) {
+            return res.sendStatus(401);
+        }
     },
+
     async me(req: Request, res: Response) {
         const userId = req.user?.id;
         if (!userId) return res.sendStatus(401);
