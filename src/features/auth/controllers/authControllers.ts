@@ -92,6 +92,13 @@ export const authController = {
 
         try {
             const payload = jwt.verify(token, REFRESH_TOKEN_SECRET) as RefreshTokenPayload;
+
+            const isValid = await authService.isRefreshTokenValid(payload.tokenId);
+            if (!isValid) {
+                res.clearCookie("refreshToken");
+                return res.status(401).json({ message: "Invalid or expired refresh token" });
+            }
+
             await authService.invalidateRefreshToken(payload.tokenId);
             res.clearCookie("refreshToken").sendStatus(204);
         } catch (err) {
@@ -100,6 +107,7 @@ export const authController = {
             return res.status(401).json({ message: "Failed to log out. Invalid refresh token." });
         }
     },
+
 
     async me(req: Request, res: Response) {
         const userId = req.user?.id;
