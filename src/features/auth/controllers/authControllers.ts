@@ -5,7 +5,7 @@ import {RefreshTokenPayload} from "../authTypes/types";
 const ACCESS_TOKEN_SECRET = process.env.JWT_SECRET || "accessSecretKey";
 const REFRESH_TOKEN_SECRET = process.env.JWT_REFRESH_SECRET || "refreshSecretKey";
 
-const ACCESS_TOKEN_EXP = "10m";
+const ACCESS_TOKEN_EXP = "10s";
 const REFRESH_TOKEN_EXP = "20s";
 
 export function createAccessToken(userId: string) {
