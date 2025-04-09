@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import {authService} from "../domain/authSerwise";
 import jwt from "jsonwebtoken";
+import {RefreshTokenPayload} from "../authTypes/types";
 const ACCESS_TOKEN_SECRET = process.env.JWT_SECRET || "accessSecretKey";
 const REFRESH_TOKEN_SECRET = process.env.JWT_REFRESH_SECRET || "refreshSecretKey";
 
@@ -64,33 +65,32 @@ export const authController = {
         if (!token) return res.sendStatus(401);
 
         try {
-            const payload: any = jwt.verify(token, REFRESH_TOKEN_SECRET);
-            const isValid = await authService.isRefreshTokenValid(payload.userId, payload.tokenId);
-            if (!isValid) return res.sendStatus(403);
-            await authService.invalidateRefreshToken(payload.tokenId);
-            const newTokenId = await authService.createRefreshToken(payload.userId);
-            const newRefreshToken = createRefreshToken(payload.userId, newTokenId);
-            const newAccessToken = createAccessToken(payload.userId);
-            res.cookie("refreshToken", newRefreshToken, {
-                httpOnly: true,
-                secure: true,
-                sameSite: "strict",
-                maxAge: 7 * 24 * 60 * 60 * 1000
-            });
-            res.json({ accessToken: newAccessToken });
+            const payload = jwt.verify(token, process.env.JWT_REFRESH_SECRET!) as RefreshTokenPayload;
+
+            const isValid = await authService.isRefreshTokenValid(payload.tokenId);
+            if (!isValid) return res.sendStatus(401);
+
+            const newTokens = await authService.rotateRefreshToken(payload.userId, payload.tokenId);
+
+            res
+                .cookie("refreshToken", newTokens.refreshToken, { httpOnly: true, secure: true })
+                .json({ accessToken: newTokens.accessToken });
         } catch (err) {
-            return res.sendStatus(403);
+            return res.sendStatus(401); // również w przypadku token expired/invalid
         }
     },
     async logout(req: Request, res: Response) {
         const token = req.cookies?.refreshToken;
-        if (!token) return res.sendStatus(204);
-        try {
-            const payload: any = jwt.verify(token, REFRESH_TOKEN_SECRET);
-            await authService.invalidateRefreshToken(payload.tokenId);
-        } catch {}
-        res.clearCookie("refreshToken");
-        res.sendStatus(204);
+        if (token) {
+            try {
+                const payload = jwt.verify(token, process.env.JWT_REFRESH_SECRET!) as RefreshTokenPayload;
+                await authService.invalidateRefreshToken(payload.tokenId);
+            } catch (err) {
+                // token mógł być już nieaktywny – ignorujemy
+            }
+        }
+
+        res.clearCookie("refreshToken").sendStatus(204);
     },
     async me(req: Request, res: Response) {
         const userId = req.user?.id;

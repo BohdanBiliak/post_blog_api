@@ -81,14 +81,6 @@ export const authService = {
         return tokenId;
     },
 
-    async isRefreshTokenValid(userId: string, tokenId: string): Promise<boolean> {
-        return refreshTokenStore.get(tokenId) === userId;
-    },
-
-    async invalidateRefreshToken(tokenId: string): Promise<void> {
-        refreshTokenStore.delete(tokenId);
-    },
-
     async getUserInfo(userId: string) {
         const user = await authRepository.findUserById(userId);
         if (!user) return null;
@@ -97,6 +89,20 @@ export const authService = {
             login: user.login,
             userId: user.id
         };
+    },
+    async isRefreshTokenValid(tokenId: string): Promise<boolean> {
+        const token = await this.tokenRepository.findById(tokenId);
+        return !!token && !token.revoked;
+    },
+
+    async rotateRefreshToken(userId: string, oldTokenId: string): Promise<{ accessToken: string; refreshToken: string }> {
+        await this.tokenRepository.revoke(oldTokenId); // lub soft-delete
+        return this.issueTokens(userId); // nowy access + refresh token
+    },
+
+    async invalidateRefreshToken(tokenId: string) {
+        await this.tokenRepository.revoke(tokenId);
     }
+
 
 };

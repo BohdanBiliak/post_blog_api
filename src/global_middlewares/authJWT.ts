@@ -5,7 +5,7 @@ import { userRepository } from "../features/user/userReposytory";
 export const authenticateJWT = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const authHeader = req.headers["authorization"];
-        console.log("Authorization Header:", authHeader); // Логируем заголовок Authorization
+        console.log("Authorization Header:", authHeader);
 
         if (!authHeader || typeof authHeader !== "string" || !authHeader.startsWith("Bearer ")) {
             console.log("Authorization header is missing or incorrect format");
@@ -13,19 +13,19 @@ export const authenticateJWT = async (req: Request, res: Response, next: NextFun
         }
 
         const token = authHeader.split(" ")[1];
-        console.log("Extracted Token:", token); // Логируем извлеченный токен
+        console.log("Extracted Token:", token);
 
         let decodedToken;
         try {
             decodedToken = jwt.verify(token, process.env.JWT_SECRET || "yourSecretKey") as { userId: string };
-            console.log("Decoded Token:", decodedToken); // Логируем декодированный токен
+            console.log("Decoded Token:", decodedToken);
         } catch (error) {
             console.error("Error verifying token:", error);
             return res.status(401).json({ message: "Invalid or expired token" });
         }
 
         const user = await userRepository.findById(decodedToken.userId);
-        console.log("User from DB:", user); // Логируем пользователя, найденного в базе
+        console.log("User from DB:", user);
 
         if (!user) {
             console.log("User not found in the database");
