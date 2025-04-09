@@ -70,7 +70,7 @@ export const authController = {
             // Check if refresh token is valid
             const isValid = await authService.isRefreshTokenValid(payload.tokenId);
             if (!isValid) return res.status(401).json({ message: "Invalid or expired refresh token" });
-
+            await authService.invalidateRefreshToken(payload.tokenId);
             // Rotate tokens
             const newTokens = await authService.rotateRefreshToken(payload.userId, payload.tokenId);
 
@@ -96,6 +96,7 @@ export const authController = {
             res.clearCookie("refreshToken").sendStatus(204);
         } catch (err) {
             console.error(err);
+            res.clearCookie("refreshToken");
             return res.status(401).json({ message: "Failed to log out. Invalid refresh token." });
         }
     },
