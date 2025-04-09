@@ -4,7 +4,7 @@ import {authRepository} from "../authReposytory";
 import {emailManager} from "../email/manager/email-manager";
 
 
-
+const refreshTokenStore = new Map<string, string>();
 export const authService = {
     async registerUser(login: string, email: string, password: string) {
         const existingUserByEmail = await authRepository.findUserByEmail(email);
@@ -74,6 +74,29 @@ export const authService = {
 
         console.log(`Confirmation email sent successfully to ${email}.`);
         return true;
+    },
+    async createRefreshToken(userId: string): Promise<string> {
+        const tokenId = uuidv4();
+        refreshTokenStore.set(tokenId, userId);
+        return tokenId;
+    },
+
+    async isRefreshTokenValid(userId: string, tokenId: string): Promise<boolean> {
+        return refreshTokenStore.get(tokenId) === userId;
+    },
+
+    async invalidateRefreshToken(tokenId: string): Promise<void> {
+        refreshTokenStore.delete(tokenId);
+    },
+
+    async getUserInfo(userId: string) {
+        const user = await authRepository.findUserById(userId);
+        if (!user) return null;
+        return {
+            email: user.email,
+            login: user.login,
+            userId: user.id
+        };
     }
 
 };

@@ -12,4 +12,6 @@ authRouter.post("/login", authController.login);
 authRouter.post("/registration-confirmation", authController.confirmRegistration)
 authRouter.post("/registration",registrationValidatorMiddleware, authController.register);
 authRouter.post("/registration-email-resending", authController.resendConfirmationEmail)
-authRouter.get("/me",authenticateJWT, userController.getCurrentUser);
+authRouter.post("/refresh-token", authController.refreshToken);
+authRouter.post("/logout", authController.logout);
+authRouter.get("/me", authenticateJWT, authController.me);

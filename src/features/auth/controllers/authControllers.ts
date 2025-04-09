@@ -1,13 +1,25 @@
 import { Request, Response } from "express";
 import {authService} from "../domain/authSerwise";
 import jwt from "jsonwebtoken";
+const ACCESS_TOKEN_SECRET = process.env.JWT_SECRET || "accessSecretKey";
+const REFRESH_TOKEN_SECRET = process.env.JWT_REFRESH_SECRET || "refreshSecretKey";
+
+const ACCESS_TOKEN_EXP = "10m";
+const REFRESH_TOKEN_EXP = "7d";
+
+function createAccessToken(userId: string) {
+    return jwt.sign({ userId }, ACCESS_TOKEN_SECRET, { expiresIn: ACCESS_TOKEN_EXP });
+}
+
+function createRefreshToken(userId: string, tokenId: string) {
+    return jwt.sign({ userId, tokenId }, REFRESH_TOKEN_SECRET, { expiresIn: REFRESH_TOKEN_EXP });
+}
 
 
 export const authController = {
     async register(req: Request, res: Response) {
         const { login, email, password } = req.body;
         const result = await authService.registerUser(login, email, password);
-
         if (result.error) {
             return res.status(400).json({
                 errorsMessages: [
@@ -20,7 +32,6 @@ export const authController = {
 
     async confirmRegistration(req: Request, res: Response) {
         const { code } = req.body;
-
         const success = await authService.confirmEmail(code);
         if (!success) {
             return res.status(400).json({
@@ -35,31 +46,65 @@ export const authController = {
     async login(req: Request, res: Response) {
         const { loginOrEmail, password } = req.body;
         const user = await authService.validateUser(loginOrEmail, password);
-
-        if (!user) {
-            return res.sendStatus(401);
-        }
-
-        const accessToken = jwt.sign(
-            { userId: user.id },
-            process.env.JWT_SECRET || "yourSecretKey",
-            { expiresIn: "1h" }
-        );
+        if (!user) return res.sendStatus(401);
+        const tokenId = await authService.createRefreshToken(user.id);
+        const refreshToken = createRefreshToken(user.id, tokenId);
+        const accessToken = createAccessToken(user.id);
+        res.cookie("refreshToken", refreshToken, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "strict",
+            maxAge: 7 * 24 * 60 * 60 * 1000 // 7 дней
+        });
 
         res.json({ accessToken });
+    },
+    async refreshToken(req: Request, res: Response) {
+        const token = req.cookies?.refreshToken;
+        if (!token) return res.sendStatus(401);
+
+        try {
+            const payload: any = jwt.verify(token, REFRESH_TOKEN_SECRET);
+            const isValid = await authService.isRefreshTokenValid(payload.userId, payload.tokenId);
+            if (!isValid) return res.sendStatus(403);
+            await authService.invalidateRefreshToken(payload.tokenId);
+            const newTokenId = await authService.createRefreshToken(payload.userId);
+            const newRefreshToken = createRefreshToken(payload.userId, newTokenId);
+            const newAccessToken = createAccessToken(payload.userId);
+            res.cookie("refreshToken", newRefreshToken, {
+                httpOnly: true,
+                secure: true,
+                sameSite: "strict",
+                maxAge: 7 * 24 * 60 * 60 * 1000
+            });
+            res.json({ accessToken: newAccessToken });
+        } catch (err) {
+            return res.sendStatus(403);
+        }
+    },
+    async logout(req: Request, res: Response) {
+        const token = req.cookies?.refreshToken;
+        if (!token) return res.sendStatus(204);
+        try {
+            const payload: any = jwt.verify(token, REFRESH_TOKEN_SECRET);
+            await authService.invalidateRefreshToken(payload.tokenId);
+        } catch {}
+        res.clearCookie("refreshToken");
+        res.sendStatus(204);
+    },
+    async me(req: Request, res: Response) {
+        const userId = req.user?.id;
+        if (!userId) return res.sendStatus(401);
+        const userInfo = await authService.getUserInfo(userId);
+        if (!userInfo) return res.sendStatus(404);
+        res.json(userInfo);
     },
 
 
     async resendConfirmationEmail(req: Request, res: Response) {
         console.log(`Received email for registration: ${req.body.email}`);
         console.log("Received request body:", req.body);
-
         const { email } = req.body;
-
-        console.log("Received request body:", req.body);
-
-        console.log(`Received request to resend confirmation email for email: ${email}`);  // Debugging log
-
         if (!email) {
             return res.status(400).json({
                 errorsMessages: [
@@ -67,9 +112,7 @@ export const authController = {
                 ]
             });
         }
-
         const success = await authService.resendConfirmationEmail(email);
-
         if (!success) {
             console.log(`Failed to resend confirmation email for ${email}.`);
             return res.status(400).json({
@@ -78,10 +121,7 @@ export const authController = {
                 ]
             });
         }
-
         console.log(`Successfully resent confirmation email for ${email}.`);
         res.sendStatus(204);
     }
-
-
 };

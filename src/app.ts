@@ -7,10 +7,13 @@ import {postsRouter} from './features/posts'
 import {userRouter} from "./features/user";
 import {commentRouter} from "./features/comments";
 import {authRouter} from "./features/auth";
+import cookieParser from 'cookie-parser';
+
 
 export const app = express()
 app.use(express.json())
 app.use(cors())
+app.use(cookieParser());
 app.get('/', (req, res) => {
     res.status(200).json({version: '1.0'})
 })

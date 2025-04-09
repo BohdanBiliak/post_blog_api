@@ -10,6 +10,9 @@ export const authRepository = {
     async findUserByEmail(email: string): Promise<UserDBModel | null> {
         return await userCollection.findOne({email});
     },
+    async findUserById(userId: string): Promise<UserDBModel | null> {
+        return await userCollection.findOne({ id: userId });
+    },
 
     async confirmUser(email: string): Promise<boolean> {
         const result = await userCollection.updateOne(
