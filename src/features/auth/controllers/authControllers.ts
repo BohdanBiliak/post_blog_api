@@ -8,11 +8,11 @@ const REFRESH_TOKEN_SECRET = process.env.JWT_REFRESH_SECRET || "refreshSecretKey
 const ACCESS_TOKEN_EXP = "10m";
 const REFRESH_TOKEN_EXP = "7d";
 
-function createAccessToken(userId: string) {
+export function createAccessToken(userId: string) {
     return jwt.sign({ userId }, ACCESS_TOKEN_SECRET, { expiresIn: ACCESS_TOKEN_EXP });
 }
 
-function createRefreshToken(userId: string, tokenId: string) {
+export function createRefreshToken(userId: string, tokenId: string) {
     return jwt.sign({ userId, tokenId }, REFRESH_TOKEN_SECRET, { expiresIn: REFRESH_TOKEN_EXP });
 }
 
@@ -62,43 +62,49 @@ export const authController = {
     },
     async refreshToken(req: Request, res: Response) {
         const token = req.cookies?.refreshToken;
-        if (!token) return res.sendStatus(401);
+        if (!token) return res.status(401).json({ message: "Missing refresh token" });
 
         try {
-            const payload = jwt.verify(token, process.env.JWT_REFRESH_SECRET!) as RefreshTokenPayload;
+            const payload = jwt.verify(token, REFRESH_TOKEN_SECRET) as RefreshTokenPayload;
 
+            // Check if refresh token is valid
             const isValid = await authService.isRefreshTokenValid(payload.tokenId);
-            if (!isValid) return res.sendStatus(401);
+            if (!isValid) return res.status(401).json({ message: "Invalid or expired refresh token" });
 
+            // Rotate tokens
             const newTokens = await authService.rotateRefreshToken(payload.userId, payload.tokenId);
 
-            res.cookie("refreshToken", newTokens.refreshToken, {httpOnly: true,
+            res.cookie("refreshToken", newTokens.refreshToken, {
+                httpOnly: true,
                 secure: true,
                 sameSite: "strict",
-                maxAge: 7 * 24 * 60 * 60 * 1000  })
+                maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+            })
                 .json({ accessToken: newTokens.accessToken });
         } catch (err) {
-            return res.sendStatus(401);
+            console.error(err);
+            return res.status(401).json({ message: "Invalid or expired refresh token" });
         }
     },
     async logout(req: Request, res: Response) {
         const token = req.cookies?.refreshToken;
-        if (!token) return res.sendStatus(401);
+        if (!token) return res.status(401).json({ message: "No refresh token found" });
 
         try {
             const payload = jwt.verify(token, REFRESH_TOKEN_SECRET) as RefreshTokenPayload;
             await authService.invalidateRefreshToken(payload.tokenId);
             res.clearCookie("refreshToken").sendStatus(204);
         } catch (err) {
-            return res.sendStatus(401);
+            console.error(err);
+            return res.status(401).json({ message: "Failed to log out. Invalid refresh token." });
         }
     },
 
     async me(req: Request, res: Response) {
         const userId = req.user?.id;
-        if (!userId) return res.sendStatus(401);
+        if (!userId) return res.status(401).json({ message: "Unauthorized" });
         const userInfo = await authService.getUserInfo(userId);
-        if (!userInfo) return res.sendStatus(404);
+        if (!userInfo) return res.status(404).json({ message: "User not found" });
         res.json(userInfo);
     },
 

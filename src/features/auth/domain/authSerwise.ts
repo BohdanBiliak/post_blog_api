@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from "uuid";
 import bcrypt from "bcrypt";
 import {authRepository} from "../authReposytory";
 import {emailManager} from "../email/manager/email-manager";
+import {createAccessToken, createRefreshToken} from "../controllers/authControllers";
 
 
 const refreshTokenStore = new Map<string, string>();
@@ -80,29 +81,29 @@ export const authService = {
         refreshTokenStore.set(tokenId, userId);
         return tokenId;
     },
+    async isRefreshTokenValid(tokenId: string): Promise<boolean> {
+        return refreshTokenStore.has(tokenId);
+    },
 
+
+    async rotateRefreshToken(userId: string, oldTokenId: string): Promise<{ accessToken: string; refreshToken: string }> {
+        refreshTokenStore.delete(oldTokenId); // invalidate old refresh token
+        const newTokenId = await this.createRefreshToken(userId);
+        const accessToken = createAccessToken(userId);
+        const refreshToken = createRefreshToken(userId, newTokenId);
+        return { accessToken, refreshToken };
+    },
+
+
+    async invalidateRefreshToken(tokenId: string) {
+        refreshTokenStore.delete(tokenId); // invalidate the token
+    },
     async getUserInfo(userId: string) {
         const user = await authRepository.findUserById(userId);
         if (!user) return null;
-        return {
-            email: user.email,
-            login: user.login,
-            userId: user.id
-        };
-    },
-    async isRefreshTokenValid(tokenId: string): Promise<boolean> {
-        const token = await this.tokenRepository.findById(tokenId);
-        return !!token && !token.revoked;
-    },
-
-    async rotateRefreshToken(userId: string, oldTokenId: string): Promise<{ accessToken: string; refreshToken: string }> {
-        await this.tokenRepository.revoke(oldTokenId); // lub soft-delete
-        return this.issueTokens(userId); // nowy access + refresh token
-    },
-
-    async invalidateRefreshToken(tokenId: string) {
-        await this.tokenRepository.revoke(tokenId);
+        return { email: user.email, login: user.login, userId: user.id };
     }
+
 
 
 };
