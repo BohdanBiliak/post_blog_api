@@ -1,7 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import {userRepository} from "../features/user/userReposytory";
+import { userRepository } from "../features/user/userReposytory";
 
+const ACCESS_TOKEN_SECRET = process.env.JWT_SECRET || "accessSecretKey";
 
 export const authenticateJWT = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -11,7 +12,7 @@ export const authenticateJWT = async (req: Request, res: Response, next: NextFun
         }
 
         const token = authHeader.split(" ")[1];
-        const decodedToken = jwt.verify(token, process.env.JWT_SECRET || "yourSecretKey") as { userId: string };
+        const decodedToken = jwt.verify(token, ACCESS_TOKEN_SECRET) as { userId: string };
 
         const user = await userRepository.findById(decodedToken.userId);
         if (!user) {
