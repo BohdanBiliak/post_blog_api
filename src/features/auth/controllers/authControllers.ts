@@ -6,7 +6,7 @@ const ACCESS_TOKEN_SECRET = process.env.JWT_SECRET || "accessSecretKey";
 const REFRESH_TOKEN_SECRET = process.env.JWT_REFRESH_SECRET || "refreshSecretKey";
 
 const ACCESS_TOKEN_EXP = "10m";
-const REFRESH_TOKEN_EXP = "7d";
+const REFRESH_TOKEN_EXP = "20s";
 
 export function createAccessToken(userId: string) {
     return jwt.sign({ userId }, ACCESS_TOKEN_SECRET, { expiresIn: ACCESS_TOKEN_EXP });
