@@ -5,14 +5,16 @@ import dotenv from 'dotenv'
 import {SETTINGS} from "../settings";
 import {UserDBModel} from "./user-db-types";
 import {CommentViewModel} from "../features/comments/commentsTypes/commentsTypes";
-import {UserAccountDBType} from "../features/user/userTypes/userTypes";
+import {SecurityDeviceDBType} from "../features/SecurityDevices/types/securityDevices";
 dotenv.config()
 
 export let postCollection: Collection<PostDbType>
 export let blogsCollection: Collection<BlogDbType>
 export let userCollection: Collection<UserDBModel>
 export let commentsCollection: Collection<CommentViewModel>
-export let accountCollection: Collection<UserAccountDBType>
+export let securityDeviceCollection: Collection<SecurityDeviceDBType>;
+
+
 export async function runDB(url:string):Promise<void> {
     let client = new MongoClient(url)
     let db = client.db(SETTINGS.DB_NAME)
@@ -21,6 +23,7 @@ export async function runDB(url:string):Promise<void> {
     blogsCollection = db.collection<BlogDbType>(SETTINGS.PATH.BLOGS);
     userCollection = db.collection<UserDBModel>(SETTINGS.PATH.USERS);
     commentsCollection = db.collection<CommentViewModel>(SETTINGS.PATH.COMMENTS);
+    securityDeviceCollection = db.collection<SecurityDeviceDBType>(SETTINGS.PATH.SECURITY);
     try {
         await client.connect();
         await db.command({ ping: 1 });
@@ -51,6 +54,7 @@ export const setDB = async (dataset?: Partial<ReadonlyDBtype>) => {
     await postCollection.deleteMany({});
     await userCollection.deleteMany({});
     await commentsCollection.deleteMany({});
+    await securityDeviceCollection.deleteMany({});
 
     console.log("DB после setDB:", db);
 };
