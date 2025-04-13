@@ -5,6 +5,7 @@ import dotenv from 'dotenv'
 import {SETTINGS} from "../settings";
 import {UserDBModel} from "./user-db-types";
 import {CommentViewModel} from "../features/comments/commentsTypes/commentsTypes";
+import {UserAccountDBType} from "../features/user/userTypes/userTypes";
 import {SecurityDeviceDBType} from "../features/SecurityDevices/types/securityDevices";
 dotenv.config()
 
@@ -12,6 +13,7 @@ export let postCollection: Collection<PostDbType>
 export let blogsCollection: Collection<BlogDbType>
 export let userCollection: Collection<UserDBModel>
 export let commentsCollection: Collection<CommentViewModel>
+export let accountCollection: Collection<UserAccountDBType>
 export let securityDeviceCollection: Collection<SecurityDeviceDBType>;
 
 
