@@ -1,8 +1,9 @@
-import express from "express";
+
 import {authenticateJWT} from "../../global_middlewares/authJWT";
 import {deleteAllOtherDevices, deleteDeviceById, getDevices} from "./controllers/securityDevicesController";
+import {Router} from "express";
 
-export const secureRouter = express.Router();
+export const secureRouter = Router();
 
 secureRouter.get("/devices", authenticateJWT,   getDevices);
 secureRouter.delete("/devices", deleteAllOtherDevices);
