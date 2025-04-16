@@ -6,7 +6,7 @@ import {SETTINGS} from "../settings";
 import {UserDBModel} from "./user-db-types";
 import {CommentViewModel} from "../features/comments/commentsTypes/commentsTypes";
 import {UserAccountDBType} from "../features/user/userTypes/userTypes";
-import {SecurityDeviceDBType} from "../features/SecurityDevices/types/types";
+import {SessionDevice} from "../features/SecurityDevices/types/types";
 dotenv.config()
 
 export let postCollection: Collection<PostDbType>
@@ -14,7 +14,7 @@ export let blogsCollection: Collection<BlogDbType>
 export let userCollection: Collection<UserDBModel>
 export let commentsCollection: Collection<CommentViewModel>
 export let accountCollection: Collection<UserAccountDBType>
-export let securityDeviceCollection: Collection<SecurityDeviceDBType>;
+export let securityDeviceCollection: Collection<SessionDevice>;
 
 
 export async function runDB(url:string):Promise<void> {
@@ -25,7 +25,7 @@ export async function runDB(url:string):Promise<void> {
     blogsCollection = db.collection<BlogDbType>(SETTINGS.PATH.BLOGS);
     userCollection = db.collection<UserDBModel>(SETTINGS.PATH.USERS);
     commentsCollection = db.collection<CommentViewModel>(SETTINGS.PATH.COMMENTS);
-    securityDeviceCollection = db.collection<SecurityDeviceDBType>(SETTINGS.PATH.SECURITY);
+    securityDeviceCollection = db.collection<SessionDevice>(SETTINGS.PATH.SECURITY);
     try {
         await client.connect();
         await db.command({ ping: 1 });
