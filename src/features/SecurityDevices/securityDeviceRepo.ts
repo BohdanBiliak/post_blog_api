@@ -1,16 +1,37 @@
-import SecurityDevice, { ISecurityDevice } from './models/SecurityDevice';
-export const findDevicesByUser = async (userId: string): Promise<Partial<ISecurityDevice>[]> => {
-    return SecurityDevice.find({ userId, expiresAt: { $gt: new Date() } }, '-_id ip title lastActiveDate deviceId');
-};
 
-export const deleteOtherDevices = async (userId: string, currentDeviceId: string): Promise<void> => {
-    await SecurityDevice.deleteMany({ userId, deviceId: { $ne: currentDeviceId } });
-};
+import {SessionDevice} from "./types/types";
+import {DeviceSessionModel} from "./models/SecurityDevice";
 
-export const deleteDevice = async (userId: string, deviceId: string): Promise<'forbidden' | 'notFound' | 'deleted'> => {
-    const device = await SecurityDevice.findOne({ deviceId });
-    if (!device) return 'notFound';
-    if (device.userId.toString() !== userId) return 'forbidden';
-    await SecurityDevice.deleteOne({ deviceId });
-    return 'deleted';
+export const deviceSessionRepository = {
+    async create(session: SessionDevice): Promise<void> {
+        await DeviceSessionModel.create(session);
+    },
+
+    async findByDeviceId(deviceId: string): Promise<SessionDevice | null> {
+        return DeviceSessionModel.findOne({ deviceId }).lean();
+    },
+
+    async updateLastActiveDate(deviceId: string, newDate: string): Promise<boolean> {
+        const result = await DeviceSessionModel.updateOne(
+            { deviceId },
+            { $set: { lastActiveDate: newDate } }
+        );
+        return result.modifiedCount === 1;
+    },
+
+    async deleteSessionByDeviceId(deviceId: string): Promise<boolean> {
+        const result = await DeviceSessionModel.deleteOne({ deviceId });
+        return result.deletedCount === 1;
+    },
+
+    async deleteAllSessionsExcept(deviceId: string, userId: string): Promise<void> {
+        await DeviceSessionModel.deleteMany({
+            deviceId: { $ne: deviceId },
+            userId: userId
+        });
+    },
+
+    async findAllSessionsForUser(userId: string): Promise<SessionDevice[]> {
+        return DeviceSessionModel.find({ userId }).lean();
+    }
 };

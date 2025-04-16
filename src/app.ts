@@ -8,7 +8,8 @@ import {userRouter} from "./features/user";
 import {commentRouter} from "./features/comments";
 import {authRouter} from "./features/auth";
 import cookieParser from 'cookie-parser';
-import {secureRouter} from "./features/SecurityDevices";
+import {devicesRouter} from "./features/SecurityDevices";
+
 
 
 export const app = express()
@@ -24,4 +25,4 @@ app.use(SETTINGS.PATH.TESTING, testingRouter)
 app.use(SETTINGS.PATH.USERS, userRouter)
 app.use(SETTINGS.PATH.COMMENTS, commentRouter)
 app.use(SETTINGS.PATH.AUTHORIZATION, authRouter )
-app.use(SETTINGS.PATH.SECURITY, secureRouter)
+app.use(SETTINGS.PATH.SECURITY, devicesRouter)

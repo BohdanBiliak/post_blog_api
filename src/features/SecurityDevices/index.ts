@@ -1,10 +1,9 @@
+import { Router } from "express";
+import {deviceSessionController} from "./controllers/securityDevicesController";
+import {authMiddleware} from "./middlewares/authMiddleware";
 
-import {authenticateJWT} from "../../global_middlewares/authJWT";
-import {deleteAllOtherDevices, deleteDeviceById, getDevices} from "./controllers/securityDevicesController";
-import {Router} from "express";
+export const devicesRouter = Router();
 
-export const secureRouter = Router();
-
-secureRouter.get("/devices", authenticateJWT,   getDevices);
-secureRouter.delete("/devices",authenticateJWT, deleteAllOtherDevices);
-secureRouter.delete("/devices/:id",deleteDeviceById);
+devicesRouter.get("/security/devices", authMiddleware, deviceSessionController.getSessions);
+devicesRouter.delete("/security/devices", authMiddleware, deviceSessionController.deleteAllExceptCurrent);
+devicesRouter.delete("/security/devices/:deviceId", authMiddleware, deviceSessionController.deleteDevice);

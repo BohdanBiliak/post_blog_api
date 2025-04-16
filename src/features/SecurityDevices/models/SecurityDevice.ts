@@ -1,21 +1,11 @@
-import { Schema, model, Document } from 'mongoose';
+import mongoose from "mongoose";
 
-export interface ISecurityDevice extends Document {
-    userId: string;
-    deviceId: string;
-    title: string;
-    ip: string;
-    lastActiveDate: Date;
-    expiresAt: Date;
-}
-
-const SecurityDeviceSchema = new Schema<ISecurityDevice>({
-    userId: { type: String, required: true },
+const deviceSessionSchema = new mongoose.Schema({
     deviceId: { type: String, required: true },
-    title: { type: String, required: true },
     ip: { type: String, required: true },
-    lastActiveDate: { type: Date, required: true },
-    expiresAt: { type: Date, required: true }
+    title: { type: String, required: true },
+    lastActiveDate: { type: String, required: true },
+    userId: { type: String, required: true }
 });
 
-export default model<ISecurityDevice>('SecurityDevice', SecurityDeviceSchema);
+export const DeviceSessionModel = mongoose.model("DeviceSession", deviceSessionSchema);

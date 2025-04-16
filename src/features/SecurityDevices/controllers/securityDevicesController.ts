@@ -1,32 +1,31 @@
+import { Request, Response } from "express";
+import {deviceSessionService} from "../domain/devicesSessionServices";
 
-import { Request, Response } from 'express';
-import * as SecurityDeviceRepo from '../securityDeviceRepo';
-import {UserDBModel} from "../../../db/user-db-types";
-export interface AuthenticatedRequest extends Request {
-    user?: UserDBModel;
-    id?: string;
-}
-export const getDevices = async (req: AuthenticatedRequest, res: Response) => {
-    const userId = req.user!.id;
-    const devices = await SecurityDeviceRepo.findDevicesByUser(userId);
-    res.status(200).json(devices);
-};
+export const deviceSessionController = {
+    async getSessions(req: Request, res: Response) {
+        const userId = req.user!.id;
+        const sessions = await deviceSessionService.getUserSessions(userId);
+        res.status(200).json(sessions);
+    },
 
-export const deleteAllOtherDevices = async (req: AuthenticatedRequest, res: Response) => {
-    const userId = req.user!.id;
-    const currentDeviceId = req.id!;
-    await SecurityDeviceRepo.deleteOtherDevices(userId, currentDeviceId);
-    res.sendStatus(204);
-};
+    async deleteAllExceptCurrent(req: Request, res: Response) {
+        const userId = req.user!.id;
+        const currentDeviceId = req.deviceId!;
+        await deviceSessionService.terminateOtherSessions(userId, currentDeviceId);
+        res.sendStatus(204);
+    },
 
-export const deleteDeviceById = async (req: AuthenticatedRequest, res: Response) => {
-    const userId = req.user!.id;
-    const { deviceId } = req.params;
-    const result = await SecurityDeviceRepo.deleteDevice(userId, deviceId);
+    async deleteDevice(req: Request, res: Response) {
+        const userId = req.user!.id;
+        const deviceId = req.params.deviceId;
 
-    switch (result) {
-        case 'forbidden': return res.sendStatus(403);
-        case 'notFound': return res.sendStatus(404);
-        default: return res.sendStatus(204);
+        const session = await deviceSessionService.getUserSessions(userId);
+        const targetSession = session.find(s => s.deviceId === deviceId);
+
+        if (!targetSession) return res.sendStatus(404);
+        if (targetSession.userId !== userId) return res.sendStatus(403);
+
+        const deleted = await deviceSessionService.terminateSession(deviceId);
+        res.sendStatus(deleted ? 204 : 404);
     }
 };

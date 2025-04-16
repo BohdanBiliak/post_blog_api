@@ -6,7 +6,7 @@ import {SETTINGS} from "../settings";
 import {UserDBModel} from "./user-db-types";
 import {CommentViewModel} from "../features/comments/commentsTypes/commentsTypes";
 import {UserAccountDBType} from "../features/user/userTypes/userTypes";
-import {SecurityDeviceDBType} from "../features/SecurityDevices/types/securityDevices";
+import {SecurityDeviceDBType} from "../features/SecurityDevices/types/types";
 dotenv.config()
 
 export let postCollection: Collection<PostDbType>
