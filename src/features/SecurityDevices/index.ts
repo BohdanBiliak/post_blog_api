@@ -6,5 +6,5 @@ import {Router} from "express";
 export const secureRouter = Router();
 
 secureRouter.get("/devices", authenticateJWT,   getDevices);
-secureRouter.delete("/devices", deleteAllOtherDevices);
+secureRouter.delete("/devices",authenticateJWT, deleteAllOtherDevices);
 secureRouter.delete("/devices/:id",deleteDeviceById);
