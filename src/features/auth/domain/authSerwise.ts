@@ -91,7 +91,7 @@ export const authService = {
         const newTokenId = await this.createRefreshToken(userId);
         const accessToken = createAccessToken(userId);
         const refreshToken = createRefreshToken(userId, newTokenId);
-        return { accessToken, refreshToken };
+        return { accessToken, refreshToken, };
     },
 
 

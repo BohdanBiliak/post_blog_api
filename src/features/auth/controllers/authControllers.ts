@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import {authService} from "../domain/authSerwise";
 import jwt from "jsonwebtoken";
 import {RefreshTokenPayload} from "../authTypes/types";
+import {deviceSessionService} from "../../SecurityDevices/domain/devicesSessionServices";
 const ACCESS_TOKEN_SECRET = process.env.JWT_SECRET || "accessSecretKey";
 const REFRESH_TOKEN_SECRET = process.env.JWT_REFRESH_SECRET || "refreshSecretKey";
 
@@ -73,7 +74,13 @@ export const authController = {
             await authService.invalidateRefreshToken(payload.tokenId);
             // Rotate tokens
             const newTokens = await authService.rotateRefreshToken(payload.userId, payload.tokenId);
-
+            await deviceSessionService.createSession({
+                ip: req.ip,
+                userId: payload.userId,
+                deviceId: payload.deviceId,
+                lastActiveDate: new Date().toISOString(),
+                title: req.headers['user-agent'] || "Unknown Device"
+            });
             res.cookie("refreshToken", newTokens.refreshToken, {
                 httpOnly: true,
                 secure: true,

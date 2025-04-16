@@ -3,6 +3,7 @@ export type AccessTokenPayload = {
 };
 
 export type RefreshTokenPayload = {
+    deviceId: string;
     userId: string;
     tokenId: string;
     iat: number;
