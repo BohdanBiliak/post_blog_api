@@ -58,7 +58,7 @@ export const authController = {
             maxAge: 7 * 24 * 60 * 60 * 1000 // 7 дней
         });
 
-        res.json({ accessToken });
+        res.status(200).json({ accessToken });
     },
     async refreshToken(req: Request, res: Response) {
         const token = req.cookies?.refreshToken;
