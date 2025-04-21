@@ -8,7 +8,10 @@ export const validationDevicesFindByParamId = param("deviceId").custom(async (va
     const device = await devicesService.findDeviceById(value);
     if (!device) {
         req.notFound = true;
-        throw new Error("Device not found");
+        throw {
+            msg:"Device not found",
+            param: "recoveryCode",
+        };
     }
     return true;
 });

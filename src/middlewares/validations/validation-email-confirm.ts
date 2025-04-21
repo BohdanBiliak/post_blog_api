@@ -12,7 +12,10 @@ export const validationEmailConfirm = body("code").custom(async (value) => {
     user.emailConfirmation.confirmationCode !== value ||
     user.emailConfirmation.expirationDate! < new Date()
   ) {
-    throw new Error("Confirmation code is incorrect");
+    throw {
+      msg: "Conf code is incorrect",
+      param: "recoveryCode",
+    };
   }
   return true;
 });
