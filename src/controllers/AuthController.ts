@@ -63,11 +63,16 @@ export class AuthController {
     const ip = req.ip;
     const cookieRefreshToken = req.cookies.refreshToken;
 
-    const cookieRefreshTokenObj = await this.jwtService.verifyToken(
-      cookieRefreshToken
-    );
 
+    const cookieRefreshTokenObj = await this.jwtService.verifyToken(cookieRefreshToken);
+    if (!cookieRefreshTokenObj) {
+      return res.sendStatus(401);
+    }
     const deviceId = cookieRefreshTokenObj!.deviceId;
+    const isActive = await this.devicesService.isDeviceActive(deviceId);
+    if (!isActive) {
+      return res.sendStatus(401);
+    }
 
     const userId = cookieRefreshTokenObj!.userId.toString();
     const user = await this.usersService.findUserById(new ObjectId(userId));
@@ -84,8 +89,8 @@ export class AuthController {
       newRefreshToken
     );
     const newIssuedAt = newRefreshTokenObj!.iat;
-
     await this.devicesService.updateDevice(ip, userId, newIssuedAt);
+
 
     res
       .cookie("refreshToken", newRefreshToken, {

@@ -65,4 +65,8 @@ export class DevicesService {
   async deleteAll(): Promise<boolean> {
     return this.devicesRepository.deleteAll();
   }
+  async isDeviceActive(deviceId: string): Promise<boolean> {
+    const device = await this.devicesRepository.findDeviceById(deviceId);
+    return !!device;
+  }
 }
