@@ -29,7 +29,9 @@ export const validationDeviceOwner = async (
 
   const deviceId = req.params.deviceId;
   const device = await devicesService.findDeviceById(deviceId);
-
+  if (!device) {
+    return res.sendStatus(404);
+  }
   const deviceUserId = device?.userId;
   const cookieUserId = cookieRefreshTokenObj.userId.toString();
 
