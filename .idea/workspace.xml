@@ -1,0 +1,809 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="556b0851-3e75-41df-b30e-b38d4d708de3" name="Changes" comment="Version 2.0">
+      <change afterPath="$PROJECT_DIR$/test-utils/test-functions.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test-utils/test-objects.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test-utils/tets-strings.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sprint1_2.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/__tests__/blogs.e2e.test.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/__tests__/helpers/datasets.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/__tests__/helpers/test-helpers.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/__tests__/posts.e2e.test.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/jwt-services.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/db/blog-db-type.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/db/db.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/db/post-db-type.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/db/user-db-types.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/SecurityDevices/controllers/securityDevicesController.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/SecurityDevices/domain/devicesSessionServices.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/SecurityDevices/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/SecurityDevices/middlewares/authMiddleware.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/SecurityDevices/models/SecurityDevice.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/SecurityDevices/securityDeviceRepo.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/SecurityDevices/types/refreshToken.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/SecurityDevices/types/types.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/auth/authReposytory.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/auth/authTypes/types.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/auth/controllers/authControllers.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/auth/domain/authSerwise.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/auth/email/emailAdapter.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/auth/email/manager/email-manager.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/auth/email/middlewares/registrationValidation.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/auth/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/blogs/blogsRepository.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/blogs/controllers/createBlogController.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/blogs/controllers/createNewPostForBlog.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/blogs/controllers/deleteBlogController.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/blogs/controllers/findBlogController.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/blogs/controllers/getAllPostsForBlog.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/blogs/controllers/getBlogController.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/blogs/controllers/putBlogController.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/blogs/domain/products-services.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/blogs/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/blogs/middlewares/blogValidators.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/comments/commentsReposytory.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/comments/commentsTypes/commentsTypes.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/comments/controllers/commentsController.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/comments/domain/commentsService.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/comments/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/comments/miidlewares/commentsValidator.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/posts/controllers/createPostController.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/posts/controllers/deletePostController.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/posts/controllers/findPostController.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/posts/controllers/getPostController.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/posts/controllers/putPostController.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/posts/domain/posts-service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/posts/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/posts/middlewares/postValidator.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/posts/postsRepository.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/testing/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/user/controllers/userController.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/user/domain/passwordService.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/user/domain/userService.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/user/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/user/middlewares/userValidator.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/user/userReposytory.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/user/userTypes/userTypes.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/global_middlewares/admin-middleware.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/global_middlewares/authJWT.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/global_middlewares/inputCheckErrorsMiddleware.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/settings.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types/blogs-types.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types/express.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types/output-errors-type.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types/posts-types.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types/user-types.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;BohdanBiliak&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/BohdanBiliak/post_blog_api.git&quot;,
+    &quot;accountId&quot;: &quot;a8f1508c-894f-4137-a4c9-0ab8e2290f9b&quot;
+  }
+}</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2qhgbVLygiMPRqXnR0EAZIgs6Ra" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Jest./blogs (1).executor&quot;: &quot;Run&quot;,
+    &quot;Jest./blogs.executor&quot;: &quot;Run&quot;,
+    &quot;Jest./blogs.should create (1).executor&quot;: &quot;Run&quot;,
+    &quot;Jest./blogs.should create.executor&quot;: &quot;Run&quot;,
+    &quot;Jest./blogs.should delete.executor&quot;: &quot;Run&quot;,
+    &quot;Jest./blogs.should find.executor&quot;: &quot;Run&quot;,
+    &quot;Jest./blogs.should get empty array.executor&quot;: &quot;Run&quot;,
+    &quot;Jest./blogs.should update.executor&quot;: &quot;Run&quot;,
+    &quot;Jest./blogs.shouldn\\'t  find.executor&quot;: &quot;Run&quot;,
+    &quot;Jest./blogs.shouldn\\'t create 401.executor&quot;: &quot;Run&quot;,
+    &quot;Jest./blogs.shouldn\\'t create.executor&quot;: &quot;Run&quot;,
+    &quot;Jest./blogs.shouldn\\'t delete.executor&quot;: &quot;Run&quot;,
+    &quot;Jest./blogs.shouldn\\'t find blog with ID 1.executor&quot;: &quot;Run&quot;,
+    &quot;Jest./blogs.shouldn\\'t find.executor&quot;: &quot;Run&quot;,
+    &quot;Jest./blogs.shouldn\\'t get empty array.executor&quot;: &quot;Run&quot;,
+    &quot;Jest./blogs.shouldn\\'t update 401.executor&quot;: &quot;Run&quot;,
+    &quot;Jest./blogs.shouldn\\'t update 404.executor&quot;: &quot;Run&quot;,
+    &quot;Jest./blogs.shouldn\\'t update.executor&quot;: &quot;Run&quot;,
+    &quot;Jest./posts.executor&quot;: &quot;Run&quot;,
+    &quot;Jest./posts.should create.executor&quot;: &quot;Run&quot;,
+    &quot;Jest./posts.should del.executor&quot;: &quot;Run&quot;,
+    &quot;Jest./posts.should find.executor&quot;: &quot;Run&quot;,
+    &quot;Jest./posts.should get empty array.executor&quot;: &quot;Run&quot;,
+    &quot;Jest./posts.should get not empty array.executor&quot;: &quot;Run&quot;,
+    &quot;Jest./posts.should return 404 if blogId does not exist.executor&quot;: &quot;Run&quot;,
+    &quot;Jest./posts.should update.executor&quot;: &quot;Run&quot;,
+    &quot;Jest./posts.shouldn\\'t create 401.executor&quot;: &quot;Run&quot;,
+    &quot;Jest./posts.shouldn\\'t create.executor&quot;: &quot;Run&quot;,
+    &quot;Jest./posts.shouldn\\'t del 401.executor&quot;: &quot;Run&quot;,
+    &quot;Jest./posts.shouldn\\'t del.executor&quot;: &quot;Run&quot;,
+    &quot;Jest./posts.shouldn\\'t find.executor&quot;: &quot;Run&quot;,
+    &quot;Jest./posts.shouldn\\'t update 401.executor&quot;: &quot;Run&quot;,
+    &quot;Jest./posts.shouldn\\'t update 404.executor&quot;: &quot;Run&quot;,
+    &quot;Jest./posts.shouldn\\'t update2.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Detrox/WebstormProjects/sprint1_2&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs.jest.jest_package&quot;: &quot;C:/Users/Detrox/WebstormProjects/sprint1_2/node_modules/jest&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\Detrox\\WebstormProjects\\sprint1_2\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Detrox\WebstormProjects\sprint1_2\src\features\auth" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Detrox\WebstormProjects\sprint1_2\src\features\auth" />
+      <recent name="C:\Users\Detrox\WebstormProjects\sprint1_2\src\features\auth\authTypes" />
+      <recent name="C:\Users\Detrox\WebstormProjects\sprint1_2\src\features" />
+      <recent name="C:\Users\Detrox\WebstormProjects\sprint1_2\src" />
+      <recent name="C:\Users\Detrox\WebstormProjects\sprint1_2\src\features\blogs" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Jest./posts">
+    <configuration name="/blogs" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/__tests__/blogs.e2e.test.ts" />
+      <test-names>
+        <test-name value="/blogs" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="/blogs.shouldn\'t create" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/__tests__/blogs.e2e.test.ts" />
+      <test-names>
+        <test-name value="/blogs" />
+        <test-name value="shouldn\'t create" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="/posts" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/__tests__/posts.e2e.test.ts" />
+      <test-names>
+        <test-name value="/posts" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="/posts.should return 404 if blogId does not exist" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/__tests__/posts.e2e.test.ts" />
+      <test-names>
+        <test-name value="/posts" />
+        <test-name value="should return 404 if blogId does not exist" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="/posts.shouldn\'t update 404" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/__tests__/posts.e2e.test.ts" />
+      <test-names>
+        <test-name value="/posts" />
+        <test-name value="shouldn\'t update 404" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Jest./posts" />
+        <item itemvalue="Jest./posts.shouldn\'t update 404" />
+        <item itemvalue="Jest./posts.should return 404 if blogId does not exist" />
+        <item itemvalue="Jest./blogs.shouldn\'t create" />
+        <item itemvalue="Jest./blogs" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-WS-243.22562.222" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="556b0851-3e75-41df-b30e-b38d4d708de3" name="Changes" comment="" />
+      <created>1735120292333</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1735120292333</updated>
+      <workItem from="1735120293438" duration="451000" />
+      <workItem from="1735121662977" duration="3352000" />
+      <workItem from="1735125117239" duration="2592000" />
+      <workItem from="1735284444133" duration="31244000" />
+      <workItem from="1735662873748" duration="5579000" />
+      <workItem from="1735739979237" duration="231000" />
+      <workItem from="1735890139572" duration="8453000" />
+      <workItem from="1736084381310" duration="14000" />
+      <workItem from="1736149669653" duration="4727000" />
+      <workItem from="1736411219877" duration="63000" />
+      <workItem from="1736691439260" duration="567000" />
+      <workItem from="1736868086903" duration="13616000" />
+      <workItem from="1736964175712" duration="4584000" />
+      <workItem from="1737020508267" duration="9178000" />
+      <workItem from="1737126361265" duration="944000" />
+      <workItem from="1737188345925" duration="1000" />
+      <workItem from="1737196400847" duration="1000" />
+      <workItem from="1737219141184" duration="1000" />
+      <workItem from="1737224352243" duration="2000" />
+      <workItem from="1737456484897" duration="1000" />
+      <workItem from="1737731764230" duration="4824000" />
+      <workItem from="1737924085636" duration="1000" />
+      <workItem from="1738336157609" duration="8718000" />
+      <workItem from="1738439644781" duration="5569000" />
+      <workItem from="1738495941356" duration="10223000" />
+      <workItem from="1739017702747" duration="5311000" />
+      <workItem from="1739111537440" duration="10190000" />
+      <workItem from="1739365102951" duration="20428000" />
+      <workItem from="1739648922825" duration="18036000" />
+      <workItem from="1739997725502" duration="80000" />
+      <workItem from="1739997980149" duration="1395000" />
+      <workItem from="1740653778256" duration="22398000" />
+      <workItem from="1741199112122" duration="13271000" />
+      <workItem from="1741336306677" duration="587000" />
+      <workItem from="1741459261699" duration="2597000" />
+      <workItem from="1741638057254" duration="2806000" />
+      <workItem from="1741795016361" duration="6650000" />
+      <workItem from="1741858415127" duration="1273000" />
+      <workItem from="1741859818724" duration="15729000" />
+      <workItem from="1741985490607" duration="6204000" />
+      <workItem from="1742233955309" duration="3793000" />
+      <workItem from="1742542281918" duration="2515000" />
+      <workItem from="1742570212947" duration="14000" />
+      <workItem from="1742675038424" duration="598000" />
+      <workItem from="1743006607904" duration="1229000" />
+      <workItem from="1743071791251" duration="33000" />
+      <workItem from="1743934329878" duration="1662000" />
+      <workItem from="1743937145263" duration="2394000" />
+      <workItem from="1743939808374" duration="6967000" />
+      <workItem from="1744212940639" duration="7295000" />
+      <workItem from="1744302698233" duration="2070000" />
+      <workItem from="1744484210293" duration="11000" />
+      <workItem from="1744562847777" duration="4502000" />
+      <workItem from="1744802358145" duration="10037000" />
+      <workItem from="1744814894985" duration="146000" />
+      <workItem from="1744815150406" duration="253000" />
+      <workItem from="1745228839605" duration="1617000" />
+      <workItem from="1745230569152" duration="1724000" />
+    </task>
+    <task id="LOCAL-00143" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1741207000636</created>
+      <option name="number" value="00143" />
+      <option name="presentableId" value="LOCAL-00143" />
+      <option name="project" value="LOCAL" />
+      <updated>1741207000636</updated>
+    </task>
+    <task id="LOCAL-00144" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1741207317675</created>
+      <option name="number" value="00144" />
+      <option name="presentableId" value="LOCAL-00144" />
+      <option name="project" value="LOCAL" />
+      <updated>1741207317675</updated>
+    </task>
+    <task id="LOCAL-00145" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1741208500510</created>
+      <option name="number" value="00145" />
+      <option name="presentableId" value="LOCAL-00145" />
+      <option name="project" value="LOCAL" />
+      <updated>1741208500510</updated>
+    </task>
+    <task id="LOCAL-00146" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1741208518867</created>
+      <option name="number" value="00146" />
+      <option name="presentableId" value="LOCAL-00146" />
+      <option name="project" value="LOCAL" />
+      <updated>1741208518867</updated>
+    </task>
+    <task id="LOCAL-00147" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1741209000277</created>
+      <option name="number" value="00147" />
+      <option name="presentableId" value="LOCAL-00147" />
+      <option name="project" value="LOCAL" />
+      <updated>1741209000277</updated>
+    </task>
+    <task id="LOCAL-00148" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1741209600254</created>
+      <option name="number" value="00148" />
+      <option name="presentableId" value="LOCAL-00148" />
+      <option name="project" value="LOCAL" />
+      <updated>1741209600254</updated>
+    </task>
+    <task id="LOCAL-00149" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1741209855338</created>
+      <option name="number" value="00149" />
+      <option name="presentableId" value="LOCAL-00149" />
+      <option name="project" value="LOCAL" />
+      <updated>1741209855338</updated>
+    </task>
+    <task id="LOCAL-00150" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1741210754278</created>
+      <option name="number" value="00150" />
+      <option name="presentableId" value="LOCAL-00150" />
+      <option name="project" value="LOCAL" />
+      <updated>1741210754278</updated>
+    </task>
+    <task id="LOCAL-00151" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1741211050226</created>
+      <option name="number" value="00151" />
+      <option name="presentableId" value="LOCAL-00151" />
+      <option name="project" value="LOCAL" />
+      <updated>1741211050226</updated>
+    </task>
+    <task id="LOCAL-00152" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1741211412038</created>
+      <option name="number" value="00152" />
+      <option name="presentableId" value="LOCAL-00152" />
+      <option name="project" value="LOCAL" />
+      <updated>1741211412038</updated>
+    </task>
+    <task id="LOCAL-00153" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1741211453767</created>
+      <option name="number" value="00153" />
+      <option name="presentableId" value="LOCAL-00153" />
+      <option name="project" value="LOCAL" />
+      <updated>1741211453767</updated>
+    </task>
+    <task id="LOCAL-00154" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1741212442361</created>
+      <option name="number" value="00154" />
+      <option name="presentableId" value="LOCAL-00154" />
+      <option name="project" value="LOCAL" />
+      <updated>1741212442362</updated>
+    </task>
+    <task id="LOCAL-00155" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1741212607171</created>
+      <option name="number" value="00155" />
+      <option name="presentableId" value="LOCAL-00155" />
+      <option name="project" value="LOCAL" />
+      <updated>1741212607171</updated>
+    </task>
+    <task id="LOCAL-00156" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1741212986548</created>
+      <option name="number" value="00156" />
+      <option name="presentableId" value="LOCAL-00156" />
+      <option name="project" value="LOCAL" />
+      <updated>1741212986548</updated>
+    </task>
+    <task id="LOCAL-00157" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1741213137124</created>
+      <option name="number" value="00157" />
+      <option name="presentableId" value="LOCAL-00157" />
+      <option name="project" value="LOCAL" />
+      <updated>1741213137124</updated>
+    </task>
+    <task id="LOCAL-00158" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1741213952558</created>
+      <option name="number" value="00158" />
+      <option name="presentableId" value="LOCAL-00158" />
+      <option name="project" value="LOCAL" />
+      <updated>1741213952558</updated>
+    </task>
+    <task id="LOCAL-00159" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1741889443020</created>
+      <option name="number" value="00159" />
+      <option name="presentableId" value="LOCAL-00159" />
+      <option name="project" value="LOCAL" />
+      <updated>1741889443021</updated>
+    </task>
+    <task id="LOCAL-00160" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1741891214957</created>
+      <option name="number" value="00160" />
+      <option name="presentableId" value="LOCAL-00160" />
+      <option name="project" value="LOCAL" />
+      <updated>1741891214957</updated>
+    </task>
+    <task id="LOCAL-00161" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1741891728606</created>
+      <option name="number" value="00161" />
+      <option name="presentableId" value="LOCAL-00161" />
+      <option name="project" value="LOCAL" />
+      <updated>1741891728606</updated>
+    </task>
+    <task id="LOCAL-00162" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1741892810275</created>
+      <option name="number" value="00162" />
+      <option name="presentableId" value="LOCAL-00162" />
+      <option name="project" value="LOCAL" />
+      <updated>1741892810275</updated>
+    </task>
+    <task id="LOCAL-00163" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1741985992224</created>
+      <option name="number" value="00163" />
+      <option name="presentableId" value="LOCAL-00163" />
+      <option name="project" value="LOCAL" />
+      <updated>1741985992225</updated>
+    </task>
+    <task id="LOCAL-00164" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1741990838703</created>
+      <option name="number" value="00164" />
+      <option name="presentableId" value="LOCAL-00164" />
+      <option name="project" value="LOCAL" />
+      <updated>1741990838703</updated>
+    </task>
+    <task id="LOCAL-00165" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1741991438853</created>
+      <option name="number" value="00165" />
+      <option name="presentableId" value="LOCAL-00165" />
+      <option name="project" value="LOCAL" />
+      <updated>1741991438853</updated>
+    </task>
+    <task id="LOCAL-00166" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1741991703722</created>
+      <option name="number" value="00166" />
+      <option name="presentableId" value="LOCAL-00166" />
+      <option name="project" value="LOCAL" />
+      <updated>1741991703723</updated>
+    </task>
+    <task id="LOCAL-00167" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1742234015601</created>
+      <option name="number" value="00167" />
+      <option name="presentableId" value="LOCAL-00167" />
+      <option name="project" value="LOCAL" />
+      <updated>1742234015601</updated>
+    </task>
+    <task id="LOCAL-00168" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1742234361210</created>
+      <option name="number" value="00168" />
+      <option name="presentableId" value="LOCAL-00168" />
+      <option name="project" value="LOCAL" />
+      <updated>1742234361210</updated>
+    </task>
+    <task id="LOCAL-00169" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1743937234409</created>
+      <option name="number" value="00169" />
+      <option name="presentableId" value="LOCAL-00169" />
+      <option name="project" value="LOCAL" />
+      <updated>1743937234409</updated>
+    </task>
+    <task id="LOCAL-00170" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1743940981050</created>
+      <option name="number" value="00170" />
+      <option name="presentableId" value="LOCAL-00170" />
+      <option name="project" value="LOCAL" />
+      <updated>1743940981051</updated>
+    </task>
+    <task id="LOCAL-00171" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1743943292351</created>
+      <option name="number" value="00171" />
+      <option name="presentableId" value="LOCAL-00171" />
+      <option name="project" value="LOCAL" />
+      <updated>1743943292351</updated>
+    </task>
+    <task id="LOCAL-00172" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1744213885844</created>
+      <option name="number" value="00172" />
+      <option name="presentableId" value="LOCAL-00172" />
+      <option name="project" value="LOCAL" />
+      <updated>1744213885845</updated>
+    </task>
+    <task id="LOCAL-00173" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1744217260389</created>
+      <option name="number" value="00173" />
+      <option name="presentableId" value="LOCAL-00173" />
+      <option name="project" value="LOCAL" />
+      <updated>1744217260389</updated>
+    </task>
+    <task id="LOCAL-00174" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1744218035661</created>
+      <option name="number" value="00174" />
+      <option name="presentableId" value="LOCAL-00174" />
+      <option name="project" value="LOCAL" />
+      <updated>1744218035661</updated>
+    </task>
+    <task id="LOCAL-00175" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1744218887856</created>
+      <option name="number" value="00175" />
+      <option name="presentableId" value="LOCAL-00175" />
+      <option name="project" value="LOCAL" />
+      <updated>1744218887856</updated>
+    </task>
+    <task id="LOCAL-00176" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1744219639116</created>
+      <option name="number" value="00176" />
+      <option name="presentableId" value="LOCAL-00176" />
+      <option name="project" value="LOCAL" />
+      <updated>1744219639116</updated>
+    </task>
+    <task id="LOCAL-00177" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1744219666161</created>
+      <option name="number" value="00177" />
+      <option name="presentableId" value="LOCAL-00177" />
+      <option name="project" value="LOCAL" />
+      <updated>1744219666161</updated>
+    </task>
+    <task id="LOCAL-00178" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1744226040256</created>
+      <option name="number" value="00178" />
+      <option name="presentableId" value="LOCAL-00178" />
+      <option name="project" value="LOCAL" />
+      <updated>1744226040256</updated>
+    </task>
+    <task id="LOCAL-00179" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1744226599918</created>
+      <option name="number" value="00179" />
+      <option name="presentableId" value="LOCAL-00179" />
+      <option name="project" value="LOCAL" />
+      <updated>1744226599918</updated>
+    </task>
+    <task id="LOCAL-00180" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1744226931700</created>
+      <option name="number" value="00180" />
+      <option name="presentableId" value="LOCAL-00180" />
+      <option name="project" value="LOCAL" />
+      <updated>1744226931700</updated>
+    </task>
+    <task id="LOCAL-00181" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1744564568316</created>
+      <option name="number" value="00181" />
+      <option name="presentableId" value="LOCAL-00181" />
+      <option name="project" value="LOCAL" />
+      <updated>1744564568316</updated>
+    </task>
+    <task id="LOCAL-00182" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1744565593581</created>
+      <option name="number" value="00182" />
+      <option name="presentableId" value="LOCAL-00182" />
+      <option name="project" value="LOCAL" />
+      <updated>1744565593581</updated>
+    </task>
+    <task id="LOCAL-00183" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1744565644630</created>
+      <option name="number" value="00183" />
+      <option name="presentableId" value="LOCAL-00183" />
+      <option name="project" value="LOCAL" />
+      <updated>1744565644630</updated>
+    </task>
+    <task id="LOCAL-00184" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1744565867980</created>
+      <option name="number" value="00184" />
+      <option name="presentableId" value="LOCAL-00184" />
+      <option name="project" value="LOCAL" />
+      <updated>1744565867980</updated>
+    </task>
+    <task id="LOCAL-00185" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1744802707353</created>
+      <option name="number" value="00185" />
+      <option name="presentableId" value="LOCAL-00185" />
+      <option name="project" value="LOCAL" />
+      <updated>1744802707354</updated>
+    </task>
+    <task id="LOCAL-00186" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1744802889885</created>
+      <option name="number" value="00186" />
+      <option name="presentableId" value="LOCAL-00186" />
+      <option name="project" value="LOCAL" />
+      <updated>1744802889885</updated>
+    </task>
+    <task id="LOCAL-00187" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1744804330220</created>
+      <option name="number" value="00187" />
+      <option name="presentableId" value="LOCAL-00187" />
+      <option name="project" value="LOCAL" />
+      <updated>1744804330220</updated>
+    </task>
+    <task id="LOCAL-00188" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1744804459601</created>
+      <option name="number" value="00188" />
+      <option name="presentableId" value="LOCAL-00188" />
+      <option name="project" value="LOCAL" />
+      <updated>1744804459601</updated>
+    </task>
+    <task id="LOCAL-00189" summary="Merge remote-tracking branch 'origin/master'">
+      <option name="closed" value="true" />
+      <created>1744805787271</created>
+      <option name="number" value="00189" />
+      <option name="presentableId" value="LOCAL-00189" />
+      <option name="project" value="LOCAL" />
+      <updated>1744805787271</updated>
+    </task>
+    <task id="LOCAL-00190" summary="Version 2.0">
+      <option name="closed" value="true" />
+      <created>1744806289692</created>
+      <option name="number" value="00190" />
+      <option name="presentableId" value="LOCAL-00190" />
+      <option name="project" value="LOCAL" />
+      <updated>1744806289692</updated>
+    </task>
+    <task id="LOCAL-00191" summary="Version 2.0">
+      <option name="closed" value="true" />
+      <created>1744807369607</created>
+      <option name="number" value="00191" />
+      <option name="presentableId" value="LOCAL-00191" />
+      <option name="project" value="LOCAL" />
+      <updated>1744807369607</updated>
+    </task>
+    <option name="localTasksCounter" value="192" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="V1.0" />
+    <MESSAGE value="Merge remote-tracking branch 'origin/master'" />
+    <MESSAGE value="Version 2.0" />
+    <option name="LAST_COMMIT_MESSAGE" value="Version 2.0" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/__tests__/blogs.e2e.test.ts</url>
+          <line>46</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/__tests__/blogs.e2e.test.ts</url>
+          <line>176</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/__tests__/posts.e2e.test.ts</url>
+          <line>88</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/__tests__/posts.e2e.test.ts</url>
+          <line>117</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/__tests__/posts.e2e.test.ts</url>
+          <line>94</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="NONE" type="javascript">
+          <url>file://$PROJECT_DIR$/src/features/blogs/middlewares/blogValidators.ts</url>
+          <line>21</line>
+          <log-expression expression="import {body} from &quot;express-validator&quot;;&#10;import {InputCheckErrorsMiddleware} from '../../../global_middlewares/inputCheckErrorsMiddleware'&#10;import {NextFunction, Response, Request} from &quot;express&quot;;&#10;import {blogsRepository} from &quot;../blogsRepository&quot;;&#10;import {adminMiddleware} from &quot;../../../global_middlewares/admin-middleware&quot;;&#10;&#10;export const nameValidator =&#10;    body(&quot;name&quot;)&#10;        .exists().withMessage('name is required')&#10;        .isString().withMessage('name must be a string')&#10;        .trim()&#10;        .isLength({ min: 1, max: 15 }).withMessage('name length should be between 1 and 15');&#10;&#10;export const descriptionValidator =&#10;    body(&quot;description&quot;)&#10;        .exists().withMessage('description is required')&#10;        .isString().withMessage('description must be a string')&#10;        .trim()&#10;        .isLength({ min: 1, max: 500 }).withMessage('description length should be between 1 and 500');&#10;&#10;export const websiteUrlValidator =&#10;    body(&quot;websiteUrl&quot;)&#10;        .exists().withMessage('websiteUrl is required')&#10;        .isString().withMessage('websiteUrl must be a string')&#10;        .trim()&#10;        .isLength({ min: 1, max: 100 }).withMessage('websiteUrl length should be between 1 and 100')&#10;        .isURL().withMessage('websiteUrl is not a valid URL');&#10;&#10;export const findBlogValidator = (req: Request, res: Response, next: NextFunction) =&gt; {&#10;    const blog = blogsRepository.find(req.params.id);&#10;    if (!blog) {&#10;        return res.status(404).send({ error: 'Blog not found' });&#10;    }&#10;    next();&#10;};&#10;&#10;export const blogValidator = [&#10;    adminMiddleware,&#10;    nameValidator,&#10;    descriptionValidator,&#10;    websiteUrlValidator,&#10;    InputCheckErrorsMiddleware&#10;]" language="JavaScript" />
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/features/user/index.ts</url>
+          <line>7</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/features/posts/index.ts</url>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/composition-root.ts</url>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
