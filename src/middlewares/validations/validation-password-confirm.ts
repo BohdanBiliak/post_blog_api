@@ -12,10 +12,7 @@ export const validationPasswordConfirm = body("recoveryCode").custom(
       user.passwordRecovery.recoveryCode !== value ||
       user.passwordRecovery.expirationDate! < new Date()
     ) {
-        throw {
-            msg: "Recovery code is incorrect",
-            param: "recoveryCode",
-        };
+        throw new Error("Recovery code is incorrect");
     }
     return true;
   }
