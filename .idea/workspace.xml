@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="556b0851-3e75-41df-b30e-b38d4d708de3" name="Changes" comment="new version 1.2.4">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middlewares/validations/find-by-id/validation-devices-find-by-param-id.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middlewares/validations/find-by-id/validation-devices-find-by-param-id.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middlewares/validations/validation-email-confirm.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middlewares/validations/validation-email-confirm.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middlewares/validations/validation-email-resend.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middlewares/validations/validation-email-resend.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middlewares/validations/validation-password-confirm.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middlewares/validations/validation-password-confirm.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middlewares/validations/validation-user-unique.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middlewares/validations/validation-user-unique.ts" afterDir="false" />
-    </list>
+    <list default="true" id="556b0851-3e75-41df-b30e-b38d4d708de3" name="Changes" comment="new version 1.2.5" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -252,15 +245,7 @@
       <workItem from="1744814894985" duration="146000" />
       <workItem from="1744815150406" duration="253000" />
       <workItem from="1745228839605" duration="1617000" />
-      <workItem from="1745230569152" duration="7116000" />
-    </task>
-    <task id="LOCAL-00150" summary="Merge remote-tracking branch 'origin/master'">
-      <option name="closed" value="true" />
-      <created>1741210754278</created>
-      <option name="number" value="00150" />
-      <option name="presentableId" value="LOCAL-00150" />
-      <option name="project" value="LOCAL" />
-      <updated>1741210754278</updated>
+      <workItem from="1745230569152" duration="7420000" />
     </task>
     <task id="LOCAL-00151" summary="Merge remote-tracking branch 'origin/master'">
       <option name="closed" value="true" />
@@ -646,7 +631,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745244987614</updated>
     </task>
-    <option name="localTasksCounter" value="199" />
+    <task id="LOCAL-00199" summary="new version 1.2.5">
+      <option name="closed" value="true" />
+      <created>1745245908520</created>
+      <option name="number" value="00199" />
+      <option name="presentableId" value="LOCAL-00199" />
+      <option name="project" value="LOCAL" />
+      <updated>1745245908520</updated>
+    </task>
+    <option name="localTasksCounter" value="200" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -686,7 +679,8 @@
     <MESSAGE value="new version 1.2.2" />
     <MESSAGE value="new version 1.2.3" />
     <MESSAGE value="new version 1.2.4" />
-    <option name="LAST_COMMIT_MESSAGE" value="new version 1.2.4" />
+    <MESSAGE value="new version 1.2.5" />
+    <option name="LAST_COMMIT_MESSAGE" value="new version 1.2.5" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

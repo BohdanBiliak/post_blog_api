@@ -9,7 +9,7 @@ export const validationErrorCheck = (
   const errorFormatter = (error: any) => {
     return {
       message: error.msg,
-      field: error.param,
+      field: error.path,
       notFound: error.meta?.notFound || false,
     };
   };
