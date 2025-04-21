@@ -4,14 +4,16 @@ import { DevicesService } from "../../../application/devices-service";
 
 const devicesService = container.get(DevicesService);
 
-export const validationDevicesFindByParamId = param("deviceId").custom(
-    async (value) => {
-        const result = await devicesService.findDeviceById(value);
-        if (!result) {
-            const error: any = new Error("Device not found");
-            error.notFound = true;
-            throw error;
-        }
-        return true;
+export const validationDevicesFindByParamId = param("deviceId").custom(async (value, { req, location, path }) => {
+    const result = await devicesService.findDeviceById(value);
+    if (!result) {
+        throw {
+            msg: "Device not found",
+            param: path,
+            location,
+            value,
+            meta: { notFound: true },
+        };
     }
-);
+    return true;
+});

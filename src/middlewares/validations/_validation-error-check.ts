@@ -10,7 +10,7 @@ export const validationErrorCheck = (
     return {
       message: error.msg,
       field: error.param,
-      notFound: error.notFound || false, // <- важливо!
+      notFound: error.meta?.notFound || false,
     };
   };
 
