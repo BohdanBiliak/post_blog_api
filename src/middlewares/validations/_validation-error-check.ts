@@ -2,33 +2,31 @@ import { NextFunction, Request, Response } from "express";
 import { ValidationError, validationResult } from "express-validator";
 
 export const validationErrorCheck = (
-  req: Request,
-  res: Response,
-  next: NextFunction
+    req: Request,
+    res: Response,
+    next: NextFunction
 ) => {
-  // @ts-ignore
-  const errorFormatter = ({ msg, param }: ValidationError) => {
+  const errorFormatter = (error: any) => {
     return {
-      message: msg,
-      field: param,
+      message: error.msg,
+      field: error.param,
+      notFound: error.notFound || false, // <- важливо!
     };
   };
 
   const result = validationResult(req).formatWith(errorFormatter);
+  const errors = result.array();
 
-  const idFinder = result.array().find((e) => e.field === "id");
-  const deviceIdFinder = result.array().find((e) => e.field === "deviceId");
-
-  if (idFinder || deviceIdFinder) {
-    res.status(404).json({ errorsMessages: result.array() });
-    return;
+  // ❗ Якщо хоча б одна помилка з позначкою notFound — повертаємо 404
+  if (errors.some((e) => e.notFound)) {
+    return res.status(404).json({ errorsMessages: errors });
   }
 
-  if (!result.isEmpty()) {
-    res
-      .status(400)
-      .json({ errorsMessages: result.array({ onlyFirstError: true }) });
-  } else {
-    next();
+  // ❗ Якщо є інші помилки — 400
+  if (errors.length > 0) {
+    return res.status(400).json({ errorsMessages: errors });
   }
+
+  // ✅ Якщо помилок немає
+  next();
 };

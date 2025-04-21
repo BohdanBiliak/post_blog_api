@@ -4,87 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="556b0851-3e75-41df-b30e-b38d4d708de3" name="Changes" comment="Version 2.0">
-      <change afterPath="$PROJECT_DIR$/test-utils/test-functions.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test-utils/test-objects.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test-utils/tets-strings.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sprint1_2.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/__tests__/blogs.e2e.test.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/__tests__/helpers/datasets.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/__tests__/helpers/test-helpers.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/__tests__/posts.e2e.test.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/jwt-services.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/db/blog-db-type.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/db/db.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/db/post-db-type.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/db/user-db-types.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/SecurityDevices/controllers/securityDevicesController.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/SecurityDevices/domain/devicesSessionServices.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/SecurityDevices/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/SecurityDevices/middlewares/authMiddleware.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/SecurityDevices/models/SecurityDevice.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/SecurityDevices/securityDeviceRepo.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/SecurityDevices/types/refreshToken.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/SecurityDevices/types/types.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/auth/authReposytory.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/auth/authTypes/types.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/auth/controllers/authControllers.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/auth/domain/authSerwise.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/auth/email/emailAdapter.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/auth/email/manager/email-manager.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/auth/email/middlewares/registrationValidation.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/auth/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/blogs/blogsRepository.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/blogs/controllers/createBlogController.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/blogs/controllers/createNewPostForBlog.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/blogs/controllers/deleteBlogController.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/blogs/controllers/findBlogController.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/blogs/controllers/getAllPostsForBlog.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/blogs/controllers/getBlogController.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/blogs/controllers/putBlogController.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/blogs/domain/products-services.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/blogs/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/blogs/middlewares/blogValidators.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/comments/commentsReposytory.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/comments/commentsTypes/commentsTypes.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/comments/controllers/commentsController.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/comments/domain/commentsService.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/comments/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/comments/miidlewares/commentsValidator.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/posts/controllers/createPostController.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/posts/controllers/deletePostController.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/posts/controllers/findPostController.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/posts/controllers/getPostController.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/posts/controllers/putPostController.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/posts/domain/posts-service.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/posts/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/posts/middlewares/postValidator.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/posts/postsRepository.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/testing/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/user/controllers/userController.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/user/domain/passwordService.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/user/domain/userService.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/user/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/user/middlewares/userValidator.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/user/userReposytory.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/user/userTypes/userTypes.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/global_middlewares/admin-middleware.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/global_middlewares/authJWT.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/global_middlewares/inputCheckErrorsMiddleware.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/settings.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/blogs-types.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/express.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/output-errors-type.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/posts-types.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/user-types.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+    <list default="true" id="556b0851-3e75-41df-b30e-b38d4d708de3" name="Changes" comment="new version">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middlewares/validations/_validation-error-check.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middlewares/validations/_validation-error-check.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middlewares/validations/find-by-id/validation-devices-find-by-param-id.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middlewares/validations/find-by-id/validation-devices-find-by-param-id.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -326,15 +249,7 @@
       <workItem from="1744814894985" duration="146000" />
       <workItem from="1744815150406" duration="253000" />
       <workItem from="1745228839605" duration="1617000" />
-      <workItem from="1745230569152" duration="1724000" />
-    </task>
-    <task id="LOCAL-00143" summary="Merge remote-tracking branch 'origin/master'">
-      <option name="closed" value="true" />
-      <created>1741207000636</created>
-      <option name="number" value="00143" />
-      <option name="presentableId" value="LOCAL-00143" />
-      <option name="project" value="LOCAL" />
-      <updated>1741207000636</updated>
+      <workItem from="1745230569152" duration="2846000" />
     </task>
     <task id="LOCAL-00144" summary="Merge remote-tracking branch 'origin/master'">
       <option name="closed" value="true" />
@@ -720,7 +635,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744807369607</updated>
     </task>
-    <option name="localTasksCounter" value="192" />
+    <task id="LOCAL-00192" summary="new version">
+      <option name="closed" value="true" />
+      <created>1745232455109</created>
+      <option name="number" value="00192" />
+      <option name="presentableId" value="LOCAL-00192" />
+      <option name="project" value="LOCAL" />
+      <updated>1745232455109</updated>
+    </task>
+    <option name="localTasksCounter" value="193" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -753,7 +676,8 @@
     <MESSAGE value="V1.0" />
     <MESSAGE value="Merge remote-tracking branch 'origin/master'" />
     <MESSAGE value="Version 2.0" />
-    <option name="LAST_COMMIT_MESSAGE" value="Version 2.0" />
+    <MESSAGE value="new version" />
+    <option name="LAST_COMMIT_MESSAGE" value="new version" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
