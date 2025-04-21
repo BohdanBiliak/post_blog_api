@@ -68,7 +68,7 @@ authRouter.post(
   authController.refreshTokens.bind(authController)
 );
 
-authRouter.post("/logout", authController.logout.bind(authController));
+authRouter.post("/logout",validationRefreshToken , authController.logout.bind(authController));
 
 // ----- Login, logout and tokens section end -----
 
