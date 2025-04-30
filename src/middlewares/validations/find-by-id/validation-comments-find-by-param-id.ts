@@ -1,15 +1,9 @@
 import { param } from "express-validator";
-import { container } from "../../../composition-root";
-import { CommentsQueryRepository } from "../../../infrastructure/repositories/query-repos/comments-query-repository";
+import { isValidObjectId } from "mongoose";
 
-const commentsQueryRepository = container.get(CommentsQueryRepository);
-
-export const validationCommentsFindByParamId = param("id").custom(
-  async (value) => {
-    const result = await commentsQueryRepository.findCommentById(value);
-    if (!result) {
-      throw new Error("ID not found");
+export const validationCommentsFindByParamId = param("id").custom((value) => {
+    if (!isValidObjectId(value)) {
+        throw new Error("Invalid comment id format");
     }
     return true;
-  }
-);
+});

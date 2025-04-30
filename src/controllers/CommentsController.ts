@@ -6,27 +6,29 @@ import { inject, injectable } from "inversify";
 @injectable()
 export class CommentsController {
   constructor(
-    @inject(CommentsService) protected commentsService: CommentsService,
-    @inject(CommentsQueryRepository)
-    protected commentsQueryRepository: CommentsQueryRepository
-  ) {}
+      @inject(CommentsService) protected commentsService: CommentsService,
+      @inject(CommentsQueryRepository)
+      protected commentsQueryRepository: CommentsQueryRepository
+  ) {
+  }
+
   async getComment(req: Request, res: Response) {
     const foundComment = await this.commentsQueryRepository.findCommentById(
-      req.params.id,
-      req.user?._id
+        req.params.id,
+        req.user?._id
     );
     res.json(foundComment);
   }
 
   async updateComment(req: Request, res: Response) {
     const isUpdated = await this.commentsService.updateComment(
-      req.params.id,
-      req.body
+        req.params.id,
+        req.body
     );
 
     if (isUpdated) {
       const updatedComment = await this.commentsQueryRepository.findCommentById(
-        req.body.id
+          req.body.id
       );
       res.status(204).json(updatedComment);
     }
@@ -49,17 +51,22 @@ export class CommentsController {
   }
 
   async updateLikeStatus(req: Request, res: Response) {
+    const comment = await this.commentsQueryRepository.findCommentById(req.params.id);
+    if (!comment) {
+      return res.sendStatus(404);
+    }
+
     const isUpdated = await this.commentsService.updateLikeStatus(
-      req.params.id,
-      req.body.likeStatus,
-      req.user!._id
+        req.params.id,
+        req.body.likeStatus,
+        req.user!._id
     );
 
     if (isUpdated) {
-      const updatedComment = await this.commentsQueryRepository.findCommentById(
-        req.params.id
-      );
-      res.status(204).json(updatedComment);
+      return res.sendStatus(204);
+    } else {
+      return res.sendStatus(400); // або інший код, якщо треба
     }
   }
 }
+
