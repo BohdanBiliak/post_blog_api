@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="556b0851-3e75-41df-b30e-b38d4d708de3" name="Changes" comment="new version 1.2.6">
+    <list default="true" id="556b0851-3e75-41df-b30e-b38d4d708de3" name="Changes" comment="new version 1.2.7">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/CommentsController.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/CommentsController.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middlewares/validations/find-by-id/validation-comments-find-by-param-id.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middlewares/validations/find-by-id/validation-comments-find-by-param-id.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middlewares/validations/_validation-error-check.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middlewares/validations/_validation-error-check.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -251,15 +250,8 @@
       <workItem from="1745228839605" duration="1617000" />
       <workItem from="1745230569152" duration="8609000" />
       <workItem from="1745935992173" duration="991000" />
-      <workItem from="1746023538091" duration="302000" />
-    </task>
-    <task id="LOCAL-00154" summary="Merge remote-tracking branch 'origin/master'">
-      <option name="closed" value="true" />
-      <created>1741212442361</created>
-      <option name="number" value="00154" />
-      <option name="presentableId" value="LOCAL-00154" />
-      <option name="project" value="LOCAL" />
-      <updated>1741212442362</updated>
+      <workItem from="1746023538091" duration="2555000" />
+      <workItem from="1746471531984" duration="233000" />
     </task>
     <task id="LOCAL-00155" summary="Merge remote-tracking branch 'origin/master'">
       <option name="closed" value="true" />
@@ -645,7 +637,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745246820249</updated>
     </task>
-    <option name="localTasksCounter" value="203" />
+    <task id="LOCAL-00203" summary="new version 1.2.7">
+      <option name="closed" value="true" />
+      <created>1746023853951</created>
+      <option name="number" value="00203" />
+      <option name="presentableId" value="LOCAL-00203" />
+      <option name="project" value="LOCAL" />
+      <updated>1746023853952</updated>
+    </task>
+    <option name="localTasksCounter" value="204" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -687,7 +687,8 @@
     <MESSAGE value="new version 1.2.4" />
     <MESSAGE value="new version 1.2.5" />
     <MESSAGE value="new version 1.2.6" />
-    <option name="LAST_COMMIT_MESSAGE" value="new version 1.2.6" />
+    <MESSAGE value="new version 1.2.7" />
+    <option name="LAST_COMMIT_MESSAGE" value="new version 1.2.7" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
